@@ -17,6 +17,7 @@
 
 package free.studio.tube.gui.activities;
 
+import android.Manifest;
 import android.content.ClipDescription;
 import android.content.ClipboardManager;
 import android.content.DialogInterface;
@@ -35,9 +36,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 
+import com.admodule.AdModule;
+import com.admodule.adfb.IFacebookAd;
+import com.facebook.ads.NativeAd;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import free.rm.gotube.R;
+import free.studio.tube.app.AdsID;
 import free.studio.tube.gui.businessobjects.YouTubePlayer;
 import free.studio.tube.app.GoTubeApp;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeChannel;
@@ -49,6 +55,9 @@ import free.studio.tube.gui.fragments.MainFragment;
 import free.studio.tube.gui.fragments.PlaylistVideosFragment;
 import free.studio.tube.gui.fragments.SearchVideoGridFragment;
 import free.studio.tube.gui.fragments.VideosGridFragment;
+import kr.co.namee.permissiongen.PermissionFail;
+import kr.co.namee.permissiongen.PermissionGen;
+import kr.co.namee.permissiongen.PermissionSuccess;
 
 /**
  * Main activity (launcher).  This activity holds {@link VideosGridFragment}.
@@ -74,6 +83,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 
 	private boolean dontAddToBackStack = false;
 
+
+	@Override public void onRequestPermissionsResult(int requestCode, String[] permissions,
+													 int[] grantResults) {
+		PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +133,61 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 					getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, mainFragment).commit();
 				}
 			}
+		}
+
+		initHomeAD();
+
+		PermissionGen.with(this)
+				.addRequestCode(100)
+				.permissions(
+						Manifest.permission.ACCESS_WIFI_STATE,
+						Manifest.permission.ACCESS_COARSE_LOCATION,
+						Manifest.permission.ACCESS_FINE_LOCATION,
+						Manifest.permission.READ_PHONE_STATE)
+				.request();
+	}
+
+	@PermissionSuccess(requestCode = 100)
+	public void permissionsSuccess(){
+
+	}
+
+	@PermissionFail(requestCode = 100)
+	private void permissionsFaild() {
+
+	}
+
+	private void initHomeAD() {
+		if (GoTubeApp.isCoolStart) {
+			GoTubeApp.isCoolStart = false;
+			if (!AdModule.getInstance().getAdMob().showInterstitialAd()) {
+				AdModule.getInstance().getFacebookAd().setLoadListener(new IFacebookAd.FacebookAdListener() {
+					@Override
+					public void onLoadedAd(View view) {
+						AdModule.getInstance().getFacebookAd().setLoadListener(null);
+						AdModule.getInstance().createMaterialDialog()
+								.showAdDialog(MainActivity.this, view);
+					}
+
+					@Override
+					public void onLoadedAd(NativeAd nativeAd) {
+
+					}
+
+					@Override
+					public void onStartLoadAd(View view) {
+
+					}
+
+					@Override
+					public void onLoadAdFailed(int i, String s) {
+						AdModule.getInstance().getFacebookAd().setLoadListener(null);
+					}
+				});
+				AdModule.getInstance().getFacebookAd().loadAd(false, AdsID.FB_NATIVE_AD_ID);
+			}
+		} else {
+			AdModule.getInstance().getAdMob().requestNewInterstitial();
 		}
 	}
 

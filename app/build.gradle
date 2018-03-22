@@ -98,5 +98,8 @@ dependencies {
     compile 'com.android.support:multidex:1.0.2'    // this is as we have over 65536 lines of code...
 
     compile 'de.hdodenhof:circleimageview:2.2.0'
+    compile 'com.lovedise:permissiongen:0.0.6'
+
+
 }
 

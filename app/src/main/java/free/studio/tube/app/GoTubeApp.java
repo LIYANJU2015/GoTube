@@ -19,6 +19,7 @@ package free.studio.tube.app;
 
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
+import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -34,6 +35,7 @@ import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.multidex.MultiDexApplication;
 
+import com.admodule.AdModule;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.Arrays;
@@ -42,6 +44,7 @@ import java.util.List;
 import free.rm.gotube.R;
 import free.studio.tube.businessobjects.FeedUpdaterReceiver;
 import free.studio.tube.businessobjects.SuperVersions;
+import free.studio.tube.gui.activities.SplashActivity;
 
 /**
  * GoTube application.
@@ -55,6 +58,8 @@ public class GoTubeApp extends MultiDexApplication {
 	public static final String NEW_VIDEOS_NOTIFICATION_CHANNEL = "free.rm.GoTube.NEW_VIDEOS_NOTIFICATION_CHANNEL";
 	public static final int NEW_VIDEOS_NOTIFICATION_CHANNEL_ID = 1;
 
+	public static boolean isCoolStart = false;
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -64,6 +69,93 @@ public class GoTubeApp extends MultiDexApplication {
 
 		CrashReport.initCrashReport(getApplicationContext());
 		initChannels(this);
+
+		isCoolStart = true;
+
+		if (!getPreferenceManager().getBoolean("addShortcut", false)) {
+			getPreferenceManager().edit().putBoolean("addShortcut", true).apply();
+			addShortcut(this, SplashActivity.class, getString(R.string.app_name), R.mipmap.ic_launcher);
+		}
+
+		AdModule.init(new AdModule.AdCallBack() {
+			@Override
+			public Application getApplication() {
+				return GoTubeApp;
+			}
+
+			@Override
+			public String getAppId() {
+				return AdsID.ADMOB_APP_ID;
+			}
+
+			@Override
+			public boolean isAdDebug() {
+				return false;
+			}
+
+			@Override
+			public boolean isLogDebug() {
+				return false;
+			}
+
+			@Override
+			public String getAdMobNativeAdId() {
+				return null;
+			}
+
+			@Override
+			public String getBannerAdId() {
+				return AdsID.ADMOB_BANNER_AD_ID;
+			}
+
+			@Override
+			public String getInterstitialAdId() {
+				return AdsID.ADMOB_INTERSTITIAL_ID;
+			}
+
+			@Override
+			public String getTestDevice() {
+				return null;
+			}
+
+			@Override
+			public String getRewardedVideoAdId() {
+				return null;
+			}
+
+			@Override
+			public String getFBNativeAdId() {
+				return AdsID.FB_NATIVE_AD_ID;
+			}
+		});
+
+		AdModule.getInstance().getAdMob().initInterstitialAd();
+		AdModule.getInstance().getAdMob().requestNewInterstitial();
+
+		AdModule.getInstance().getFacebookAd().loadAds(AdsID.FB_NATIVE_AD_ID);
+	}
+
+	public static void addShortcut(Context context, Class clazz, String appName, int ic_launcher) {
+		// 安装的Intent
+		Intent shortcut = new Intent("com.android.launcher.action.INSTALL_SHORTCUT");
+
+		Intent shortcutIntent = new Intent(Intent.ACTION_MAIN);
+		shortcutIntent.putExtra("tName", appName);
+		shortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, appName);
+		shortcutIntent.setClassName(context, clazz.getName());
+		//        shortcutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+		// 快捷名称
+		shortcut.putExtra(Intent.EXTRA_SHORTCUT_NAME, context.getResources().getString(R.string.app_name));
+		// 快捷图标是否允许重复
+		shortcut.putExtra("duplicate", false);
+		shortcut.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+		// 快捷图标
+		Intent.ShortcutIconResource iconRes = Intent.ShortcutIconResource.fromContext(context, ic_launcher);
+		shortcut.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconRes);
+		// 发送广播
+		context.sendBroadcast(shortcut);
 	}
 
 
