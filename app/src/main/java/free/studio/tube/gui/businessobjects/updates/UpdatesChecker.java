@@ -17,13 +17,11 @@
 
 package free.studio.tube.gui.businessobjects.updates;
 
-import android.util.Log;
-
 import org.json.JSONObject;
 
 import java.net.URL;
 
-import free.rm.GoTube.BuildConfig;
+import free.rm.gotube.BuildConfig;
 
 /**
  * Checks for app updates.

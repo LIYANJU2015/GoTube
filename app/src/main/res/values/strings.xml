@@ -21,4 +21,7 @@
 
 	<string name="downloaded_tip">Video has been downloaded !</string>
 	<string name="download_add_tip">Video added successfully to download</string>
+
+	<string name="facebook_app_id">449200398846669</string>
+	<string name="fb_login_protocol_scheme">fb449200398846669</string>
 </resources>

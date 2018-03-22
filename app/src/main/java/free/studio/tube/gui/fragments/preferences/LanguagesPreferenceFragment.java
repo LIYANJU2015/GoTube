@@ -20,7 +20,7 @@ package free.studio.tube.gui.fragments.preferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 
 /**
  * Preference fragment for languages and regions related settings.

@@ -37,8 +37,8 @@ import android.widget.FrameLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import free.rm.GoTube.R;
-import free.rm.GoTube.gui.businessobjects.YouTubePlayer;
+import free.rm.gotube.R;
+import free.studio.tube.gui.businessobjects.YouTubePlayer;
 import free.studio.tube.app.GoTubeApp;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeChannel;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubePlaylist;

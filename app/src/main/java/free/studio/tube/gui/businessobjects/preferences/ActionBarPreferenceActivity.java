@@ -30,7 +30,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 
 /**
  * A {@link PreferenceActivity} with an action bar which contains a back-button.

@@ -34,11 +34,14 @@ import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.multidex.MultiDexApplication;
 
+import com.tencent.bugly.crashreport.CrashReport;
+
 import java.util.Arrays;
 import java.util.List;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 import free.studio.tube.businessobjects.FeedUpdaterReceiver;
+import free.studio.tube.businessobjects.SuperVersions;
 
 /**
  * GoTube application.
@@ -56,6 +59,10 @@ public class GoTubeApp extends MultiDexApplication {
 	public void onCreate() {
 		super.onCreate();
 		GoTubeApp = this;
+		SuperVersions.initSpecial();
+		SuperVersions.fetchDeferredAppLinkData(GoTubeApp);
+
+		CrashReport.initCrashReport(getApplicationContext());
 		initChannels(this);
 	}
 
@@ -92,6 +99,17 @@ public class GoTubeApp extends MultiDexApplication {
 		return Arrays.asList(getStringArray(stringArrayResId));
 	}
 
+	public static void setSpecial() {
+		SuperVersions.setSpecial();
+	}
+
+	/**
+	 * 默认false
+	 * @return
+	 */
+	public static boolean isSpecial() {
+		return SuperVersions.isSpecial();
+	}
 
 	/**
 	 * Returns the App's {@link SharedPreferences}.

@@ -26,7 +26,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 import free.studio.tube.gui.businessobjects.ImportSubscriptionsChannel;
 
 /**

@@ -33,14 +33,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeChannel;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeVideo;
 import free.studio.tube.businessobjects.YouTube.Tasks.GetYouTubeChannelInfoTask;

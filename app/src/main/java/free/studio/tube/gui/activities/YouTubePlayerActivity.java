@@ -21,7 +21,7 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 import free.studio.tube.app.GoTubeApp;
 import free.studio.tube.gui.businessobjects.BackButtonActivity;
 import free.studio.tube.gui.fragments.YouTubePlayerFragment;

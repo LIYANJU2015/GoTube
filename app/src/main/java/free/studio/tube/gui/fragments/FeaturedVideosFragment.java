@@ -17,7 +17,7 @@
 
 package free.studio.tube.gui.fragments;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 import free.studio.tube.app.GoTubeApp;
 import free.studio.tube.businessobjects.VideoCategory;
 

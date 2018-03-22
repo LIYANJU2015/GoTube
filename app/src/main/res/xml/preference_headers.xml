@@ -42,10 +42,5 @@
 		android:title="@string/pref_other_category">
 	</header>
 
-	<header
-		android:fragment="free.studio.tube.gui.fragments.preferences.AboutPreferenceFragment"
-		android:icon="@drawable/ic_pref_about"
-		android:title="@string/pref_about_category">
-	</header>
 
 </preference-headers>

@@ -27,7 +27,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 import free.studio.tube.app.GoTubeApp;
 import free.studio.tube.businessobjects.db.SubscriptionsDb;
 import free.studio.tube.businessobjects.Logger;

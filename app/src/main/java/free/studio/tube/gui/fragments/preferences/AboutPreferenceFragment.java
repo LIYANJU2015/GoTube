@@ -32,8 +32,8 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-import free.rm.GoTube.BuildConfig;
-import free.rm.GoTube.R;
+import free.rm.gotube.BuildConfig;
+import free.rm.gotube.R;
 import free.studio.tube.app.GoTubeApp;
 
 /**

@@ -54,6 +54,7 @@
 				android:layout_height="wrap_content"
 				android:background="?attr/colorPrimary"
 				android:layout_gravity="center_horizontal"
+				app:tabBackground="?selectableItemBackgroundBorderless"
 				app:tabIndicatorColor="@android:color/transparent"
 				app:tabMode="scrollable"/>
 

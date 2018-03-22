@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package free.rm.GoTube.gui.businessobjects;
+package free.studio.tube.gui.businessobjects;
 
 import android.content.Context;
 import android.content.Intent;

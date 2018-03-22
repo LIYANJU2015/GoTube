@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.youtube.model.Thumbnail;
 import com.google.api.services.youtube.model.Video;
+import com.rating.RatingActivity;
 
 import java.io.File;
 import java.io.Serializable;
@@ -44,9 +45,10 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 import free.studio.tube.app.GoTubeApp;
 import free.studio.tube.businessobjects.AsyncTaskParallel;
+import free.studio.tube.businessobjects.FacebookReport;
 import free.studio.tube.businessobjects.FileDownloader;
 import free.studio.tube.businessobjects.Logger;
 import free.studio.tube.businessobjects.YouTube.VideoStream.ParseStreamMetaData;
@@ -577,6 +579,20 @@ public class YouTubeVideo implements Serializable {
 			if (success) {
 				success = DownloadedVideosDb.getVideoDownloadsDb().add(YouTubeVideo.this, localFileUri.toString());
 			}
+
+			RatingActivity.setPopTotalCount(GoTubeApp.getContext(), 2);
+			RatingActivity.setRatingClickListener(new RatingActivity.RatingClickListener() {
+				@Override
+				public void onClickFiveStart() {
+					FacebookReport.logSendAppRating("five");
+				}
+
+				@Override
+				public void onClickReject() {
+					FacebookReport.logSendAppRating("no");
+				}
+			});
+			RatingActivity.launch(GoTubeApp.getContext());
 
 			Toast.makeText(GoTubeApp.getContext(),
 					String.format(GoTubeApp.getContext().getString(success ? R.string.video_downloaded : R.string.video_download_stream_error), getTitle()),

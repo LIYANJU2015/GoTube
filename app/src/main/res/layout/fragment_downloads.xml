@@ -16,10 +16,12 @@
 		<TextView
 			android:id="@+id/noDownloadedVideosText"
 			android:visibility="gone"
+			android:textColor="@color/black_color"
 			android:text="@string/no_downloaded_videos_text"
 			style="@style/NoDownloadsMsgTextView"/>
 
 		<TextView
+			android:elevation="4dp"
 			android:id="@+id/downloadsDisabledWarning"
 			android:layout_width="wrap_content"
 			android:layout_gravity="center_horizontal"

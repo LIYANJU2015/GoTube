@@ -23,8 +23,8 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 
-import free.rm.GoTube.BuildConfig;
-import free.rm.GoTube.R;
+import free.rm.gotube.BuildConfig;
+import free.rm.gotube.R;
 import free.studio.tube.businessobjects.YouTube.VideoStream.VideoResolution;
 
 /**

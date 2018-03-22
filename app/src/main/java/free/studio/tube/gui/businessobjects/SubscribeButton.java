@@ -24,7 +24,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 import free.studio.tube.businessobjects.YouTube.Tasks.GetChannelVideosTask;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeChannel;
 import free.studio.tube.businessobjects.db.Tasks.SubscribeToChannelTask;

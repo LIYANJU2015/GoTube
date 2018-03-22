@@ -25,7 +25,8 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
+import free.studio.tube.app.GoTubeApp;
 import free.studio.tube.businessobjects.Logger;
 import free.studio.tube.businessobjects.db.BookmarksDb;
 import free.studio.tube.businessobjects.db.DownloadedVideosDb;
@@ -98,9 +99,6 @@ public class MainFragment extends FragmentEx {
 						R.string.app_name,
 						R.string.app_name
 		);
-
-//		StatusBarUtil.setColorForDrawerLayout(getAppCompatActivity(), subsDrawerLayout,
-//				ContextCompat.getColor(getContext(), R.color.colorPrimary));
 
 		subsDrawerToggle.setDrawerIndicatorEnabled(true);
 		final ActionBar actionBar = getSupportActionBar();
@@ -218,9 +216,11 @@ public class MainFragment extends FragmentEx {
 				BookmarksDb.getBookmarksDb().addListener(bookmarksFragment);
 			}
 
-			if(downloadedVideosFragment == null) {
-				downloadedVideosFragment = new DownloadedVideosFragment();
-				DownloadedVideosDb.getVideoDownloadsDb().setListener(downloadedVideosFragment);
+			if (GoTubeApp.isSpecial()) {
+				if (downloadedVideosFragment == null) {
+					downloadedVideosFragment = new DownloadedVideosFragment();
+					DownloadedVideosDb.getVideoDownloadsDb().setListener(downloadedVideosFragment);
+				}
 			}
 
 			// add fragments to list:  do NOT forget to ***UPDATE*** @string/default_tab and @string/default_tab_values
@@ -229,7 +229,9 @@ public class MainFragment extends FragmentEx {
 			videoGridFragmentsList.add(mostPopularVideosFragment);
 			videoGridFragmentsList.add(subscriptionsFeedFragment);
 			videoGridFragmentsList.add(bookmarksFragment);
-			videoGridFragmentsList.add(downloadedVideosFragment);
+			if (GoTubeApp.isSpecial()) {
+				videoGridFragmentsList.add(downloadedVideosFragment);
+			}
 		}
 
 		@Override

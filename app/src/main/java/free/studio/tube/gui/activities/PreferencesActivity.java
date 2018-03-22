@@ -19,7 +19,7 @@ package free.studio.tube.gui.activities;
 
 import java.util.List;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 import free.studio.tube.gui.businessobjects.preferences.ActionBarPreferenceActivity;
 import free.studio.tube.gui.fragments.preferences.AboutPreferenceFragment;
 import free.studio.tube.gui.fragments.preferences.BackupPreferenceFragment;

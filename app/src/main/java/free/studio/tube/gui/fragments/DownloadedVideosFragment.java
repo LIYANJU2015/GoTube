@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import butterknife.BindView;
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 import free.studio.tube.app.GoTubeApp;
 import free.studio.tube.businessobjects.AsyncTaskParallel;
 import free.studio.tube.businessobjects.VideoCategory;

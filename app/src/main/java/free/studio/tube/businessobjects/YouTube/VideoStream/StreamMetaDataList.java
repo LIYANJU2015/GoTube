@@ -21,7 +21,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 import free.studio.tube.app.GoTubeApp;
 
 /**

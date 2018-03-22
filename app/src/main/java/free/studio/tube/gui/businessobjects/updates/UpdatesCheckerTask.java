@@ -21,7 +21,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 import free.studio.tube.businessobjects.AsyncTaskParallel;
 
 /**

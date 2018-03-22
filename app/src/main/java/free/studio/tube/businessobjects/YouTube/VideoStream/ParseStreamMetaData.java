@@ -34,7 +34,7 @@ import org.schabi.newpipe.extractor.exceptions.ContentNotAvailableException;
 import org.schabi.newpipe.extractor.stream.StreamInfo;
 import org.schabi.newpipe.extractor.stream.VideoStream;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 
 
 /**

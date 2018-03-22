@@ -25,7 +25,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 
 /**
  * A transparent activity that:

@@ -37,7 +37,7 @@ import com.bumptech.glide.request.target.Target;
 
 import java.io.Serializable;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 import free.studio.tube.businessobjects.FileDownloader;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeVideo;
 import free.studio.tube.app.GoTubeApp;

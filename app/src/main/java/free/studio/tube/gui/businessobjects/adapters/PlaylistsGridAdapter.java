@@ -26,7 +26,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 import free.studio.tube.businessobjects.YouTube.GetChannelPlaylists;
 import free.studio.tube.businessobjects.YouTube.Tasks.GetChannelPlaylistsTask;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeChannel;

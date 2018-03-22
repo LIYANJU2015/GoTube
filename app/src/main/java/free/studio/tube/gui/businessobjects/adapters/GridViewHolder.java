@@ -33,14 +33,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 import free.studio.tube.app.GoTubeApp;
 import free.studio.tube.businessobjects.SreentUtils;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeVideo;
 import free.studio.tube.gui.activities.ThumbnailViewerActivity;
 import free.studio.tube.businessobjects.db.Tasks.IsVideoBookmarkedTask;
 import free.studio.tube.gui.businessobjects.MainActivityListener;
-import free.rm.GoTube.gui.businessobjects.YouTubePlayer;
+import free.studio.tube.gui.businessobjects.YouTubePlayer;
 
 /**
  * A ViewHolder for the videos grid view.
@@ -177,6 +177,12 @@ class GridViewHolder extends RecyclerView.ViewHolder {
 			else
 				popupMenu.getMenu().findItem(R.id.download_video).setVisible(false);
 		}
+
+		if (!GoTubeApp.isSpecial()) {
+			popupMenu.getMenu().findItem(R.id.delete_download).setVisible(false);
+			popupMenu.getMenu().findItem(R.id.download_video).setVisible(false);
+		}
+
 		popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {

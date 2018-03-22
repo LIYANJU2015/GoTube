@@ -76,4 +76,7 @@
 	-->
 	<color name="feed_message_text">#FFF</color>
 
+	<color name="rating_btn_normal_color">#F44336</color>
+	<color name="rating_btn_press_color">#CCF44336</color>
+
 </resources>

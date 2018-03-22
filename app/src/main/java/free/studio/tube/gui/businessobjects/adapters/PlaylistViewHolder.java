@@ -28,7 +28,7 @@ import com.bumptech.glide.request.RequestOptions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubePlaylist;
 import free.studio.tube.gui.businessobjects.PlaylistClickListener;
 

@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package free.rm.GoTube.gui.businessobjects;
+package free.rm.gotube.gui.businessobjects;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -26,11 +26,11 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import free.rm.GoTube.R;
-import free.rm.GoTube.businessobjects.YouTube.POJOs.YouTubeAPIKey;
-import free.rm.GoTube.businessobjects.YouTube.POJOs.YouTubeVideo;
-import free.rm.GoTube.gui.activities.YouTubePlayerActivity;
-import free.rm.GoTube.gui.fragments.YouTubePlayerFragment;
+import free.rm.gotube.R;
+import free.rm.gotube.businessobjects.YouTube.POJOs.YouTubeAPIKey;
+import free.rm.gotube.businessobjects.YouTube.POJOs.YouTubeVideo;
+import free.rm.gotube.gui.activities.YouTubePlayerActivity;
+import free.rm.gotube.gui.fragments.YouTubePlayerFragment;
 
 /**
  * Launches YouTube player.

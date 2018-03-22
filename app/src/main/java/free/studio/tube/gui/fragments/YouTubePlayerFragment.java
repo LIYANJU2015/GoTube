@@ -34,7 +34,7 @@ import java.net.URLDecoder;
 import java.util.List;
 import java.util.Locale;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 import free.studio.tube.app.GoTubeApp;
 import free.studio.tube.businessobjects.AsyncTaskParallel;
 import free.studio.tube.businessobjects.YouTube.Tasks.GetVideoDescriptionTask;
@@ -395,25 +395,29 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 	 * Show the HUD (head-up display), i.e. the Action Bar and Media Controller.
 	 */
 	private void showHud() {
-		if (!isHudVisible()) {
-			getSupportActionBar().show();
-			getSupportActionBar().setTitle(youTubeVideo != null ? youTubeVideo.getTitle() : "");
-			mediaController.show(0);
+		try {
+			if (!isHudVisible()) {
+				getSupportActionBar().show();
+				getSupportActionBar().setTitle(youTubeVideo != null ? youTubeVideo.getTitle() : "");
+				mediaController.show(0);
 
-			videoDescriptionDrawer.close();
-			videoDescriptionDrawerIconView.setVisibility(View.INVISIBLE);
-			commentsDrawer.close();
-			commentsDrawerIconView.setVisibility(View.INVISIBLE);
+				videoDescriptionDrawer.close();
+				videoDescriptionDrawerIconView.setVisibility(View.INVISIBLE);
+				commentsDrawer.close();
+				commentsDrawerIconView.setVisibility(View.INVISIBLE);
 
-			// hide UI after a certain timeout (defined in HUD_VISIBILITY_TIMEOUT)
-			hideHudTimerHandler = new Handler();
-			hideHudTimerHandler.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					hideHud();
-					hideHudTimerHandler = null;
-				}
-			}, HUD_VISIBILITY_TIMEOUT);
+				// hide UI after a certain timeout (defined in HUD_VISIBILITY_TIMEOUT)
+				hideHudTimerHandler = new Handler();
+				hideHudTimerHandler.postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						hideHud();
+						hideHudTimerHandler = null;
+					}
+				}, HUD_VISIBILITY_TIMEOUT);
+			}
+		} catch (Throwable e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -463,6 +467,10 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 		if((youTubeVideo != null && !youTubeVideo.isDownloaded()) && (GoTubeApp.isConnectedToWiFi() || (GoTubeApp.isConnectedToMobile() && allowDownloadsOnMobile))) {
 			menu.findItem(R.id.download_video).setVisible(true);
 		} else {
+			menu.findItem(R.id.download_video).setVisible(false);
+		}
+
+		if (!GoTubeApp.isSpecial()) {
 			menu.findItem(R.id.download_video).setVisible(false);
 		}
 	}

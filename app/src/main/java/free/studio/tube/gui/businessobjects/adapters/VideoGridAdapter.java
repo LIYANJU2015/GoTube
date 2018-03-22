@@ -26,7 +26,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 import free.studio.tube.businessobjects.YouTube.GetYouTubeVideos;
 import free.studio.tube.businessobjects.YouTube.Tasks.GetYouTubeVideosTask;
 import free.studio.tube.businessobjects.VideoCategory;

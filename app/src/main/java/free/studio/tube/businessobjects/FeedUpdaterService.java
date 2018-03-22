@@ -12,7 +12,7 @@ import android.support.v4.app.NotificationCompat;
 import java.util.ArrayList;
 import java.util.List;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 import free.studio.tube.app.GoTubeApp;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeChannel;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeVideo;

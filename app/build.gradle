@@ -8,11 +8,11 @@ android {
         applicationId "free.rm.GoTube"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 12
+        versionCode 1
         // Third party devs:  pls be ethical and change the below keys
         buildConfigField 'String[]', 'YOUTUBE_API_KEYS',
                 '{' +
-                        '"AIzaSyBlD0IyrnYDVUklu-lEp5ZPmeUFaKEmz2I",' +
+                        '"AIzaSyBUgQUzZJTZrdW9LAY0-hr__UYnKoQRRNU",' +
                         '"AIzaSyCBe6h-D27WgcDkX9Wuyb3Fjef6tFja2Eg",' +
                         '"AIzaSyC2eifJuPidYxsq7NKvZGdTxngFrhbm0G0"'  +
                 '}'
@@ -55,11 +55,25 @@ configurations {
     }
 }
 
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
 
     nonFreeCompile files('libs/YouTubeAndroidPlayerApi.jar')
+
+    compile(name: 'admodule-release', ext: 'aar')
+    compile(name: 'rating-release', ext: 'aar')
+
+    compile 'com.tencent.bugly:crashreport:2.6.6.1'
+    compile 'com.facebook.android:audience-network-sdk:4.27.1'
+    compile 'com.facebook.android:facebook-android-sdk:4.31.0'
+    compile 'com.google.android.gms:play-services-ads:11.8.0'
 
     compile group: 'org.ocpsoft.prettytime', name: 'prettytime', version: '4.0.1.Final'
     compile 'com.google.http-client:google-http-client-android:1.23.0'

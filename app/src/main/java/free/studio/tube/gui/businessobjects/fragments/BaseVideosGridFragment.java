@@ -25,7 +25,7 @@ import android.view.View;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 import free.studio.tube.gui.businessobjects.adapters.VideoGridAdapter;
 import free.studio.tube.gui.fragments.VideosGridFragment;
 

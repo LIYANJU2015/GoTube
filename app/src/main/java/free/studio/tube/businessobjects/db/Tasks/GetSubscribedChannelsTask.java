@@ -23,7 +23,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 import free.studio.tube.businessobjects.AsyncTaskParallel;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeChannel;
 import free.studio.tube.businessobjects.db.SubscriptionsDb;

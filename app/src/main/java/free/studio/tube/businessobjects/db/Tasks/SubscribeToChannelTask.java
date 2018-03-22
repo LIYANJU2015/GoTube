@@ -19,7 +19,7 @@ package free.studio.tube.businessobjects.db.Tasks;
 
 import android.widget.Toast;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 import free.studio.tube.app.GoTubeApp;
 import free.studio.tube.businessobjects.AsyncTaskParallel;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeChannel;

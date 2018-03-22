@@ -33,7 +33,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 import free.studio.tube.businessobjects.AsyncTaskParallel;
 
 /**

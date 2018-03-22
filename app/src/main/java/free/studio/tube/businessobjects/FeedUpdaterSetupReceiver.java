@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 import free.studio.tube.app.GoTubeApp;
 
 /**

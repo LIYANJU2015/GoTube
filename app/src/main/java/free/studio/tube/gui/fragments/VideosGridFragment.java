@@ -28,9 +28,8 @@ import android.widget.GridView;
 
 import com.bumptech.glide.Glide;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 import free.studio.tube.businessobjects.VideoCategory;
-import free.studio.tube.gui.businessobjects.LoadingProgressBar;
 import free.studio.tube.gui.businessobjects.MainActivityListener;
 import free.studio.tube.gui.businessobjects.adapters.VideoGridAdapter;
 import free.studio.tube.gui.businessobjects.fragments.BaseVideosGridFragment;

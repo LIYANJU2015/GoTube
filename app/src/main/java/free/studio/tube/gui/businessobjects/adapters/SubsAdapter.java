@@ -32,7 +32,7 @@ import com.bumptech.glide.request.RequestOptions;
 import java.util.Iterator;
 import java.util.List;
 
-import free.rm.GoTube.R;
+import free.rm.gotube.R;
 import free.studio.tube.businessobjects.Logger;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeChannel;
 import free.studio.tube.businessobjects.db.Tasks.GetSubscribedChannelsTask;
