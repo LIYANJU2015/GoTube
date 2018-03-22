@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	xmlns:custom="http://schemas.android.com/tools"
+	android:fitsSystemWindows="true">
+
+	<android.support.design.widget.AppBarLayout
+		android:background="@color/light_contrast_background_color"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<FrameLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:layout_scrollFlags="scroll|enterAlways">
+
+
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+
+				<!-- TOOLBAR / ACTIONBAR -->
+				<android.support.v7.widget.Toolbar
+					android:id="@+id/toolbar"
+					android:background="@color/colorPrimary"
+					android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+					app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+					android:layout_width="match_parent"
+					android:layout_height="?attr/actionBarSize"
+					android:elevation="4dp"
+					/>
+
+				<RelativeLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content">
+
+					<!-- PLAYLIST THUMBNAIL -->
+
+					<!-- BANNER IMAGE -->
+					<ImageView
+						android:id="@+id/playlist_banner_image_view"
+						android:layout_width="match_parent"
+						android:layout_height="70dp"
+						android:layout_alignParentTop="true"
+						android:adjustViewBounds="true"
+						android:scaleType="centerCrop"
+						android:src="@drawable/channel_banner"
+						custom:defaultImage="@drawable/banner_default"/>
+
+					<de.hdodenhof.circleimageview.CircleImageView
+						android:elevation="6dp"
+						android:layout_marginTop="20dp"
+						android:layout_marginBottom="16dp"
+						android:layout_alignTop="@id/playlist_banner_image_view"
+						android:id="@+id/playlist_thumbnail_image_view"
+						android:layout_width="70dp"
+						android:layout_height="70dp"
+						android:layout_marginLeft="8dp"
+						android:layout_marginStart="8dp"
+						app:civ_border_width="2dp"
+						app:civ_border_color="@color/white"
+						android:src="@drawable/buddy"/>
+
+					<!-- PLAYLIST TITLE -->
+					<TextView
+						android:layout_marginTop="4dp"
+						android:id="@+id/playlist_title_text_view"
+						android:layout_below="@id/playlist_banner_image_view"
+						android:layout_toRightOf="@+id/playlist_thumbnail_image_view"
+						android:layout_centerVertical="true"
+						android:gravity="center_vertical"
+						android:drawableLeft="@drawable/ic_playlists"
+						android:textColor="@color/color_7f7f7f"
+						android:text="Playlist Title"
+						style="@style/PlaylistTitleTextView"/>
+
+				</RelativeLayout>
+
+			</LinearLayout>
+		</FrameLayout>
+	</android.support.design.widget.AppBarLayout>
+
+
+	<include
+		layout="@layout/videos_gridview"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+</android.support.design.widget.CoordinatorLayout>

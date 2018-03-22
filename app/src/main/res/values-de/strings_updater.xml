@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="update_available">Aktualisierung verfügbar</string>
+	<string name="update_dialog_msg">Eine neue GoTube Aktualisierung ist verfügbar. Die App wird auf Version %s aktualisiert.</string>
+	<string name="up_to_date">Aktuell</string>
+	<string name="up_to_date_msg">Du hast bereits die neuste Version von GoTube installiert.</string>
+	<string name="update">Aktualisieren</string>
+	<string name="later">Später</string>
+	<string name="update_failure">Die App konnte nicht aktualisiert werden.</string>
+	<string name="downloading">Herunterladen…</string>
+</resources>

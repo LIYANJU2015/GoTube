@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:showIn="@layout/activity_main">
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <!-- Scrolling content -->
+
+        <!-- FRAGMENTS will be placed here ... -->
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light_contrast_background_color"
+        >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|enterAlways">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- TOOLBAR / ACTIONBAR -->
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:elevation="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/colorPrimary"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!-- BANNER IMAGE -->
+                    <ImageView
+                        android:id="@+id/channel_banner_image_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/channel_banner" />
+
+                    <!-- CHANNEL THUMBNAIL -->
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:elevation="6dp"
+                        android:layout_marginTop="50dp"
+                        android:layout_alignTop="@id/channel_banner_image_view"
+                        android:id="@+id/channel_thumbnail_image_view"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        app:civ_border_width="2dp"
+                        app:civ_border_color="@color/white"
+                        android:src="@drawable/buddy" />
+
+                    <!-- NUMBER OF SUBSCRIBERS -->
+                    <TextView
+                        android:layout_below="@id/channel_banner_image_view"
+                        android:id="@+id/channel_subs_text_view"
+                        style="@style/ChannelSubsTextView"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/color_7f7f7f"
+                        android:layout_toRightOf="@+id/channel_thumbnail_image_view"
+                        android:padding="10dp"
+                        android:text="@string/loading" />
+
+                    <!-- SUBSCRIBE BUTTON -->
+                    <free.studio.tube.gui.businessobjects.SubscribeButton
+                        android:layout_below="@id/channel_banner_image_view"
+                        android:id="@+id/channel_subscribe_button"
+                        style="@style/SubscribeButton"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:padding="8dp"
+                        android:elevation="6dp"
+                        android:layout_margin="16dp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+        </FrameLayout>
+
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            app:tabIndicatorColor="@android:color/transparent"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/colorPrimary"
+            app:tabTextColor="@color/color_7f7f7f" />
+
+        <View
+            android:id="@+id/channel_toolbar_shadow"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/toolbar_shadow_light"
+            android:visibility="gone" />
+
+    </android.support.design.widget.AppBarLayout>
+
+</android.support.design.widget.CoordinatorLayout>

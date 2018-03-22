@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="preferences">Einstellungen</string>
+
+	<string name="pref_languages_category">Sprachen &amp; Regionen</string>
+	<string name="pref_title_preferred_regions">Bevorzugte Region</string>
+	<string name="pref_summary_preferred_regions">
+		Wähle eine bevorzugte Region. Dies wird zum Filtern von Videos in der
+		Kategorie \"Empfohlen\" verwendet.
+	</string>
+
+	<string name="pref_title_preferred_languages">Bevorzugte Sprache(n)</string>
+	<string name="pref_summary_preferred_languages">
+		Experimentell: Wähle eine oder mehrere bevorzugte Sprachen. Dies wird zum
+		Filtern von Videos in der Kategorie \"Beliebt\" und für Videosuchen verwendet.
+	</string>
+
+	<string name="pref_video_player_category">Video Player</string>
+	<string name="pref_title_preferred_res">Bevorzugte Auflösung</string>
+	<string name="pref_summary_preferred_res">Wähle deine bevorzugte Auflösung</string>
+	<string name="pref_title_use_offical_player">Offiziellen YouTube Player verwenden</string>
+	<string name="pref_summary_use_offical_player">Nicht empfohlen</string>
+
+	<string name="pref_backup_category">Sicherungen</string>
+	<string name="pref_title_backup_dbs">Datenbanken sichern</string>
+	<string name="pref_summary_backup_dbs">Sichere deine Abo- und Lesezeichen-Datenbanken.</string>
+	<string name="pref_title_import_dbs">Sicherung importieren</string>
+	<string name="pref_summary_import_dbs">Importiere deine Abo- und Lesezeichen-Datenbanken.</string>
+	<string name="databases_backing_up">Sichere…</string>
+	<string name="databases_backup_success">Datenbanken gesichert nach %s</string>
+	<string name="databases_backup_fail">Fehler beim Sichern der Datenbanken.</string>
+	<string name="databases_import_select_backup">Sicherung zum Importieren auswählen</string>
+	<string name="databases_import_nothing_selected">Es wurde nichts ausgewählt…</string>
+	<string name="databases_import_warning_message">Die Abo- und Lesezeichen-Datenbanken werden mit denen aus der ausgewählten Sicherung ERSETZT.\n\Fortfahren?</string>
+	<string name="continue_">Fortfahren</string>
+	<string name="databases_importing">Importiere…</string>
+	<string name="databases_import_fail">Fehler beim Importieren der Datenbanken.</string>
+	<string name="databases_import_success">Die Datenbanken wurden erfolgreich importiert.  Starte die App neu um die Änderungen anzuwenden.</string>
+
+	<string name="pref_title_import_subs">Abos von YouTube importieren</string>
+	<string name="pref_summary_import_subs">Importiere deine Abos aus deinem YouTube Account.</string>
+	<string name="subs_import_select_backup">YouTube XML Datei zum Importieren auswählen</string>
+
+	<string name="pref_about_category">Über</string>
+	<string name="pref_title_website">Webseite</string>
+	<string name="pref_title_credits">Credits</string>
+	<string name="pref_summary_credits">Menschen und Projekte die diese App möglich gemacht haben.</string>
+	<string name="pref_title_version">Version</string>
+	<string name="pref_title_updates">Aktualisierungen</string>
+	<string name="pref_summary_updates">Nach Aktualisierungen suchen.</string>
+	<string name="pref_title_license">Lizenz</string>
+	<string name="pref_summary_license">GNU General Public License Version 3</string>
+	<string name="app_license">
+		Copyright &#169; 2015-2018  Ramon Mifsud\n
+
+		\nDieses Programm ist freie Software. Sie können es unter den Bedingungen der GNU General Public License,
+		wie von der Free Software Foundation veröffentlicht (Version 3 der Lizenz), weitergeben und/oder modifizieren.\n
+
+		\nDie Veröffentlichung dieses Programms erfolgt in der Hoffnung, daß es Ihnen von Nutzen sein wird,
+		aber OHNE IRGENDEINE GARANTIE, sogar ohne die implizite Garantie der MARKTREIFE oder der
+		VERWENDBARKEIT FÜR EINEN BESTIMMTEN ZWECK. Details finden Sie in der GNU General Public License.\n
+
+		\nSie sollten ein Exemplar der GNU General Public License zusammen mit diesem Programm erhalten haben.
+		Falls nicht, siehe &lt;http://www.gnu.org/licenses/&gt;.
+	</string>
+	<string name="i_agree">Zustimmen</string>
+
+	<string name="pref_other_category">Andere</string>
+	<string name="pref_title_default_tab">Standard Tab</string>
+	<string name="pref_summary_default_tab">Standard Tab welcher beim GoTube-Start angezeigt wird: %s</string>
+
+	<string name="pref_title_screen_orientation">Bildschirmausrichtung</string>
+	<string name="pref_summary_screen_orientation">Drehung des Videos</string>
+	<string name="pref_screen_landscape">Querformat</string>
+	<string name="pref_screen_portrait">Hochformat</string>
+	<string name="pref_screen_auto">Automatisch</string>
+	<string name="pref_screen_sensor">Gerätesensor</string>
+
+	<string name="pref_title_youtube_api_key">YouTube API Key</string>
+	<string name="pref_summary_youtube_api_key">Gib deinen eigenen YouTube API Key ein.  Leer lassen um den Standard API Key zu verwenden.</string>
+	<string name="pref_youtube_api_key_error">Beim Versuch, den eingegebenen API Key zu validieren, ist ein Fehler aufgetreten.</string>
+	<string name="pref_youtube_api_key_custom">Der Key is gültig.  Starte die App neu um den neuen YouTube API Key zu verwenden.</string>
+	<string name="pref_youtube_api_key_default">Starte die App neu um zum Standard YouTube API Key zurück zu wechseln.</string>
+	<string name="restart">Neustarten</string>
+
+	<string name="pref_title_feed_notification">Feed Auto Notification</string>
+	<string name="pref_summary_feed_notification">How often to check for new videos from subscribed channels: %s</string>
+	<string-array name="feed_notification">
+		<item>Off</item>
+		<item>6 Hours</item>
+		<item>12 Hours</item>
+		<item>24 Hours</item>
+	</string-array>
+
+	<string name="pref_title_disable_immersive_mode">Disable Immersive Mode</string>
+	<string name="pref_summary_disable_immersive_mode">Comments and video description icons and the navigation bar shall always be displayed</string>
+
+	<string name="pref_title_allow_mobile_downloads">Allow downloads on mobile networks</string>
+	<string name="pref_summary_allow_mobile_downloads">Select this to enable downloading videos on mobile networks. Otherwise, videos can only be downloaded on Wi-Fi.</string>
+</resources>
