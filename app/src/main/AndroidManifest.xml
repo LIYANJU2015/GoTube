@@ -41,6 +41,8 @@
 
 		<activity
 			android:name="free.studio.tube.gui.activities.MainActivity"
+			android:launchMode="singleTask"
+			android:screenOrientation="portrait"
 			android:theme="@style/NoActionBarActivityTheme">
 
 		</activity>
@@ -59,6 +61,7 @@
 		<activity
 			android:name="free.studio.tube.gui.activities.YouTubePlayerActivity"
 			android:configChanges="orientation|keyboardHidden|screenSize"
+			android:hardwareAccelerated="true"
 			android:theme="@style/VideoPlayerActivityTheme">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>

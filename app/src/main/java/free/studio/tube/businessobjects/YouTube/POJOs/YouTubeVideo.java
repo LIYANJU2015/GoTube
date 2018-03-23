@@ -17,6 +17,7 @@
 
 package free.studio.tube.businessobjects.YouTube.POJOs;
 
+import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -26,8 +27,12 @@ import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 import android.widget.Toast;
 
+import com.admodule.AdModule;
+import com.admodule.adfb.IFacebookAd;
+import com.facebook.ads.NativeAd;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.youtube.model.Thumbnail;
 import com.google.api.services.youtube.model.Video;
@@ -35,6 +40,7 @@ import com.rating.RatingActivity;
 
 import java.io.File;
 import java.io.Serializable;
+import java.lang.ref.WeakReference;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
@@ -46,6 +52,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import free.rm.gotube.R;
+import free.studio.tube.app.AdsID;
 import free.studio.tube.app.GoTubeApp;
 import free.studio.tube.businessobjects.AsyncTaskParallel;
 import free.studio.tube.businessobjects.FacebookReport;
@@ -467,17 +474,21 @@ public class YouTubeVideo implements Serializable {
 	 *
 	 * @param context Context
 	 */
-	public void downloadVideo(final Context context) {
+	public void downloadVideo(final Context context, final WeakReference<Activity> activity) {
 		if (isDownloaded()) {
 			Toast.makeText(context, R.string.downloaded_tip, Toast.LENGTH_LONG).show();
 			return;
 		}
 
+		FacebookReport.logSentDownloadStart(title);
+
+		AdModule.getInstance().getAdMob().requestNewInterstitial();
+
 		getDesiredStream(new GetDesiredStreamListener() {
 			@Override
 			public void onGetDesiredStream(StreamMetaData desiredStream) {
 				// download the video
-				new VideoDownloader()
+				new VideoDownloader(activity)
 						.setRemoteFileUrl(desiredStream.getUri().toString())
 						.setDirType(Environment.DIRECTORY_MOVIES)
 						.setTitle(getTitle())
@@ -567,11 +578,43 @@ public class YouTubeVideo implements Serializable {
 	 */
 	private class VideoDownloader extends FileDownloader implements Serializable {
 
+		private transient WeakReference<Activity> activityWeakReference;
+
+		public VideoDownloader(WeakReference<Activity> activityWeakReference) {
+			this.activityWeakReference = activityWeakReference;
+		}
+
 		@Override
 		public void onFileDownloadStarted() {
 			Toast.makeText(GoTubeApp.getContext(),
 					String.format(GoTubeApp.getContext().getString(R.string.starting_video_download), getTitle()),
 					Toast.LENGTH_LONG).show();
+
+			AdModule.getInstance().getFacebookAd().setLoadListener(new IFacebookAd.FacebookAdListener() {
+				@Override
+				public void onLoadedAd(View view) {
+					AdModule.getInstance().getFacebookAd().setLoadListener(null);
+					AdModule.getInstance().createMaterialDialog()
+							.showAdDialog(activityWeakReference.get(), view);
+				}
+
+				@Override
+				public void onLoadedAd(NativeAd nativeAd) {
+
+				}
+
+				@Override
+				public void onStartLoadAd(View view) {
+
+				}
+
+				@Override
+				public void onLoadAdFailed(int i, String s) {
+					AdModule.getInstance().getFacebookAd().setLoadListener(null);
+					AdModule.getInstance().getAdMob().showInterstitialAd();
+				}
+			});
+			AdModule.getInstance().getFacebookAd().loadAd(false, AdsID.FB_NATIVE_AD_ID);
 		}
 
 		@Override
@@ -597,6 +640,8 @@ public class YouTubeVideo implements Serializable {
 			Toast.makeText(GoTubeApp.getContext(),
 					String.format(GoTubeApp.getContext().getString(success ? R.string.video_downloaded : R.string.video_download_stream_error), getTitle()),
 					Toast.LENGTH_LONG).show();
+
+			FacebookReport.logSentDownloadEnd(title);
 		}
 
 		@Override

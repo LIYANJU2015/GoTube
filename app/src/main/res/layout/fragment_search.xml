@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:orientation="vertical">
     <!-- TOOLBAR / ACTIONBAR -->
     <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-                                       android:id="@+id/toolbar"
-                                       android:layout_width="match_parent"
-                                       android:layout_height="wrap_content"
-                                       android:minHeight="?attr/actionBarSize"
-                                       android:background="@color/colorPrimary"
-                                       android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
-    <include
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        layout="@layout/videos_gridview"/>
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <View
+        android:visibility="gone"
+        android:id="@+id/search_toolbar_shadow"
+        android:background="@drawable/toolbar_shadow_light"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"/>
+
+    <include
+        layout="@layout/videos_gridview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

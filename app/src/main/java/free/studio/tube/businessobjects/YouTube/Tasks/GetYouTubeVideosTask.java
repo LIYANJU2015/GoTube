@@ -65,7 +65,10 @@ public class GetYouTubeVideosTask extends AsyncTaskParallel<Void, Void, List<You
 		this.videoGridAdapter = videoGridAdapter;
 		this.progressBar = progressBar;
 		this.refreshCallBack = refreshCallBack;
+		sIsLoadMore = true;
 	}
+
+	public static boolean sIsLoadMore = false;
 
 	/**
 	 * Constructor to get youtube videos as part of a swipe to refresh. Since this functionality has its own progress bar, we'll
@@ -119,6 +122,11 @@ public class GetYouTubeVideosTask extends AsyncTaskParallel<Void, Void, List<You
 		return videosList;
 	}
 
+	@Override
+	protected void onCancelled(List<YouTubeVideo> youTubeVideos) {
+		super.onCancelled(youTubeVideos);
+		sIsLoadMore = false;
+	}
 
 	@Override
 	protected void onPostExecute(List<YouTubeVideo> videosList) {
@@ -129,9 +137,11 @@ public class GetYouTubeVideosTask extends AsyncTaskParallel<Void, Void, List<You
 			refreshCallBack.onRefreshEnd();
 		}
 
-		if(onFinished != null) {
+		if (onFinished != null) {
 			onFinished.run();
 		}
+
+		sIsLoadMore = false;
 	}
 
 

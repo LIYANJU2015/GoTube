@@ -26,6 +26,8 @@ import android.view.View;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import free.rm.gotube.R;
+import free.studio.tube.businessobjects.Logger;
+import free.studio.tube.businessobjects.YouTube.Tasks.GetYouTubeVideosTask;
 import free.studio.tube.gui.businessobjects.adapters.VideoGridAdapter;
 import free.studio.tube.gui.fragments.VideosGridFragment;
 
@@ -49,10 +51,16 @@ public abstract class BaseVideosGridFragment extends TabFragment implements Swip
 
 	@Override
 	public void onRefresh() {
+		if (GetYouTubeVideosTask.sIsLoadMore) {
+			Logger.e("onRefresh", "loading more no finish....");
+			return;
+		}
 		videoGridAdapter.refresh(new Runnable() {
 			@Override
 			public void run() {
-				swipeRefreshLayout.setRefreshing(false);
+				if (swipeRefreshLayout != null) {
+					swipeRefreshLayout.setRefreshing(false);
+				}
 			}
 		});
 	}

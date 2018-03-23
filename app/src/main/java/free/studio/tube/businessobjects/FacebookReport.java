@@ -12,6 +12,40 @@ import free.studio.tube.app.GoTubeApp;
 
 public class FacebookReport {
 
+    public static void logSentDownloadPlay() {
+        AppEventsLogger logger = AppEventsLogger.newLogger(GoTubeApp.getContext());
+        logger.logEvent("SentDownloadPlay");
+    }
+
+    public static void logSentDownloadStart(String title) {
+        AppEventsLogger logger = AppEventsLogger.newLogger(GoTubeApp.getContext());
+        Bundle bundle = new Bundle();
+        bundle.putString("download", "title " + title);
+        logger.logEvent("StartDownload",bundle);
+    }
+
+    public static void logSentChannelBrowser() {
+        AppEventsLogger logger = AppEventsLogger.newLogger(GoTubeApp.getContext());
+        logger.logEvent("ChannelBrowser Enter Into");
+    }
+
+    public static void logSentDownloadEnd(String title) {
+        AppEventsLogger logger = AppEventsLogger.newLogger(GoTubeApp.getContext());
+        Bundle bundle = new Bundle();
+        bundle.putString("download", "title " + title);
+        logger.logEvent("EndDownload",bundle);
+    }
+
+    public static void logSentVideoPlayStart() {
+        AppEventsLogger logger = AppEventsLogger.newLogger(GoTubeApp.getContext());
+        logger.logEvent("SentVideoPlay Start");
+    }
+
+    public static void logSentVideoPlay() {
+        AppEventsLogger logger = AppEventsLogger.newLogger(GoTubeApp.getContext());
+        logger.logEvent("SentVideoPlay Enter Into");
+    }
+
     public static void logSentReferrer2(String from) {
         AppEventsLogger logger = AppEventsLogger.newLogger(GoTubeApp.getContext());
         Bundle bundle = new Bundle();

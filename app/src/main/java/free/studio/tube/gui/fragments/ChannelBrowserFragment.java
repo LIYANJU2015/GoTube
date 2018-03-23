@@ -40,6 +40,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import free.rm.gotube.R;
+import free.studio.tube.businessobjects.FacebookReport;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeChannel;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeVideo;
 import free.studio.tube.businessobjects.YouTube.Tasks.GetYouTubeChannelInfoTask;
@@ -178,6 +179,9 @@ public class ChannelBrowserFragment extends FragmentEx {
 		} else {
 			initViews();
 		}
+
+		FacebookReport.logSentChannelBrowser();
+
 		return fragment;
 	}
 

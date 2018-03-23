@@ -17,6 +17,7 @@
 
 package free.studio.tube.gui.businessobjects.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -32,6 +33,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+
+import java.lang.ref.WeakReference;
 
 import free.rm.gotube.R;
 import free.studio.tube.app.GoTubeApp;
@@ -87,7 +90,7 @@ class GridViewHolder extends RecyclerView.ViewHolder {
 			@Override
 			public void onClick(View thumbnailView) {
 				if (youTubeVideo != null) {
-					YouTubePlayer.launch(youTubeVideo, context);
+					YouTubePlayer.launch(youTubeVideo, (Activity) thumbnailImageView.getContext());
 				}
 			}
 		});
@@ -212,7 +215,7 @@ class GridViewHolder extends RecyclerView.ViewHolder {
 						youTubeVideo.removeDownload();
 						return true;
 					case R.id.download_video:
-						youTubeVideo.downloadVideo(context);
+						youTubeVideo.downloadVideo(context, new WeakReference<>((Activity)view.getContext()));
 						return true;
 				}
 				return false;

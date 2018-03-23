@@ -26,10 +26,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
+import com.admodule.AdModule;
 import com.bumptech.glide.Glide;
 
 import free.rm.gotube.R;
+import free.studio.tube.app.AdsID;
 import free.studio.tube.businessobjects.VideoCategory;
+import free.studio.tube.gui.businessobjects.AdViewWrapperAdapter;
 import free.studio.tube.gui.businessobjects.MainActivityListener;
 import free.studio.tube.gui.businessobjects.adapters.VideoGridAdapter;
 import free.studio.tube.gui.businessobjects.fragments.BaseVideosGridFragment;
@@ -70,9 +73,12 @@ public abstract class VideosGridFragment extends BaseVideosGridFragment {
 
 		videoGridAdapter.setListener((MainActivityListener)getActivity());
 
+		AdViewWrapperAdapter adViewWrapperAdapter = new AdViewWrapperAdapter(videoGridAdapter);
+		videoGridAdapter.setAdViewWrapperAdapter(adViewWrapperAdapter);
+
 		gridView.setHasFixedSize(true);
 		gridView.setLayoutManager(new GridLayoutManager(getActivity(), getResources().getInteger(R.integer.video_grid_num_columns)));
-		gridView.setAdapter(videoGridAdapter);
+		gridView.setAdapter(adViewWrapperAdapter);
 
 		return view;
 	}
@@ -98,7 +104,33 @@ public abstract class VideosGridFragment extends BaseVideosGridFragment {
 				}
 			});
 			videoGridAdapter.setVideoCategory(getVideoCategory(), getSearchString());
+			videoGridAdapter.initAdMobBanner();
 		}
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (videoGridAdapter != null) {
+			videoGridAdapter.resumeBanner();
+		}
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		if (videoGridAdapter != null) {
+			videoGridAdapter.pauseBanner();
+		}
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		if (videoGridAdapter != null) {
+			videoGridAdapter.destroyBanner();
+		}
+		AdModule.getInstance().getFacebookAd().loadAd(false, AdsID.FB_NATIVE_AD_ID);
 	}
 
 	@Override

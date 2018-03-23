@@ -1,5 +1,7 @@
 package free.studio.tube.gui.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,6 +32,7 @@ import com.bumptech.glide.request.RequestOptions;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.ref.WeakReference;
 import java.net.URLDecoder;
 import java.util.List;
 import java.util.Locale;
@@ -37,6 +40,7 @@ import java.util.Locale;
 import free.rm.gotube.R;
 import free.studio.tube.app.GoTubeApp;
 import free.studio.tube.businessobjects.AsyncTaskParallel;
+import free.studio.tube.businessobjects.FacebookReport;
 import free.studio.tube.businessobjects.YouTube.Tasks.GetVideoDescriptionTask;
 import free.studio.tube.businessobjects.YouTube.GetVideosDetailsByIDs;
 import free.studio.tube.businessobjects.YouTube.Tasks.GetYouTubeChannelInfoTask;
@@ -153,6 +157,12 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 		return view;
 	}
 
+	private Activity activity;
+	@Override
+	public void onAttach(Context context) {
+		super.onAttach(context);
+		activity = getActivity();
+	}
 
 	/**
 	 * Initialise the views.
@@ -327,6 +337,8 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 		loadingVideoView.setVisibility(View.GONE);
 		videoView.seekTo(videoCurrentPosition);
 
+		FacebookReport.logSentVideoPlayStart();
+
 		// was the video player tutorial displayed before?
 		if (wasTutorialDisplayedBefore()) {
 			videoView.start();
@@ -470,6 +482,10 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 			menu.findItem(R.id.download_video).setVisible(false);
 		}
 
+		if (youTubeVideo.isDownloaded()) {
+			FacebookReport.logSentDownloadPlay();
+		}
+
 		if (!GoTubeApp.isSpecial()) {
 			menu.findItem(R.id.download_video).setVisible(false);
 		}
@@ -525,7 +541,7 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 				return true;
 
 			case R.id.download_video:
-				youTubeVideo.downloadVideo(getContext());
+				youTubeVideo.downloadVideo(getContext(), new WeakReference<>(activity));
 				return true;
 
 			default:

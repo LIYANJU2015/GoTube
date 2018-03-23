@@ -44,12 +44,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import free.rm.gotube.R;
 import free.studio.tube.app.AdsID;
-import free.studio.tube.gui.businessobjects.YouTubePlayer;
 import free.studio.tube.app.GoTubeApp;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeChannel;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubePlaylist;
 import free.studio.tube.businessobjects.db.DownloadedVideosDb;
 import free.studio.tube.gui.businessobjects.MainActivityListener;
+import free.studio.tube.gui.businessobjects.YouTubePlayer;
 import free.studio.tube.gui.fragments.ChannelBrowserFragment;
 import free.studio.tube.gui.fragments.MainFragment;
 import free.studio.tube.gui.fragments.PlaylistVideosFragment;
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 		PermissionGen.with(this)
 				.addRequestCode(100)
 				.permissions(
-						Manifest.permission.ACCESS_WIFI_STATE,
+						Manifest.permission.WRITE_EXTERNAL_STORAGE,
 						Manifest.permission.ACCESS_COARSE_LOCATION,
 						Manifest.permission.ACCESS_FINE_LOCATION,
 						Manifest.permission.READ_PHONE_STATE)
@@ -182,6 +182,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 					@Override
 					public void onLoadAdFailed(int i, String s) {
 						AdModule.getInstance().getFacebookAd().setLoadListener(null);
+						AdModule.getInstance().getAdMob().showInterstitialAd();
 					}
 				});
 				AdModule.getInstance().getFacebookAd().loadAd(false, AdsID.FB_NATIVE_AD_ID);

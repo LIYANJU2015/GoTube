@@ -17,10 +17,12 @@
 
 package free.studio.tube.gui.businessobjects;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
+import free.rm.gotube.R;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeVideo;
 import free.studio.tube.gui.activities.YouTubePlayerActivity;
 import free.studio.tube.gui.fragments.YouTubePlayerFragment;
@@ -43,6 +45,13 @@ public class YouTubePlayer {
 		context.startActivity(i);
 	}
 
+	public static void launch(YouTubeVideo youTubeVideo, Activity activity) {
+		Intent i = new Intent(activity, YouTubePlayerActivity.class);
+		i.putExtra(YouTubePlayerFragment.YOUTUBE_VIDEO_OBJ, youTubeVideo);
+		activity.startActivity(i);
+		activity.overridePendingTransition(R.anim.slide_bottom_in, 0);
+	}
+
 
 	/**
 	 * Launches the custom-made YouTube player so that the user can view the selected video.
@@ -54,6 +63,14 @@ public class YouTubePlayer {
 		i.setAction(Intent.ACTION_VIEW);
 		i.setData(Uri.parse(videoUrl));
 		context.startActivity(i);
+	}
+
+	public static void launch(String videoUrl, Activity activity) {
+		Intent i = new Intent(activity, YouTubePlayerActivity.class);
+		i.setAction(Intent.ACTION_VIEW);
+		i.setData(Uri.parse(videoUrl));
+		activity.startActivity(i);
+		activity.overridePendingTransition(R.anim.slide_bottom_in, 0);
 	}
 
 }

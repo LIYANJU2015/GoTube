@@ -17,6 +17,7 @@
 
 package free.studio.tube.gui.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -71,6 +72,10 @@ public class SearchVideoGridFragment extends VideosGridFragment {
 		// the app will call onCreateOptionsMenu() for when the user wants to search
 		setHasOptionsMenu(true);
 
+		View shadowView = view.findViewById(R.id.search_toolbar_shadow);
+		if (Build.VERSION.SDK_INT < 21) {
+			shadowView.setVisibility(View.VISIBLE);
+		}
 		return view;
 	}
 

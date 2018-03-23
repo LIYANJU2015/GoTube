@@ -20,9 +20,17 @@ package free.studio.tube.gui.activities;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.View;
+
+import com.admodule.AdModule;
+import com.admodule.adfb.IFacebookAd;
+import com.facebook.ads.Ad;
+import com.facebook.ads.NativeAd;
 
 import free.rm.gotube.R;
+import free.studio.tube.app.AdsID;
 import free.studio.tube.app.GoTubeApp;
+import free.studio.tube.businessobjects.FacebookReport;
 import free.studio.tube.gui.businessobjects.BackButtonActivity;
 import free.studio.tube.gui.fragments.YouTubePlayerFragment;
 
@@ -36,6 +44,49 @@ public class YouTubePlayerActivity extends BackButtonActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_video_player);
+
+		FacebookReport.logSentVideoPlay();
+
+		AdModule.getInstance().getAdMob().requestNewInterstitial();
+		AdModule.getInstance().getFacebookAd().interstitialLoad(AdsID.FB_INTERSTITIAL_AD_ID, new IFacebookAd.FBInterstitialAdListener(){
+			@Override
+			public void onInterstitialDismissed(Ad ad) {
+				super.onInterstitialDismissed(ad);
+				try {
+					AdModule.getInstance().getFacebookAd().destoryInterstitial();
+				} catch (Throwable e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	@Override
+	public void finish() {
+		super.finish();
+		overridePendingTransition(0, R.anim.slide_bottom_out);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		AdModule.getInstance().getFacebookAd().loadAd(false, AdsID.FB_NATIVE_AD_ID);
+		try {
+			if (AdModule.getInstance().getFacebookAd().isInterstitialLoaded()) {
+				try {
+					AdModule.getInstance().getFacebookAd().showInterstitial();
+				} catch (Throwable e) {
+					e.printStackTrace();
+					AdModule.getInstance().getFacebookAd().destoryInterstitial();
+					AdModule.getInstance().getAdMob().showInterstitialAd();
+				}
+			} else {
+				AdModule.getInstance().getFacebookAd().destoryInterstitial();
+				AdModule.getInstance().getAdMob().showInterstitialAd();
+			}
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
