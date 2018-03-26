@@ -1,9 +1,11 @@
 package free.studio.tube.gui.fragments;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -154,14 +156,53 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 
 		}
 
+		registerScreen();
+
 		return view;
 	}
 
-	private Activity activity;
+	private BroadcastReceiver screenReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if (intent == null) {
+				return;
+			}
+			if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) { // 锁屏
+				try {
+					if (videoView != null && videoView.isPlaying()) {
+						videoView.pause();
+					}
+				} catch (Throwable e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	};
+
+	private void registerScreen() {
+		try {
+			IntentFilter filter = new IntentFilter();
+			filter.addAction(Intent.ACTION_SCREEN_ON);
+			filter.addAction(Intent.ACTION_SCREEN_OFF);
+			filter.addAction(Intent.ACTION_USER_PRESENT);
+			getActivity().registerReceiver(screenReceiver, filter);
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+	}
+
 	@Override
-	public void onAttach(Context context) {
-		super.onAttach(context);
-		activity = getActivity();
+	public void onDestroyView() {
+		super.onDestroyView();
+		unregisterScreen();
+	}
+
+	private void unregisterScreen() {
+		try {
+			getActivity().unregisterReceiver(screenReceiver);
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -474,6 +515,9 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 
 	@Override
 	public void onPrepareOptionsMenu(Menu menu) {
+		if (youTubeVideo == null) {
+			return;
+		}
 		// Hide the download video option if mobile downloads are not allowed and the device is connected through mobile, and the video isn't already downloaded
 		boolean allowDownloadsOnMobile = GoTubeApp.getPreferenceManager().getBoolean(GoTubeApp.getStr(R.string.pref_key_allow_mobile_downloads), false);
 		if((youTubeVideo != null && !youTubeVideo.isDownloaded()) && (GoTubeApp.isConnectedToWiFi() || (GoTubeApp.isConnectedToMobile() && allowDownloadsOnMobile))) {
@@ -541,7 +585,7 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 				return true;
 
 			case R.id.download_video:
-				youTubeVideo.downloadVideo(getContext(), new WeakReference<>(activity));
+				youTubeVideo.downloadVideo(getContext());
 				return true;
 
 			default:

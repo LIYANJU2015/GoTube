@@ -116,9 +116,9 @@
 	-->
 
 	<style name="VideoPlayerActivityTheme" parent="AppTheme">
-		<item name="android:windowIsTranslucent">true</item>
 		<item name="android:windowFullscreen">true</item>
 		<item name="windowActionBarOverlay">true</item>
+		<item name="android:windowBackground">@color/black_color</item>
 		<item name="actionBarStyle">@style/VideoPlayerActionBarTheme</item>
 		<!--<item name="actionOverflowMenuStyle">@style/PopupMenu2</item>-->
 	</style>

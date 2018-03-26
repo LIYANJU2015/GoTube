@@ -162,7 +162,7 @@ public class ChannelBrowserFragment extends FragmentEx {
 			@Override
 			public void onClick(View v) {
 				// If we're subscribing to the channel, save the list of videos we have into the channel (to be stored in the database by SubscribeToChannelTask)
-				if(!channel.isUserSubscribed()) {
+				if (channel != null && !channel.isUserSubscribed()) {
 					Iterator<YouTubeVideo> iterator = channelVideosFragment.getVideoGridAdapter().getIterator();
 					while (iterator.hasNext()) {
 						channel.addYouTubeVideo(iterator.next());
@@ -177,7 +177,11 @@ public class ChannelBrowserFragment extends FragmentEx {
 				task.execute(channelId);
 			}
 		} else {
-			initViews();
+			try {
+				initViews();
+			} catch (Throwable e) {
+				e.printStackTrace();
+			}
 		}
 
 		FacebookReport.logSentChannelBrowser();
@@ -261,9 +265,15 @@ public class ChannelBrowserFragment extends FragmentEx {
 			// channel the subscribe button is for since there wasn't a channel object to set when
 			// the button was created.
 			channel = youTubeChannel;
-			initViews();
-			channelSubscribeButton.setChannel(youTubeChannel);
-			channelVideosFragment.setYouTubeChannel(youTubeChannel);
+			try {
+				initViews();
+				channelSubscribeButton.setChannel(youTubeChannel);
+				if (channelVideosFragment != null) {
+					channelVideosFragment.setYouTubeChannel(youTubeChannel);
+				}
+			} catch (Throwable e) {
+				e.printStackTrace();
+			}
 		}
 
 	}

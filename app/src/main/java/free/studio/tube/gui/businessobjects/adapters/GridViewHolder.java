@@ -34,14 +34,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
-import java.lang.ref.WeakReference;
-
 import free.rm.gotube.R;
 import free.studio.tube.app.GoTubeApp;
 import free.studio.tube.businessobjects.SreentUtils;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeVideo;
-import free.studio.tube.gui.activities.ThumbnailViewerActivity;
 import free.studio.tube.businessobjects.db.Tasks.IsVideoBookmarkedTask;
+import free.studio.tube.gui.activities.ThumbnailViewerActivity;
 import free.studio.tube.gui.businessobjects.MainActivityListener;
 import free.studio.tube.gui.businessobjects.YouTubePlayer;
 
@@ -215,7 +213,7 @@ class GridViewHolder extends RecyclerView.ViewHolder {
 						youTubeVideo.removeDownload();
 						return true;
 					case R.id.download_video:
-						youTubeVideo.downloadVideo(context, new WeakReference<>((Activity)view.getContext()));
+						youTubeVideo.downloadVideo(context);
 						return true;
 				}
 				return false;

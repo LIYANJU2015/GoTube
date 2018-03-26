@@ -85,6 +85,9 @@ public class GetYouTubeVideosTask extends AsyncTaskParallel<Void, Void, List<You
 		this.onFinished = onFinished;
 		this.getYouTubeVideos.reset();
 		this.videoGridAdapter.clearList();
+		if (videoGridAdapter.getAdViewWrapperAdapter() != null) {
+			videoGridAdapter.getAdViewWrapperAdapter().clearAdView();
+		}
 	}
 
 

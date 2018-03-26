@@ -474,7 +474,7 @@ public class YouTubeVideo implements Serializable {
 	 *
 	 * @param context Context
 	 */
-	public void downloadVideo(final Context context, final WeakReference<Activity> activity) {
+	public void downloadVideo(final Context context) {
 		if (isDownloaded()) {
 			Toast.makeText(context, R.string.downloaded_tip, Toast.LENGTH_LONG).show();
 			return;
@@ -488,7 +488,7 @@ public class YouTubeVideo implements Serializable {
 			@Override
 			public void onGetDesiredStream(StreamMetaData desiredStream) {
 				// download the video
-				new VideoDownloader(activity)
+				new VideoDownloader()
 						.setRemoteFileUrl(desiredStream.getUri().toString())
 						.setDirType(Environment.DIRECTORY_MOVIES)
 						.setTitle(getTitle())
@@ -578,43 +578,13 @@ public class YouTubeVideo implements Serializable {
 	 */
 	private class VideoDownloader extends FileDownloader implements Serializable {
 
-		private transient WeakReference<Activity> activityWeakReference;
-
-		public VideoDownloader(WeakReference<Activity> activityWeakReference) {
-			this.activityWeakReference = activityWeakReference;
-		}
-
 		@Override
 		public void onFileDownloadStarted() {
 			Toast.makeText(GoTubeApp.getContext(),
 					String.format(GoTubeApp.getContext().getString(R.string.starting_video_download), getTitle()),
 					Toast.LENGTH_LONG).show();
 
-			AdModule.getInstance().getFacebookAd().setLoadListener(new IFacebookAd.FacebookAdListener() {
-				@Override
-				public void onLoadedAd(View view) {
-					AdModule.getInstance().getFacebookAd().setLoadListener(null);
-					AdModule.getInstance().createMaterialDialog()
-							.showAdDialog(activityWeakReference.get(), view);
-				}
-
-				@Override
-				public void onLoadedAd(NativeAd nativeAd) {
-
-				}
-
-				@Override
-				public void onStartLoadAd(View view) {
-
-				}
-
-				@Override
-				public void onLoadAdFailed(int i, String s) {
-					AdModule.getInstance().getFacebookAd().setLoadListener(null);
-					AdModule.getInstance().getAdMob().showInterstitialAd();
-				}
-			});
-			AdModule.getInstance().getFacebookAd().loadAd(false, AdsID.FB_NATIVE_AD_ID);
+			AdModule.getInstance().getAdMob().showInterstitialAd();
 		}
 
 		@Override

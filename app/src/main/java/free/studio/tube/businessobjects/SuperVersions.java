@@ -112,7 +112,6 @@ public class SuperVersions {
 
         public static void initSpecial() {
             isSpecial = GoTubeApp.getPreferenceManager().getBoolean(SPECIALKEY, false);
-            isSpecial = true;
         }
 
         public static boolean isSpecial() {

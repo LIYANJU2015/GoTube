@@ -34,6 +34,7 @@ import free.studio.tube.app.AdsID;
 import free.studio.tube.businessobjects.VideoCategory;
 import free.studio.tube.gui.businessobjects.AdViewWrapperAdapter;
 import free.studio.tube.gui.businessobjects.MainActivityListener;
+import free.studio.tube.gui.businessobjects.OnegoGridLayoutManager;
 import free.studio.tube.gui.businessobjects.adapters.VideoGridAdapter;
 import free.studio.tube.gui.businessobjects.fragments.BaseVideosGridFragment;
 
@@ -77,7 +78,7 @@ public abstract class VideosGridFragment extends BaseVideosGridFragment {
 		videoGridAdapter.setAdViewWrapperAdapter(adViewWrapperAdapter);
 
 		gridView.setHasFixedSize(true);
-		gridView.setLayoutManager(new GridLayoutManager(getActivity(), getResources().getInteger(R.integer.video_grid_num_columns)));
+		gridView.setLayoutManager(new OnegoGridLayoutManager(getActivity(), getResources().getInteger(R.integer.video_grid_num_columns)));
 		gridView.setAdapter(adViewWrapperAdapter);
 
 		return view;

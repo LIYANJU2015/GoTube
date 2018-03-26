@@ -49,7 +49,7 @@ public class YouTubePlayer {
 		Intent i = new Intent(activity, YouTubePlayerActivity.class);
 		i.putExtra(YouTubePlayerFragment.YOUTUBE_VIDEO_OBJ, youTubeVideo);
 		activity.startActivity(i);
-		activity.overridePendingTransition(R.anim.slide_bottom_in, 0);
+//		activity.overridePendingTransition(R.anim.slide_bottom_in, 0);
 	}
 
 
@@ -70,7 +70,7 @@ public class YouTubePlayer {
 		i.setAction(Intent.ACTION_VIEW);
 		i.setData(Uri.parse(videoUrl));
 		activity.startActivity(i);
-		activity.overridePendingTransition(R.anim.slide_bottom_in, 0);
+//		activity.overridePendingTransition(R.anim.slide_bottom_in, 0);
 	}
 
 }

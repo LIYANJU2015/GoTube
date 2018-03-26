@@ -84,6 +84,10 @@ public abstract class RecyclerViewAdapterEx<T, HolderType extends RecyclerView.V
 		this.adViewWrapperAdapter = adViewWrapperAdapter;
 	}
 
+	public AdViewWrapperAdapter getAdViewWrapperAdapter() {
+		return adViewWrapperAdapter;
+	}
+
 	public static View setUpNativeAdView(Context context, NativeAd nativeAd) {
 		nativeAd.unregisterView();
 
@@ -182,7 +186,7 @@ public abstract class RecyclerViewAdapterEx<T, HolderType extends RecyclerView.V
 						nativeAd = AdModule.getInstance().getFacebookAd().getNativeAd();
 					}
 					if (nativeAd != null && nativeAd.isAdLoaded()) {
-						int adPostion = oldSize + 2;
+						int adPostion = oldSize + 1;
 						Logger.d("recyleradper",  "viewType " + (oldSize + l.size())
 								+ " adPostion " + adPostion);
 						adViewWrapperAdapter.addAdView(oldSize + l.size(), new AdViewWrapperAdapter.

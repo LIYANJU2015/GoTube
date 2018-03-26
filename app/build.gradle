@@ -5,16 +5,17 @@ android {
     buildToolsVersion '26.0.2'
 
     defaultConfig {
-        applicationId "free.rm.gotube"
+        applicationId "com.tube.gotubeplayer"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 1
+        versionCode 3
+        versionName '1.0.0'
         // Third party devs:  pls be ethical and change the below keys
         buildConfigField 'String[]', 'YOUTUBE_API_KEYS',
                 '{' +
-                        '"AIzaSyBUgQUzZJTZrdW9LAY0-hr__UYnKoQRRNU",' +
-                        '"AIzaSyCBe6h-D27WgcDkX9Wuyb3Fjef6tFja2Eg",' +
-                        '"AIzaSyC2eifJuPidYxsq7NKvZGdTxngFrhbm0G0"'  +
+                        '"AIzaSyA25ZmI3kQXf50eN3qI_xF_Bw0eMg7bfdA",' +
+                        '"AIzaSyACXAuWNTQJvDZQ-Mji9IT43ehHqKz6O-o",' +
+                        '"AIzaSyB2x6BIvhdBparpLBGOROWI8g9dccwSxsU"'  +
                 '}'
         buildConfigField 'String', 'GoTube_WEBSITE',         '"http://GoTube-app.com"'
         buildConfigField 'String', 'GoTube_WEBSITE_CREDITS', '"http://GoTube-app.com/credits.html"'
@@ -22,29 +23,43 @@ android {
         vectorDrawables.useSupportLibrary true
         multiDexEnabled true    // this is as we have over 65536 lines of code...
     }
+
+    signingConfigs {
+        release {
+            storeFile file("keystore")
+            storePassword "1234asdf"
+            keyAlias "lisi"
+            keyPassword "1234asdf"
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+//            minifyEnabled true
+            zipAlignEnabled true
+            //shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
-    flavorDimensions "gotube"
-    productFlavors {
-        // 100% Open-Source Edition
-        oss {
-            applicationId "free.rm.gotube.oss"
-            versionName "1.0.0"          // the digits of the *fractional part* shall not be larger than "9"
-            resValue "string", "app_name", "GoTube"
-            dimension "gotube"
-        }
-        // 99% Open-source edition:  uses the YouTube Player Jar [i.e. proprietary module - optional usage]
-        extra {
-            applicationId "free.rm.gotube.extra"
-            versionName "1.0.0"    // the digits of the *fractional part* shall not be larger than "9"
-            resValue "string", "app_name", "GoTube"
-            dimension "gotube"
-        }
-    }
+
+//    flavorDimensions "gotube"
+//    productFlavors {
+//        // 100% Open-Source Edition
+//        oss {
+//            applicationId "com.tube.gotubeplayer"
+//            versionName "1.0.0"          // the digits of the *fractional part* shall not be larger than "9"
+//            resValue "string", "app_name", "GoTube"
+//            dimension "gotube"
+//        }
+//        // 99% Open-source edition:  uses the YouTube Player Jar [i.e. proprietary module - optional usage]
+////        extra {
+////            applicationId "free.rm.gotube.extra"
+////            versionName "1.0.0"    // the digits of the *fractional part* shall not be larger than "9"
+////            resValue "string", "app_name", "GoTube"
+////            dimension "gotube"
+////        }
+//    }
 }
 
 configurations {
@@ -52,6 +67,15 @@ configurations {
 
     all {
         exclude module: 'httpclient'
+    }
+}
+
+android {
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
     }
 }
 
