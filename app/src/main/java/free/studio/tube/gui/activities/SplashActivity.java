@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import free.rm.gotube.R;
+import free.studio.tube.app.GoTubeApp;
+import free.studio.tube.businessobjects.FacebookReport;
 
 /**
  * Created by liyanju on 2018/3/22.
@@ -24,6 +26,10 @@ public class SplashActivity extends AppCompatActivity{
     }
 
     private void startMain() {
+        long delayTime = 500;
+        if (GoTubeApp.isCoolStart) {
+            delayTime = 1200;
+        }
         getWindow().getDecorView().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -31,8 +37,9 @@ public class SplashActivity extends AppCompatActivity{
                 startActivity(intent);
                 overridePendingTransition(R.anim.activity_fade_in, 0);
                 finish();
+                FacebookReport.logSentMainUserInfo();
             }
-        }, 500);
+        }, delayTime);
 
     }
 }

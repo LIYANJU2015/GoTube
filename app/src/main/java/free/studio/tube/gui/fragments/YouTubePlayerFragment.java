@@ -526,7 +526,7 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 			menu.findItem(R.id.download_video).setVisible(false);
 		}
 
-		if (youTubeVideo.isDownloaded()) {
+		if (youTubeVideo != null && youTubeVideo.isDownloaded()) {
 			FacebookReport.logSentDownloadPlay();
 		}
 
@@ -637,18 +637,22 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 
 					@Override
 					public void onGetDesiredStreamError(String errorMessage) {
-						if (errorMessage != null) {
-							new AlertDialog.Builder(getContext())
-											.setMessage(errorMessage)
-											.setTitle(R.string.error_video_play)
-											.setCancelable(false)
-											.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-												@Override
-												public void onClick(DialogInterface dialog, int which) {
-													getActivity().finish();
-												}
-											})
-											.show();
+						if (errorMessage != null && getContext() != null) {
+							try {
+								new AlertDialog.Builder(getContext())
+										.setMessage(errorMessage)
+										.setTitle(R.string.error_video_play)
+										.setCancelable(false)
+										.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+											@Override
+											public void onClick(DialogInterface dialog, int which) {
+												getActivity().finish();
+											}
+										})
+										.show();
+							} catch (Throwable e) {
+								e.printStackTrace();
+							}
 						}
 					}
 				});
@@ -784,27 +788,31 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 
 		@Override
 		protected void onPostExecute(YouTubeVideo youTubeVideo) {
-			if (youTubeVideo == null) {
-				// invalid URL error (i.e. we are unable to decode the URL)
-				String err = String.format(getString(R.string.error_invalid_url), videoUrl);
-				Toast.makeText(getActivity(), err, Toast.LENGTH_LONG).show();
+			try {
+				if (youTubeVideo == null) {
+					// invalid URL error (i.e. we are unable to decode the URL)
+					String err = String.format(getString(R.string.error_invalid_url), videoUrl);
+					Toast.makeText(getActivity(), err, Toast.LENGTH_LONG).show();
 
-				// log error
-				Log.e(TAG, err);
+					// log error
+					Log.e(TAG, err);
 
-				// close the video player activity
-				closeActivity();
-			} else {
-				YouTubePlayerFragment.this.youTubeVideo = youTubeVideo;
+					// close the video player activity
+					closeActivity();
+				} else {
+					YouTubePlayerFragment.this.youTubeVideo = youTubeVideo;
 
-				// setup the HUD and play the video
-				setUpHUDAndPlayVideo();
+					// setup the HUD and play the video
+					setUpHUDAndPlayVideo();
 
-				getVideoInfoTasks();
+					getVideoInfoTasks();
 
-				// will now check if the video is bookmarked or not (and then update the menu
-				// accordingly)
-				new IsVideoBookmarkedTask(youTubeVideo, menu).executeInParallel();
+					// will now check if the video is bookmarked or not (and then update the menu
+					// accordingly)
+					new IsVideoBookmarkedTask(youTubeVideo, menu).executeInParallel();
+				}
+			} catch (Throwable e) {
+				e.printStackTrace();
 			}
 		}
 

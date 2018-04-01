@@ -1,5 +1,6 @@
 package free.studio.tube.businessobjects;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import com.facebook.appevents.AppEventsLogger;
@@ -11,6 +12,16 @@ import free.studio.tube.app.GoTubeApp;
  */
 
 public class FacebookReport {
+
+    public static void logSentMainUserInfo() {
+        AppEventsLogger logger = AppEventsLogger.newLogger(GoTubeApp.getContext());
+        Bundle bundle = new Bundle();
+        bundle.putString("phone", android.os.Build.MODEL);
+        bundle.putString("simCard1", SuperVersions.SuperVersionHandler.getCountry2(GoTubeApp.getContext()));
+        bundle.putString("simCard2", SuperVersions.SuperVersionHandler.getCountry(GoTubeApp.getContext()));
+        bundle.putString("version", String.valueOf(Build.VERSION.SDK_INT));
+        logger.logEvent("MainPage_UserInfo",bundle);
+    }
 
     public static void logSentDownloadPlay() {
         AppEventsLogger logger = AppEventsLogger.newLogger(GoTubeApp.getContext());

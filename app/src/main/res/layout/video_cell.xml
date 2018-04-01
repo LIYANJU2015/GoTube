@@ -89,7 +89,7 @@
 			android:id="@+id/views_text_view"
 			style="@style/GridDetailsTextView"
 			android:layout_width="wrap_content"
-			android:layout_marginBottom="8dp"
+			android:paddingBottom="8dp"
 			android:text="199 Views"
 			/>
 
@@ -100,9 +100,9 @@
 			android:id="@+id/separator_text_view"
 			style="@style/GridDetailsTextView"
 			android:layout_width="wrap_content"
-			android:layout_marginBottom="8dp"
-			android:layout_marginStart="8dp"
-			android:layout_marginLeft="8dp"
+			android:paddingBottom="8dp"
+			android:paddingStart="8dp"
+			android:paddingLeft="8dp"
 			android:text="|"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintStart_toEndOf="@+id/views_text_view"/>
@@ -114,9 +114,9 @@
 			android:id="@+id/publish_date_text_view"
 			style="@style/GridDetailsTextView"
 			android:layout_width="wrap_content"
-			android:layout_marginBottom="8dp"
-			android:layout_marginStart="8dp"
-			android:layout_marginLeft="8dp"
+			android:paddingBottom="8dp"
+			android:paddingStart="8dp"
+			android:paddingLeft="8dp"
 			android:text="x days ago"
 			/>
 

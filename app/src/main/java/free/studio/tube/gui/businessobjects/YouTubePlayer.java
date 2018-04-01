@@ -52,6 +52,13 @@ public class YouTubePlayer {
 //		activity.overridePendingTransition(R.anim.slide_bottom_in, 0);
 	}
 
+	public static void launch(Context context, YouTubeVideo youTubeVideo) {
+		Intent i = new Intent(context, YouTubePlayerActivity.class);
+		i.putExtra(YouTubePlayerFragment.YOUTUBE_VIDEO_OBJ, youTubeVideo);
+		context.startActivity(i);
+//		activity.overridePendingTransition(R.anim.slide_bottom_in, 0);
+	}
+
 
 	/**
 	 * Launches the custom-made YouTube player so that the user can view the selected video.

@@ -50,6 +50,7 @@ import free.studio.tube.businessobjects.YouTube.POJOs.YouTubePlaylist;
 import free.studio.tube.businessobjects.db.DownloadedVideosDb;
 import free.studio.tube.gui.businessobjects.MainActivityListener;
 import free.studio.tube.gui.businessobjects.YouTubePlayer;
+import free.studio.tube.gui.businessobjects.adapters.RecyclerViewAdapterEx;
 import free.studio.tube.gui.fragments.ChannelBrowserFragment;
 import free.studio.tube.gui.fragments.MainFragment;
 import free.studio.tube.gui.fragments.PlaylistVideosFragment;
@@ -158,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 	}
 
 	private void initHomeAD() {
-		if (GoTubeApp.isCoolStart) {
+		if (GoTubeApp.isCoolStart && RecyclerViewAdapterEx.isCanAdShow()) {
 			GoTubeApp.isCoolStart = false;
 			if (!AdModule.getInstance().getAdMob().showInterstitialAd()) {
 				AdModule.getInstance().getFacebookAd().setLoadListener(new IFacebookAd.FacebookAdListener() {
@@ -226,6 +227,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 		// setup the SearchView (actionbar)
 		final MenuItem searchItem = menu.findItem(R.id.menu_search);
 		final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
+		if (searchView == null) {
+			return true;
+		}
 
 		searchView.setQueryHint(getString(R.string.search_videos));
 		searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

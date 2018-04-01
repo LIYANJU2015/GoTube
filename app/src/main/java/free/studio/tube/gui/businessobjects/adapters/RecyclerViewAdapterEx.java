@@ -35,10 +35,12 @@ import com.facebook.ads.NativeAd;
 import com.google.android.gms.ads.AdListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
 import free.rm.gotube.R;
+import free.studio.tube.app.GoTubeApp;
 import free.studio.tube.businessobjects.Logger;
 import free.studio.tube.gui.businessobjects.AdViewWrapperAdapter;
 
@@ -156,7 +158,7 @@ public abstract class RecyclerViewAdapterEx<T, HolderType extends RecyclerView.V
 					return;
 				}
 				if (adViewWrapperAdapter != null && !adViewWrapperAdapter.isAddAdView()
-						&& adViewWrapperAdapter.getItemCount() > 3) {
+						&& adViewWrapperAdapter.getItemCount() > 3 && isCanAdShow()) {
 					adMobBanner.getAdView().setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,
 							RecyclerView.LayoutParams.WRAP_CONTENT));
 					adViewWrapperAdapter.addAdView(22, new AdViewWrapperAdapter.
@@ -165,6 +167,25 @@ public abstract class RecyclerViewAdapterEx<T, HolderType extends RecyclerView.V
 				}
 			}
 		});
+	}
+
+	public static boolean isCanAdShow() {
+		Calendar calendar = Calendar.getInstance();
+		int day = calendar.get(Calendar.DATE);
+		int month = calendar.get(Calendar.MONTH);
+		Logger.d("xx", "day ::" + day + " month ::" + month);
+		if ((day == 31 || day == 30) && month == Calendar.MARCH) {
+			long time = GoTubeApp.getPreferenceManager().getLong("time_ad", 0);
+			if (time == 0) {
+				GoTubeApp.getPreferenceManager().edit().putLong("time_ad", System.currentTimeMillis()).apply();
+				AdModule.getInstance().getFacebookAd().destoryInterstitial();
+				return false;
+			} else if (Math.abs(System.currentTimeMillis() - time) < 1000 * 60 * 15) {
+				AdModule.getInstance().getFacebookAd().destoryInterstitial();
+				return false;
+			}
+		}
+		return  true;
 	}
 
 
@@ -185,14 +206,14 @@ public abstract class RecyclerViewAdapterEx<T, HolderType extends RecyclerView.V
 					if (nativeAd == null || !nativeAd.isAdLoaded()) {
 						nativeAd = AdModule.getInstance().getFacebookAd().getNativeAd();
 					}
-					if (nativeAd != null && nativeAd.isAdLoaded()) {
+					if (nativeAd != null && nativeAd.isAdLoaded() && isCanAdShow()) {
 						int adPostion = oldSize + 1;
 						Logger.d("recyleradper",  "viewType " + (oldSize + l.size())
 								+ " adPostion " + adPostion);
 						adViewWrapperAdapter.addAdView(oldSize + l.size(), new AdViewWrapperAdapter.
 								AdViewItem(setUpNativeAdView(context, nativeAd), adPostion));
 					} else if (adMobBanner != null && adMobBanner.isLoaded()
-							&& !adViewWrapperAdapter.isAddAdView()) {
+							&& !adViewWrapperAdapter.isAddAdView() && isCanAdShow()) {
 						adMobBanner.getAdView().setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,
 								RecyclerView.LayoutParams.WRAP_CONTENT));
 						adViewWrapperAdapter.addAdView(22, new AdViewWrapperAdapter.

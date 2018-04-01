@@ -227,11 +227,11 @@ public class MainFragment extends FragmentEx {
 			videoGridFragmentsList.clear();
 			videoGridFragmentsList.add(featuredVideosFragment);
 			videoGridFragmentsList.add(mostPopularVideosFragment);
-			videoGridFragmentsList.add(subscriptionsFeedFragment);
-			videoGridFragmentsList.add(bookmarksFragment);
 			if (GoTubeApp.isSpecial()) {
 				videoGridFragmentsList.add(downloadedVideosFragment);
 			}
+			videoGridFragmentsList.add(subscriptionsFeedFragment);
+			videoGridFragmentsList.add(bookmarksFragment);
 		}
 
 		@Override
