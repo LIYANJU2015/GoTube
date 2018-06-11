@@ -31,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
@@ -203,7 +204,7 @@ public class CommentsAdapter extends BaseExpandableListAdapter {
 			upvotesTextView.setText(comment.getLikeCount());
 			Glide.with(context)
 					.load(comment.getThumbnailUrl())
-					.apply(new RequestOptions().placeholder(R.drawable.buddy_channel_item))
+					.apply(RequestOptions.bitmapTransform(new CircleCrop()).placeholder(R.drawable.buddy))
 					.into(thumbnailImageView);
 
 			thumbnailImageView.setOnClickListener(new View.OnClickListener() {

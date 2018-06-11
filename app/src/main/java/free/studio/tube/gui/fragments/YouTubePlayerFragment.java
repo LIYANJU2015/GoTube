@@ -1,6 +1,5 @@
 package free.studio.tube.gui.fragments;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -34,7 +33,6 @@ import com.bumptech.glide.request.RequestOptions;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.lang.ref.WeakReference;
 import java.net.URLDecoder;
 import java.util.List;
 import java.util.Locale;
@@ -46,13 +44,13 @@ import free.studio.tube.businessobjects.FacebookReport;
 import free.studio.tube.businessobjects.YouTube.Tasks.GetVideoDescriptionTask;
 import free.studio.tube.businessobjects.YouTube.GetVideosDetailsByIDs;
 import free.studio.tube.businessobjects.YouTube.Tasks.GetYouTubeChannelInfoTask;
-import free.studio.tube.businessobjects.YouTube.VideoStream.StreamMetaData;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeChannel;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeChannelInterface;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeVideo;
+import free.studio.tube.businessobjects.YouTube.VideoStream.StreamMetaDataList;
 import free.studio.tube.businessobjects.db.Tasks.CheckIfUserSubbedToChannelTask;
 import free.studio.tube.businessobjects.db.DownloadedVideosDb;
-import free.studio.tube.businessobjects.interfaces.GetDesiredStreamListener;
+import free.studio.tube.businessobjects.interfaces.GetStreamListener;
 import free.studio.tube.gui.activities.MainActivity;
 import free.studio.tube.gui.activities.ThumbnailViewerActivity;
 import free.studio.tube.gui.businessobjects.adapters.CommentsAdapter;
@@ -292,7 +290,7 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 		videoDescDislikesTextView = view.findViewById(R.id.video_desc_dislikes);
 		videoDescRatingsDisabledTextView = view.findViewById(R.id.video_desc_ratings_disabled);
 		videoDescPublishDateTextView = view.findViewById(R.id.video_desc_publish_date);
-		videoDescriptionTextView = view.findViewById(R.id.video_desc_description);
+//		videoDescriptionTextView = view.findViewById(R.id.video_desc_description);
 		videoDescLikesBar = view.findViewById(R.id.video_desc_likes_bar);
 		videoDescSubscribeButton = view.findViewById(R.id.video_desc_subscribe_button);
 
@@ -627,16 +625,21 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 					videoView.setVideoURI(uri);
 				}
 			} else {
-				youTubeVideo.getDesiredStream(new GetDesiredStreamListener() {
+				youTubeVideo.getStream(new GetStreamListener() {
+//					@Override
+//					public void onGetStream(StreamMetaData desiredStream) {
+//						// play the video
+//						Logger.i(YouTubePlayerFragment.this, ">> PLAYING: %s", desiredStream);
+//						videoView.setVideoURI(desiredStream.getUri());
+//					}
+
 					@Override
-					public void onGetDesiredStream(StreamMetaData desiredStream) {
-						// play the video
-						Logger.i(YouTubePlayerFragment.this, ">> PLAYING: %s", desiredStream);
-						videoView.setVideoURI(desiredStream.getUri());
+					public void onGetStream(StreamMetaDataList streamMetaDataList) {
+
 					}
 
 					@Override
-					public void onGetDesiredStreamError(String errorMessage) {
+					public void onGetStreamError(String errorMessage) {
 						if (errorMessage != null && getContext() != null) {
 							try {
 								new AlertDialog.Builder(getContext())

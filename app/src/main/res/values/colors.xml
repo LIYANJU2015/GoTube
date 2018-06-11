@@ -6,6 +6,9 @@
 
 	<color name="GoTube_theme_colour">#ff6600</color>
 
+	<color name="player_theme_color">@color/colorPrimary</color>
+	<color name="player_theme_color_translucent">#99F44336</color>
+
 	<!--
 		Material Dialog Colors
 	-->
@@ -78,5 +81,8 @@
 
 	<color name="rating_btn_normal_color">#F44336</color>
 	<color name="rating_btn_press_color">#CCF44336</color>
+
+	<color name="theme_color">@color/colorPrimary</color>
+	<color name="theme_color_translucent">#99F44336</color>
 
 </resources>

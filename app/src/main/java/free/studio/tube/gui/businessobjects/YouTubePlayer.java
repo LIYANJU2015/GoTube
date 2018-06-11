@@ -26,6 +26,7 @@ import free.rm.gotube.R;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeVideo;
 import free.studio.tube.gui.activities.YouTubePlayerActivity;
 import free.studio.tube.gui.fragments.YouTubePlayerFragment;
+import free.studio.tube.gui.player.TubePlayerActivity;
 
 /**
  * Launches YouTube player.
@@ -53,10 +54,11 @@ public class YouTubePlayer {
 	}
 
 	public static void launch(Context context, YouTubeVideo youTubeVideo) {
-		Intent i = new Intent(context, YouTubePlayerActivity.class);
-		i.putExtra(YouTubePlayerFragment.YOUTUBE_VIDEO_OBJ, youTubeVideo);
-		context.startActivity(i);
+//		Intent i = new Intent(context, YouTubePlayerActivity.class);
+//		i.putExtra(YouTubePlayerFragment.YOUTUBE_VIDEO_OBJ, youTubeVideo);
+//		context.startActivity(i);
 //		activity.overridePendingTransition(R.anim.slide_bottom_in, 0);
+		TubePlayerActivity.launch(context, youTubeVideo);
 	}
 
 

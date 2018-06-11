@@ -56,7 +56,7 @@ public class StreamMetaDataList extends ArrayList<StreamMetaData> {
 	 *
 	 * @return The desired {@link StreamMetaData}.
 	 */
-	public StreamMetaData getDesiredStream() {
+	public StreamMetaData  getDesiredStream() {
 		VideoResolution desiredVideoRes = getDesiredVideoResolution();
 		Log.d(TAG, "Desired Video Res:  " + desiredVideoRes);
 		return getDesiredStream(desiredVideoRes);

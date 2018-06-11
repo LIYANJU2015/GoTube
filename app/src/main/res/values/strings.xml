@@ -25,4 +25,15 @@
 
 	<string name="facebook_app_id">449200398846669</string>
 	<string name="fb_login_protocol_scheme">fb449200398846669</string>
+
+
+	<string name="lock_tip">Please unlock the screen first!</string>
+	<string name="unlocked">Unlocked</string>
+	<string name="locked">Already locked</string>
+	<string name="replay">Play again</string>
+
+	<string name="player_error_message">Play an error, please try again later</string>
+	<string name="player_retry">Retry</string>
+	<string name="player_continue_play">Continue to play</string>
+	<string name="player_wifi_tip">You are using mobile network, continue to play will consume traffic</string>
 </resources>

@@ -17,7 +17,6 @@
 
 package free.studio.tube.businessobjects.YouTube.POJOs;
 
-import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -27,12 +26,9 @@ import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
-import android.view.View;
 import android.widget.Toast;
 
 import com.admodule.AdModule;
-import com.admodule.adfb.IFacebookAd;
-import com.facebook.ads.NativeAd;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.youtube.model.Thumbnail;
 import com.google.api.services.youtube.model.Video;
@@ -40,7 +36,6 @@ import com.rating.RatingActivity;
 
 import java.io.File;
 import java.io.Serializable;
-import java.lang.ref.WeakReference;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
@@ -52,7 +47,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import free.rm.gotube.R;
-import free.studio.tube.app.AdsID;
 import free.studio.tube.app.GoTubeApp;
 import free.studio.tube.businessobjects.AsyncTaskParallel;
 import free.studio.tube.businessobjects.FacebookReport;
@@ -63,7 +57,7 @@ import free.studio.tube.businessobjects.YouTube.VideoStream.StreamMetaData;
 import free.studio.tube.businessobjects.YouTube.VideoStream.StreamMetaDataList;
 import free.studio.tube.businessobjects.db.BookmarksDb;
 import free.studio.tube.businessobjects.db.DownloadedVideosDb;
-import free.studio.tube.businessobjects.interfaces.GetDesiredStreamListener;
+import free.studio.tube.businessobjects.interfaces.GetStreamListener;
 
 /**
  * Represents a YouTube video.
@@ -434,10 +428,19 @@ public class YouTubeVideo implements Serializable {
 	/**
 	 * Get the stream for this Video, based on the user's preference. When done, the stream will be returned
 	 * via the passed GetDesiredStreamListener.
-	 * @param listener Instance of {@link GetDesiredStreamListener} to pass the stream through
+	 * @param listener Instance of {@link GetStreamListener} to pass the stream through
 	 */
-	public void getDesiredStream(GetDesiredStreamListener listener) {
-		new GetStreamTask(listener).executeInParallel();
+	public void getStream(GetStreamListener listener) {
+		getStreamTask = new GetStreamTask(listener);
+		getStreamTask.executeInParallel();
+	}
+
+	private GetStreamTask getStreamTask;
+
+	public void cancelGetStream() {
+		if (getStreamTask != null) {
+			getStreamTask.cancel(true);
+		}
 	}
 
 
@@ -484,9 +487,13 @@ public class YouTubeVideo implements Serializable {
 
 		AdModule.getInstance().getAdMob().requestNewInterstitial();
 
-		getDesiredStream(new GetDesiredStreamListener() {
+		getStream(new GetStreamListener() {
 			@Override
-			public void onGetDesiredStream(StreamMetaData desiredStream) {
+			public void onGetStream(StreamMetaDataList streamMetaDataList) {
+				StreamMetaData desiredStream = streamMetaDataList.getDesiredStream();
+				if (desiredStream == null) {
+					return;
+				}
 				// download the video
 				new VideoDownloader()
 						.setRemoteFileUrl(desiredStream.getUri().toString())
@@ -513,7 +520,7 @@ public class YouTubeVideo implements Serializable {
 
 
 			@Override
-			public void onGetDesiredStreamError(String errorMessage) {
+			public void onGetStreamError(String errorMessage) {
 				Logger.e(YouTubeVideo.this, "Stream error: %s", errorMessage);
 				Toast.makeText(GoTubeApp.getContext(),
 								String.format(GoTubeApp.getContext().getString(R.string.video_download_stream_error), getTitle()),
@@ -531,9 +538,9 @@ public class YouTubeVideo implements Serializable {
 	 */
 	private class GetStreamTask extends AsyncTaskParallel<Void, Exception, StreamMetaDataList> {
 
-		private GetDesiredStreamListener listener;
+		private GetStreamListener listener;
 
-		GetStreamTask(GetDesiredStreamListener listener) {
+		GetStreamTask(GetStreamListener listener) {
 			this.listener = listener;
 		}
 
@@ -560,12 +567,9 @@ public class YouTubeVideo implements Serializable {
 		@Override
 		protected void onPostExecute(StreamMetaDataList streamMetaDataList) {
 			if (streamMetaDataList == null || streamMetaDataList.size() <= 0) {
-				listener.onGetDesiredStreamError(streamMetaDataList.getErrorMessage());
+				listener.onGetStreamError(streamMetaDataList.getErrorMessage());
 			} else {
-				// get the desired stream based on user preferences
-				StreamMetaData desiredStream = streamMetaDataList.getDesiredStream();
-
-				listener.onGetDesiredStream(desiredStream);
+				listener.onGetStream(streamMetaDataList);
 			}
 		}
 

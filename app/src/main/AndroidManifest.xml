@@ -58,6 +58,12 @@
 			</intent-filter>
 		</activity>
 
+		<activity android:name="free.studio.tube.gui.player.TubePlayerActivity"
+			android:configChanges="orientation|keyboardHidden|screenSize"
+			android:screenOrientation="portrait"
+			android:theme="@style/videoplayer"
+			/>
+
 		<activity
 			android:name="free.studio.tube.gui.activities.YouTubePlayerActivity"
 			android:configChanges="orientation|keyboardHidden|screenSize"

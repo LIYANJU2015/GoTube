@@ -85,7 +85,7 @@ public class GoTubeApp extends MultiDexApplication {
 
 			@Override
 			public String getAppId() {
-				return AdsID.ADMOB_APP_ID;
+				return "";
 			}
 
 			@Override
@@ -105,12 +105,12 @@ public class GoTubeApp extends MultiDexApplication {
 
 			@Override
 			public String getBannerAdId() {
-				return AdsID.ADMOB_BANNER_AD_ID;
+				return "";
 			}
 
 			@Override
 			public String getInterstitialAdId() {
-				return AdsID.ADMOB_INTERSTITIAL_ID;
+				return "";
 			}
 
 			@Override
@@ -125,7 +125,7 @@ public class GoTubeApp extends MultiDexApplication {
 
 			@Override
 			public String getFBNativeAdId() {
-				return AdsID.FB_NATIVE_AD_ID;
+				return "";
 			}
 		});
 
