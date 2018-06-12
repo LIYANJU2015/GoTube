@@ -71,8 +71,9 @@ public abstract class VideosGridFragment extends BaseVideosGridFragment {
 			videoGridAdapter.setContext(getActivity());
 		}
 //		videoGridAdapter.setProgressBar(progressBar);
-
-		videoGridAdapter.setListener((MainActivityListener)getActivity());
+		if (getActivity() instanceof MainActivityListener) {
+			videoGridAdapter.setListener((MainActivityListener) getActivity());
+		}
 
 		AdViewWrapperAdapter adViewWrapperAdapter = new AdViewWrapperAdapter(videoGridAdapter);
 		videoGridAdapter.setAdViewWrapperAdapter(adViewWrapperAdapter);

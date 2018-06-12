@@ -15,4 +15,9 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
--ignorewarning
+
+
+-keep class tv.danmaku.ijk.** { *; }
+-dontwarn tv.danmaku.ijk.**
+-keep class com.dueeeke.videoplayer.** { *; }
+-dontwarn com.dueeeke.videoplayer.**

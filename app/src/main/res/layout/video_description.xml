@@ -9,14 +9,37 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/video_desc_title"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:text="Title Goes Here!"
-            android:textAppearance="@android:style/TextAppearance.Large"
-            android:textColor="@color/black_color" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/video_desc_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingBottom="10dp"
+                android:text="Title Goes Here!"
+                android:textSize="17sp"
+                android:textAppearance="@android:style/TextAppearance.Large"
+                android:textColor="@color/black_color" />
+
+            <TextView
+                style="@style/VideoDescTextView"
+                android:padding="5dp"
+                android:id="@+id/download_video_iv"
+                android:background="@drawable/round_selector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_file_download"
+                android:text="@string/downloads"
+                android:visibility="gone"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+               />
+
+        </LinearLayout>
 
 
         <LinearLayout
@@ -125,8 +148,7 @@
             android:text="7 days ago" />
 
 
-        <com.ms.square.android.expandabletextview.ExpandableTextView
-            xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
+        <com.ms.square.android.expandabletextview.ExpandableTextView xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
             android:id="@+id/expand_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

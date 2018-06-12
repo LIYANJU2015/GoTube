@@ -146,11 +146,6 @@ public class ChannelBrowserFragment extends FragmentEx {
 			}
 		});
 
-		// setup the toolbar/actionbar
-		Toolbar toolbar = fragment.findViewById(R.id.toolbar);
-		setSupportActionBar(toolbar);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 		channelBannerImage = fragment.findViewById(R.id.channel_banner_image_view);
 		channelThumbnailImage = fragment.findViewById(R.id.channel_thumbnail_image_view);
 		channelSubscribersTextView = fragment.findViewById(R.id.channel_subs_text_view);

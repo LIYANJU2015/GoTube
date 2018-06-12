@@ -22,35 +22,62 @@ import android.content.ClipDescription;
 import android.content.ClipboardManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.admodule.AdModule;
 import com.admodule.adfb.IFacebookAd;
+import com.arlib.floatingsearchview.FloatingSearchView;
+import com.arlib.floatingsearchview.suggestions.SearchSuggestionsAdapter;
+import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.facebook.ads.NativeAd;
+
+import org.json.JSONArray;
+import org.mozilla.javascript.tools.jsc.Main;
+
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import free.rm.gotube.R;
 import free.studio.tube.app.AdsID;
 import free.studio.tube.app.GoTubeApp;
+import free.studio.tube.businessobjects.SreentUtils;
+import free.studio.tube.businessobjects.TubeSearchSuggistion;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeChannel;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubePlaylist;
 import free.studio.tube.businessobjects.db.DownloadedVideosDb;
 import free.studio.tube.gui.businessobjects.MainActivityListener;
 import free.studio.tube.gui.businessobjects.YouTubePlayer;
 import free.studio.tube.gui.businessobjects.adapters.RecyclerViewAdapterEx;
+import free.studio.tube.gui.businessobjects.adapters.SubsAdapter;
 import free.studio.tube.gui.fragments.ChannelBrowserFragment;
 import free.studio.tube.gui.fragments.MainFragment;
 import free.studio.tube.gui.fragments.PlaylistVideosFragment;
@@ -59,6 +86,8 @@ import free.studio.tube.gui.fragments.VideosGridFragment;
 import kr.co.namee.permissiongen.PermissionFail;
 import kr.co.namee.permissiongen.PermissionGen;
 import kr.co.namee.permissiongen.PermissionSuccess;
+import q.rorbin.badgeview.Badge;
+import q.rorbin.badgeview.QBadgeView;
 
 /**
  * Main activity (launcher).  This activity holds {@link VideosGridFragment}.
@@ -89,6 +118,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 													 int[] grantResults) {
 		PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
 	}
+
+	private RecyclerView subsListView = null;
+	private SubsAdapter subsAdapter = null;
+	private DrawerLayout subsDrawerLayout = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -136,8 +169,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 			}
 		}
 
-		initHomeAD();
-
 		PermissionGen.with(this)
 				.addRequestCode(100)
 				.permissions(
@@ -146,6 +177,190 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 						Manifest.permission.ACCESS_FINE_LOCATION,
 						Manifest.permission.READ_PHONE_STATE)
 				.request();
+
+		subsDrawerLayout = findViewById(R.id.subs_drawer_layout);
+
+		subsListView = findViewById(R.id.subs_drawer);
+		if (subsAdapter == null) {
+			subsAdapter = SubsAdapter.get(this, findViewById(R.id.subs_drawer_progress_bar));
+		} else {
+			subsAdapter.setContext(this);
+		}
+		subsAdapter.setListener(this);
+
+		subsListView.setLayoutManager(new LinearLayoutManager(this));
+		subsListView.setAdapter(subsAdapter);
+
+		initSearchView();
+
+	}
+
+	private FloatingSearchView mSearchView;
+	private boolean isSearched;
+
+	private void initSearchView() {
+		mSearchView = findViewById(R.id.floating_search_view);
+		mSearchView.attachNavigationDrawerToMenuButton(subsDrawerLayout);
+
+		mSearchView.setSearchHint(getString(R.string.app_name));
+
+		initSearchRedPoint(mSearchView);
+
+		mSearchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
+			@Override
+			public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
+				onSearchAction(searchSuggestion.getBody());
+				mSearchView.clearSearchFocus();
+				mSearchView.setSearchText(searchSuggestion.getBody());
+			}
+
+			@Override
+			public void onSearchAction(String currentQuery) {
+				isSearched = true;
+				mSearchView.clearSuggestions();
+				if (mSearchTask != null) {
+					mSearchTask.cancel(true);
+				}
+				mSearchView.hideProgress();
+
+				SearchVideoGridFragment searchVideoGridFragment = new SearchVideoGridFragment();
+				Bundle bundle = new Bundle();
+				bundle.putString(SearchVideoGridFragment.QUERY, currentQuery);
+				searchVideoGridFragment.setArguments(bundle);
+
+				FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+				transaction.replace(R.id.fragment_container, searchVideoGridFragment);
+				transaction.addToBackStack(null);
+				transaction.commitAllowingStateLoss();
+			}
+		});
+
+		mSearchView.setOnBindSuggestionCallback(new SearchSuggestionsAdapter.OnBindSuggestionCallback() {
+			@Override
+			public void onBindSuggestion(View suggestionView, ImageView leftIcon, TextView textView, SearchSuggestion item, int itemPosition) {
+				leftIcon.setImageResource(R.drawable.ic_search_606060_24dp);
+				textView.setText(item.getBody());
+			}
+		});
+		mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+			@Override
+			public void onSearchTextChanged(String oldQuery, String newQuery) {
+				Log.e("xx", ">> isSearched " + isSearched);
+				if (isSearched) {
+					isSearched = false;
+					return;
+				}
+				if (!oldQuery.equals("") && newQuery.equals("")) {
+					mSearchView.clearSuggestions();
+				} else {
+					searchSuggestions(newQuery);
+				}
+			}
+		});
+		mSearchView.setOnMenuItemClickListener(new FloatingSearchView.OnMenuItemClickListener() {
+			@Override
+			public void onActionMenuItemSelected(MenuItem item) {
+				switch (item.getItemId()) {
+					case R.id.menu_preferences:
+						Intent i = new Intent(MainActivity.this, PreferencesActivity.class);
+						startActivity(i);
+						break;
+					case R.id.menu_downloads:
+						DownloadActivity.launch(getApplicationContext());
+						break;
+				}
+			}
+		});
+
+	}
+
+	Badge mRedMenuBadge;
+
+	private void initSearchRedPoint(FloatingSearchView searchView) {
+		mRedMenuBadge = new QBadgeView(getApplication())
+				.bindTarget(searchView.findViewById(com.arlib.floatingsearchview.R.id.menu_view));
+		mRedMenuBadge.setBadgeBackgroundColor(ContextCompat.getColor(getApplication(),
+				R.color.colorPrimary));
+		mRedMenuBadge.setBadgeGravity(Gravity.END | Gravity.TOP);
+		mRedMenuBadge.setBadgeNumber(-1);
+		mRedMenuBadge.setGravityOffset(6, true);
+	}
+
+	private AsyncTask mSearchTask;
+
+	private void searchSuggestions(String newText) {
+		if (mSearchTask != null) {
+			mSearchTask.cancel(true);
+		}
+
+		mSearchTask = new AsyncTask<String, Void, List<SearchSuggestion>>() {
+
+			@Override
+			protected void onPreExecute() {
+				super.onPreExecute();
+				if (mSearchView != null) {
+					mSearchView.showProgress();
+				}
+			}
+
+			@Override
+			protected List<SearchSuggestion> doInBackground(String... strings) {
+				try {
+					Log.v("suggion", "doInBackground suggistion");
+					String query = strings[0];
+					URL url = new URL("http://suggestqueries.google.com/complete/search?client=firefox&hl=fr&q=" + query);
+					HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+					conn.setRequestMethod("GET");
+					conn.connect();
+					if (conn.getResponseCode() == 200) {
+						InputStream is = conn.getInputStream();
+						ByteArrayOutputStream baos = new ByteArrayOutputStream();
+						byte[] buffer = new byte[1024];
+						int len = 0;
+						while ((len = is.read(buffer)) != -1) {
+							baos.write(buffer, 0, len);
+						}
+						baos.close();
+						is.close();
+						byte[] byteArray = baos.toByteArray();
+						String content = new String(byteArray);
+
+						if (!TextUtils.isEmpty(content)) {
+							JSONArray jsonArray = new JSONArray(content);
+							for (int i = 0; i < jsonArray.length(); i++) {
+								JSONArray jsonArray1 = jsonArray.optJSONArray(i);
+								if (jsonArray1 != null) {
+									ArrayList<SearchSuggestion> list = new ArrayList<>();
+									for (int j = 0; j < jsonArray1.length(); j++) {
+										String str = jsonArray1.getString(j);
+										list.add(new TubeSearchSuggistion(str));
+									}
+									return list;
+								}
+							}
+						}
+					}
+				} catch (Throwable e) {
+					e.printStackTrace();
+				}
+				return null;
+			}
+
+			@Override
+			protected void onCancelled() {
+				super.onCancelled();
+				mSearchView.hideProgress();
+			}
+
+			@Override
+			protected void onPostExecute(List<SearchSuggestion> list) {
+				super.onPostExecute(list);
+				if (list != null && !isFinishing()) {
+					mSearchView.swapSuggestions(list);
+				}
+				mSearchView.hideProgress();
+			}
+		}.executeOnExecutor(SreentUtils.sExecutorService, newText);
 	}
 
 	@PermissionSuccess(requestCode = 100)
@@ -156,41 +371,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 	@PermissionFail(requestCode = 100)
 	private void permissionsFaild() {
 
-	}
-
-	private void initHomeAD() {
-		if (GoTubeApp.isCoolStart && RecyclerViewAdapterEx.isCanAdShow()) {
-			GoTubeApp.isCoolStart = false;
-			if (!AdModule.getInstance().getAdMob().showInterstitialAd()) {
-				AdModule.getInstance().getFacebookAd().setLoadListener(new IFacebookAd.FacebookAdListener() {
-					@Override
-					public void onLoadedAd(View view) {
-						AdModule.getInstance().getFacebookAd().setLoadListener(null);
-						AdModule.getInstance().createMaterialDialog()
-								.showAdDialog(MainActivity.this, view);
-					}
-
-					@Override
-					public void onLoadedAd(NativeAd nativeAd) {
-
-					}
-
-					@Override
-					public void onStartLoadAd(View view) {
-
-					}
-
-					@Override
-					public void onLoadAdFailed(int i, String s) {
-						AdModule.getInstance().getFacebookAd().setLoadListener(null);
-						AdModule.getInstance().getAdMob().showInterstitialAd();
-					}
-				});
-				AdModule.getInstance().getFacebookAd().loadAd(false, AdsID.FB_NATIVE_AD_ID);
-			}
-		} else {
-			AdModule.getInstance().getAdMob().requestNewInterstitial();
-		}
 	}
 
 
@@ -219,65 +399,65 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 	}
 
 
-	@Override
-	public boolean onCreateOptionsMenu(final Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.main_activity_menu, menu);
+//	@Override
+//	public boolean onCreateOptionsMenu(final Menu menu) {
+////		MenuInflater inflater = getMenuInflater();
+////		inflater.inflate(R.menu.main_activity_menu, menu);
+////
+////		// setup the SearchView (actionbar)
+////		final MenuItem searchItem = menu.findItem(R.id.menu_search);
+////		final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+////
+////		if (searchView == null) {
+////			return true;
+////		}
+////
+////		searchView.setQueryHint(getString(R.string.search_videos));
+////		searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+////			@Override
+////			public boolean onQueryTextChange(String newText) {
+////				return false;
+////			}
+////
+////			@Override
+////			public boolean onQueryTextSubmit(String query) {
+////				// hide the keyboard
+////				searchView.clearFocus();
+////
+////				// open SearchVideoGridFragment and display the results
+////				searchVideoGridFragment = new SearchVideoGridFragment();
+////				Bundle bundle = new Bundle();
+////				bundle.putString(SearchVideoGridFragment.QUERY, query);
+////				searchVideoGridFragment.setArguments(bundle);
+////				switchToFragment(searchVideoGridFragment);
+////
+////				return true;
+////			}
+////		});
+//
+//		return true;
+//	}
 
-		// setup the SearchView (actionbar)
-		final MenuItem searchItem = menu.findItem(R.id.menu_search);
-		final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
-		if (searchView == null) {
-			return true;
-		}
-
-		searchView.setQueryHint(getString(R.string.search_videos));
-		searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-			@Override
-			public boolean onQueryTextChange(String newText) {
-				return false;
-			}
-
-			@Override
-			public boolean onQueryTextSubmit(String query) {
-				// hide the keyboard
-				searchView.clearFocus();
-
-				// open SearchVideoGridFragment and display the results
-				searchVideoGridFragment = new SearchVideoGridFragment();
-				Bundle bundle = new Bundle();
-				bundle.putString(SearchVideoGridFragment.QUERY, query);
-				searchVideoGridFragment.setArguments(bundle);
-				switchToFragment(searchVideoGridFragment);
-
-				return true;
-			}
-		});
-
-		return true;
-	}
-
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case R.id.menu_preferences:
-				Intent i = new Intent(this, PreferencesActivity.class);
-				startActivity(i);
-				return true;
-			case R.id.menu_enter_video_url:
-				displayEnterVideoUrlDialog();
-				return true;
-			case android.R.id.home:
-				if(mainFragment == null || !mainFragment.isVisible()) {
-					onBackPressed();
-					return true;
-				}
-		}
-
-		return super.onOptionsItemSelected(item);
-	}
+//	@Override
+//	public boolean onOptionsItemSelected(MenuItem item) {
+//		switch (item.getItemId()) {
+//			case R.id.menu_preferences:
+//				Intent i = new Intent(this, PreferencesActivity.class);
+//				startActivity(i);
+//				return true;
+//			case R.id.menu_enter_video_url:
+//				displayEnterVideoUrlDialog();
+//				return true;
+//			case android.R.id.home:
+//				if(mainFragment == null || !mainFragment.isVisible()) {
+//					onBackPressed();
+//					return true;
+//				}
+//		}
+//
+//		return super.onOptionsItemSelected(item);
+//	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -341,8 +521,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 	public void onBackPressed() {
 		if (mainFragment != null  &&  mainFragment.isVisible()) {
 			// If the Subscriptions Drawer is open, close it instead of minimizing the app.
-			if(mainFragment.isDrawerOpen()) {
-				mainFragment.closeDrawer();
+			if(subsDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+				subsDrawerLayout.closeDrawer(GravityCompat.START);
 			} else {
 				// On Android, when the user presses back button, the Activity is destroyed and will be
 				// recreated when the user relaunches the app.
@@ -359,15 +539,16 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 	}
 
 
-	private void switchToFragment(Fragment fragment) {
+	public void switchToFragment(Fragment fragment) {
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
 		transaction.replace(R.id.fragment_container, fragment);
 		if(!dontAddToBackStack)
 			transaction.addToBackStack(null);
-		else
+		else {
 			dontAddToBackStack = false;
-		transaction.commit();
+		}
+		transaction.commitAllowingStateLoss();
 	}
 
 

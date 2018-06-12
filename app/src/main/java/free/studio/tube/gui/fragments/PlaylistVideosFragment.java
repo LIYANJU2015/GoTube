@@ -25,8 +25,6 @@ public class PlaylistVideosFragment extends VideosGridFragment {
 
 	private YouTubePlaylist youTubePlaylist;
 
-	@BindView(R.id.toolbar)
-	Toolbar     toolbar;
 	@BindView(R.id.playlist_banner_image_view)
 	ImageView   playlistBannerImageView;
 	@BindView(R.id.playlist_thumbnail_image_view)
@@ -49,15 +47,6 @@ public class PlaylistVideosFragment extends VideosGridFragment {
 
 		ButterKnife.bind(this, view);
 		playlistTitleTextView.setText(youTubePlaylist.getTitle());
-
-		// setup the toolbar/actionbar
-		setSupportActionBar(toolbar);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-		ActionBar actionBar = getSupportActionBar();
-		if (actionBar != null && youTubePlaylist.getChannel() != null) {
-			actionBar.setTitle(youTubePlaylist.getChannel().getTitle());
-		}
 
 		// set the playlist's thumbnail
 		Glide.with(getActivity())

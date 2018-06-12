@@ -58,52 +58,7 @@ public class SearchVideoGridFragment extends VideosGridFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// inflate the layout for this fragment
 		View view = super.onCreateView(inflater, container, savedInstanceState);
-
-		// setup the toolbar/actionbar
-		Toolbar toolbar = view.findViewById(R.id.toolbar);
-		setSupportActionBar(toolbar);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-		// set the action bar's title
-		ActionBar actionBar = getSupportActionBar();
-		if (actionBar != null)
-			actionBar.setTitle(searchQuery);
-
-		// the app will call onCreateOptionsMenu() for when the user wants to search
-		setHasOptionsMenu(true);
-
-		View shadowView = view.findViewById(R.id.search_toolbar_shadow);
-		if (Build.VERSION.SDK_INT < 21) {
-			shadowView.setVisibility(View.VISIBLE);
-		}
 		return view;
-	}
-
-
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		final MenuItem   searchMenuItem = menu.findItem(R.id.menu_search);
-		final SearchView searchView = (SearchView) searchMenuItem.getActionView();
-
-		// will be called when the user clicks on the actionbar's search icon
-		searchMenuItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
-			@Override
-			public boolean onMenuItemActionExpand(MenuItem item) {
-				// if the user has previously search, then copy the query into the search view
-				if (searchQuery != null  &&  !searchQuery.isEmpty()) {
-					searchView.onActionViewExpanded();
-					searchView.setQuery(searchQuery, false);
-				}
-
-				// now expand the search view
-				return true;
-			}
-
-			@Override
-			public boolean onMenuItemActionCollapse(MenuItem item) {
-				return true;
-			}
-		});
 	}
 
 

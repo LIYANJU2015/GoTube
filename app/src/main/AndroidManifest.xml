@@ -90,6 +90,10 @@
 			android:theme="@style/NoActionBarActivityTheme">
 		</activity>
 
+		<activity android:name="free.studio.tube.gui.activities.DownloadActivity"
+			android:theme="@style/NoActionBarActivityTheme"
+			/>
+
 		<!--<service android:name=".businessobjects.FeedUpdaterService"/>-->
 
 		<!--<receiver-->
@@ -139,11 +143,11 @@
 		<!-- 配置APP ID -->
 		<meta-data
 			android:name="BUGLY_APPID"
-			android:value="3f537f3c5d" />
+			android:value="ea34d5843c" />
 		<!-- 配置APP版本号 -->
 		<meta-data
 			android:name="BUGLY_APP_VERSION"
-			android:value="1.1.0" />
+			android:value="1.0.0" />
 		<!-- 配置APP渠道号 -->
 		<meta-data
 			android:name="BUGLY_APP_CHANNEL"

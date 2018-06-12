@@ -14,7 +14,7 @@ public class DownloadedVideosTable {
 	public static String getCreateStatement() {
 		return "CREATE TABLE " + TABLE_NAME + " (" +
 						COL_YOUTUBE_VIDEO_ID + " TEXT PRIMARY KEY NOT NULL, " +
-						COL_YOUTUBE_VIDEO + " BLOB, " +
+						COL_YOUTUBE_VIDEO + " TEXT, " +
 						COL_FILE_URI + " TEXT, " +
 						COL_ORDER + " INTEGER " +
 						" )";

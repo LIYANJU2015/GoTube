@@ -18,6 +18,7 @@
 package free.studio.tube.app;
 
 import android.annotation.TargetApi;
+import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.Application;
 import android.app.NotificationChannel;
@@ -34,8 +35,10 @@ import android.os.Build;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.multidex.MultiDexApplication;
+import android.text.TextUtils;
 
 import com.admodule.AdModule;
+import com.liulishuo.filedownloader.FileDownloader;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.Arrays;
@@ -60,10 +63,36 @@ public class GoTubeApp extends MultiDexApplication {
 
 	public static boolean isCoolStart = false;
 
+
+	private String getCurrentProcessName() {
+		int pid = android.os.Process.myPid();
+		ActivityManager am = (ActivityManager)
+				getSystemService(Context.ACTIVITY_SERVICE);
+		final List<ActivityManager.RunningAppProcessInfo> appProcessInfos = am.getRunningAppProcesses();
+
+		if (appProcessInfos != null) {
+			for (ActivityManager.RunningAppProcessInfo appProcess : appProcessInfos) {
+				if (appProcess.pid == pid) {
+					return appProcess.processName;
+				}
+			}
+		}
+		return "";
+	}
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
+
 		GoTubeApp = this;
+
+		FileDownloader.setup(this);
+
+		final String packageName = getPackageName();
+		if (!TextUtils.isEmpty(packageName) && !packageName.equals(getCurrentProcessName())) {
+			return;
+		}
+
 		SuperVersions.initSpecial();
 		SuperVersions.fetchDeferredAppLinkData(GoTubeApp);
 
@@ -133,6 +162,8 @@ public class GoTubeApp extends MultiDexApplication {
 		AdModule.getInstance().getAdMob().requestNewInterstitial();
 
 		AdModule.getInstance().getFacebookAd().loadAds(AdsID.FB_NATIVE_AD_ID);
+
+		setSpecial();
 	}
 
 	public static void addShortcut(Context context, Class clazz, String appName, int ic_launcher) {

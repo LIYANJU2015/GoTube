@@ -40,15 +40,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!-- TOOLBAR / ACTIONBAR -->
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:elevation="4dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="@color/colorPrimary"
-                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"

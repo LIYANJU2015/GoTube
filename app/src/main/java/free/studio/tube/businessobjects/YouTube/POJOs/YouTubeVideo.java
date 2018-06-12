@@ -32,6 +32,7 @@ import com.admodule.AdModule;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.youtube.model.Thumbnail;
 import com.google.api.services.youtube.model.Video;
+import com.google.gson.annotations.Expose;
 import com.rating.RatingActivity;
 
 import java.io.File;
@@ -51,6 +52,7 @@ import free.studio.tube.app.GoTubeApp;
 import free.studio.tube.businessobjects.AsyncTaskParallel;
 import free.studio.tube.businessobjects.FacebookReport;
 import free.studio.tube.businessobjects.FileDownloader;
+import free.studio.tube.businessobjects.FileDownloaderHelper;
 import free.studio.tube.businessobjects.Logger;
 import free.studio.tube.businessobjects.YouTube.VideoStream.ParseStreamMetaData;
 import free.studio.tube.businessobjects.YouTube.VideoStream.StreamMetaData;
@@ -101,6 +103,9 @@ public class YouTubeVideo implements Serializable {
 	/** Default preferred language(s) -- by default, no language shall be filtered out. */
 	private static final Set<String> defaultPrefLanguages = new HashSet<>(GoTubeApp.getStringArrayAsList(R.array.languages_iso639_codes));
 
+	public YouTubeVideo() {
+
+	}
 
 	public YouTubeVideo(Video video) {
 		this.id = video.getId();
@@ -435,7 +440,7 @@ public class YouTubeVideo implements Serializable {
 		getStreamTask.executeInParallel();
 	}
 
-	private GetStreamTask getStreamTask;
+	private transient GetStreamTask getStreamTask;
 
 	public void cancelGetStream() {
 		if (getStreamTask != null) {
@@ -472,6 +477,15 @@ public class YouTubeVideo implements Serializable {
 		return DownloadedVideosDb.getVideoDownloadsDb().isVideoDownloaded(YouTubeVideo.this);
 	}
 
+	public void downloadVideo(Context context, String downloadurl) {
+		if (isDownloaded()) {
+			Toast.makeText(context, R.string.downloaded_tip, Toast.LENGTH_LONG).show();
+			return;
+		}
+
+		FileDownloaderHelper.addDownloadTask(this, downloadurl);
+	}
+
 	/**
 	 * Downloads this video.
 	 *
@@ -494,31 +508,9 @@ public class YouTubeVideo implements Serializable {
 				if (desiredStream == null) {
 					return;
 				}
-				// download the video
-				new VideoDownloader()
-						.setRemoteFileUrl(desiredStream.getUri().toString())
-						.setDirType(Environment.DIRECTORY_MOVIES)
-						.setTitle(getTitle())
-						.setDescription(GoTubeApp.getStr(R.string.video) + " ― " + getChannelName())
-						.setOutputFileName(getId())
-						.setOutputFileExtension("mp4")
-						.setAllowedOverRoaming(false)
-						.setAllowedNetworkTypesFlags(getAllowedNetworkTypesFlags())
-						.displayPermissionsActivity(context);
-				Toast.makeText(context, R.string.download_add_tip, Toast.LENGTH_LONG).show();
+
+				FileDownloaderHelper.addDownloadTask(YouTubeVideo.this, desiredStream.getUri().toString());
 			}
-
-
-			private int getAllowedNetworkTypesFlags() {
-				boolean allowDownloadsOnMobile = GoTubeApp.getPreferenceManager().getBoolean(GoTubeApp.getStr(R.string.pref_key_allow_mobile_downloads), false);
-				int flags = DownloadManager.Request.NETWORK_WIFI;
-				if(allowDownloadsOnMobile)
-					flags = flags | DownloadManager.Request.NETWORK_MOBILE;
-
-				return flags;
-			}
-
-
 			@Override
 			public void onGetStreamError(String errorMessage) {
 				Logger.e(YouTubeVideo.this, "Stream error: %s", errorMessage);

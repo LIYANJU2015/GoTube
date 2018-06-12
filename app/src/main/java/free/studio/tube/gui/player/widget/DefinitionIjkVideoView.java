@@ -53,6 +53,10 @@ public class DefinitionIjkVideoView extends IjkVideoView implements DefinitionMe
         this.mCurrentUrl = getValueFromLinkedMap(videos, 0);
     }
 
+    public String getCurrentUrl() {
+        return mCurrentUrl;
+    }
+
     public static String getValueFromLinkedMap(LinkedHashMap<String, String> map, int index) {
         int currentIndex = 0;
         for (String key : map.keySet()) {

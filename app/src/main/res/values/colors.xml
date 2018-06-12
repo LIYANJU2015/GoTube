@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="colorPrimary">#F44336</color>
+	<color name="colorPrimary">#D32F2F</color>
 	<color name="colorPrimaryDark">#D32F2F</color>
 	<color name="colorAccent">#FF5252</color>
 
@@ -84,5 +84,8 @@
 
 	<color name="theme_color">@color/colorPrimary</color>
 	<color name="theme_color_translucent">#99F44336</color>
+
+	<color name="colorSubTextWhite">#b3ffffff</color>
+	<color name="colorPrimaryTextWhite">#ffffffff</color>
 
 </resources>

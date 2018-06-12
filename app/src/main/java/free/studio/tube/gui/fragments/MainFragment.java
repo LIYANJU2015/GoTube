@@ -1,6 +1,10 @@
 package free.studio.tube.gui.fragments;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -9,6 +13,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -17,29 +22,46 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.arlib.floatingsearchview.FloatingSearchView;
+import com.arlib.floatingsearchview.suggestions.SearchSuggestionsAdapter;
+import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
+
+import org.json.JSONArray;
+
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import free.rm.gotube.R;
 import free.studio.tube.app.GoTubeApp;
 import free.studio.tube.businessobjects.Logger;
+import free.studio.tube.businessobjects.SreentUtils;
+import free.studio.tube.businessobjects.TubeSearchSuggistion;
 import free.studio.tube.businessobjects.db.BookmarksDb;
 import free.studio.tube.businessobjects.db.DownloadedVideosDb;
+import free.studio.tube.gui.activities.MainActivity;
+import free.studio.tube.gui.activities.PreferencesActivity;
 import free.studio.tube.gui.businessobjects.MainActivityListener;
 import free.studio.tube.gui.businessobjects.adapters.SubsAdapter;
 import free.studio.tube.gui.businessobjects.fragments.FragmentEx;
+import q.rorbin.badgeview.Badge;
+import q.rorbin.badgeview.QBadgeView;
 
 public class MainFragment extends FragmentEx {
-	private RecyclerView				subsListView = null;
-	private SubsAdapter					subsAdapter  = null;
-	private ActionBarDrawerToggle		subsDrawerToggle;
 	private TabLayout                   tabLayout = null;
-	private DrawerLayout 							subsDrawerLayout = null;
 
 	/** List of fragments that will be displayed as tabs. */
 	private List<VideosGridFragment>	videoGridFragmentsList = new ArrayList<>();
@@ -47,7 +69,6 @@ public class MainFragment extends FragmentEx {
 	private MostPopularVideosFragment	mostPopularVideosFragment = null;
 	private SubscriptionsFeedFragment   subscriptionsFeedFragment = null;
 	private BookmarksFragment			bookmarksFragment = null;
-	private DownloadedVideosFragment    downloadedVideosFragment = null;
 
 	// Constants for saving the state of this Fragment's child Fragments
 	public static final String FEATURED_VIDEOS_FRAGMENT = "MainFragment.featuredVideosFragment";
@@ -61,6 +82,13 @@ public class MainFragment extends FragmentEx {
 
 	public static final String SHOULD_SELECTED_FEED_TAB = "MainFragment.SHOULD_SELECTED_FEED_TAB";
 
+	private Activity activity;
+
+	@Override
+	public void onAttach(Context context) {
+		super.onAttach(context);
+		activity = getActivity();
+	}
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,7 +99,6 @@ public class MainFragment extends FragmentEx {
 			mostPopularVideosFragment = (MostPopularVideosFragment) getChildFragmentManager().getFragment(savedInstanceState, MOST_POPULAR_VIDEOS_FRAGMENT);
 			subscriptionsFeedFragment = (SubscriptionsFeedFragment)getChildFragmentManager().getFragment(savedInstanceState, SUBSCRIPTIONS_FEED_FRAGMENT);
 			bookmarksFragment = (BookmarksFragment) getChildFragmentManager().getFragment(savedInstanceState, BOOKMARKS_FRAGMENT);
-			downloadedVideosFragment = (DownloadedVideosFragment) getChildFragmentManager().getFragment(savedInstanceState, DOWNLOADED_VIDEOS_FRAGMENT);
 		}
 	}
 
@@ -79,44 +106,6 @@ public class MainFragment extends FragmentEx {
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_main, container, false);
-
-		// setup the toolbar / actionbar
-		Toolbar toolbar = view.findViewById(R.id.toolbar);
-		setSupportActionBar(toolbar);
-
-		// indicate that this fragment has an action bar menu
-		setHasOptionsMenu(true);
-
-		View shadowView = view.findViewById(R.id.toolbar_shadow);
-		if (Build.VERSION.SDK_INT < 21) {
-			shadowView.setVisibility(View.VISIBLE);
-		}
-
-		subsDrawerLayout = view.findViewById(R.id.subs_drawer_layout);
-		subsDrawerToggle = new ActionBarDrawerToggle(
-						getActivity(),
-						subsDrawerLayout,
-						R.string.app_name,
-						R.string.app_name
-		);
-
-		subsDrawerToggle.setDrawerIndicatorEnabled(true);
-		final ActionBar actionBar = getSupportActionBar();
-		if (actionBar != null) {
-			actionBar.setDisplayHomeAsUpEnabled(true);
-			actionBar.setHomeButtonEnabled(true);
-		}
-
-		subsListView = view.findViewById(R.id.subs_drawer);
-		if (subsAdapter == null) {
-			subsAdapter = SubsAdapter.get(getActivity(), view.findViewById(R.id.subs_drawer_progress_bar));
-		} else {
-			subsAdapter.setContext(getActivity());
-		}
-		subsAdapter.setListener((MainActivityListener)getActivity());
-
-		subsListView.setLayoutManager(new LinearLayoutManager(getActivity()));
-		subsListView.setAdapter(subsAdapter);
 
 		videosPagerAdapter = new VideosPagerAdapter(getChildFragmentManager());
 		viewPager = view.findViewById(R.id.pager);
@@ -163,13 +152,6 @@ public class MainFragment extends FragmentEx {
 	}
 
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-
-		subsDrawerToggle.syncState();
-	}
-
 
 	@Override
 	public void onResume() {
@@ -188,9 +170,6 @@ public class MainFragment extends FragmentEx {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Pass the event to ActionBarDrawerToggle, if it returns true, then it has handled the app
 		// icon touch event
-		if (subsDrawerToggle.onOptionsItemSelected(item)) {
-			return true;
-		}
 
 		// Handle your other action bar items...
 		return super.onOptionsItemSelected(item);
@@ -216,20 +195,11 @@ public class MainFragment extends FragmentEx {
 				BookmarksDb.getBookmarksDb().addListener(bookmarksFragment);
 			}
 
-			if (GoTubeApp.isSpecial()) {
-				if (downloadedVideosFragment == null) {
-					downloadedVideosFragment = new DownloadedVideosFragment();
-					DownloadedVideosDb.getVideoDownloadsDb().setListener(downloadedVideosFragment);
-				}
-			}
-
 			// add fragments to list:  do NOT forget to ***UPDATE*** @string/default_tab and @string/default_tab_values
 			videoGridFragmentsList.clear();
 			videoGridFragmentsList.add(featuredVideosFragment);
 			videoGridFragmentsList.add(mostPopularVideosFragment);
-			if (GoTubeApp.isSpecial()) {
-				videoGridFragmentsList.add(downloadedVideosFragment);
-			}
+
 			videoGridFragmentsList.add(subscriptionsFeedFragment);
 			videoGridFragmentsList.add(bookmarksFragment);
 		}
@@ -261,24 +231,7 @@ public class MainFragment extends FragmentEx {
 			getChildFragmentManager().putFragment(outState, SUBSCRIPTIONS_FEED_FRAGMENT, subscriptionsFeedFragment);
 		if(bookmarksFragment != null && bookmarksFragment.isAdded())
 			getChildFragmentManager().putFragment(outState, BOOKMARKS_FRAGMENT, bookmarksFragment);
-		if(downloadedVideosFragment != null && downloadedVideosFragment.isAdded())
-			getChildFragmentManager().putFragment(outState, DOWNLOADED_VIDEOS_FRAGMENT, downloadedVideosFragment);
 
 		super.onSaveInstanceState(outState);
-	}
-
-	/**
-	 * Returns true if the subscriptions drawer is opened.
-	 */
-	public boolean isDrawerOpen() {
-		return subsDrawerLayout.isDrawerOpen(GravityCompat.START);
-	}
-
-	
-	/**
-	 * Close the subscriptions drawer.
-	 */
-	public void closeDrawer() {
-		subsDrawerLayout.closeDrawer(GravityCompat.START);
 	}
 }

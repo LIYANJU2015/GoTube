@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	android:orientation="vertical"
 	xmlns:custom="http://schemas.android.com/tools"
 	android:fitsSystemWindows="true">
 
@@ -24,16 +25,6 @@
 				android:layout_height="wrap_content"
 				android:orientation="vertical">
 
-				<!-- TOOLBAR / ACTIONBAR -->
-				<android.support.v7.widget.Toolbar
-					android:id="@+id/toolbar"
-					android:background="@color/colorPrimary"
-					android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-					app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-					android:layout_width="match_parent"
-					android:layout_height="?attr/actionBarSize"
-					android:elevation="4dp"
-					/>
 
 				<RelativeLayout
 					android:layout_width="match_parent"
@@ -90,5 +81,5 @@
 		layout="@layout/videos_gridview"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-</android.support.design.widget.CoordinatorLayout>
+		/>
+</LinearLayout>

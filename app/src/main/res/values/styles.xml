@@ -18,13 +18,30 @@
 
 	</style>
 
+	<style name="AppTheme_noActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+		<item name="colorPrimary">@color/colorPrimary</item>
+		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+		<item name="colorAccent">@color/colorAccent</item>
+
+		<item name="actionBarPopupTheme">@style/ThemeOverlay.AppCompat</item>
+		<item name="android:popupMenuStyle">@style/PopupMenu</item>
+		<!--<item name="popupMenuStyle">@style/PopupMenu</item>-->
+
+		<item name="textAppearanceLargePopupMenu">@style/VideoOptionsTextAppearanceLarge</item>
+		<item name="android:textAppearanceLargePopupMenu">@style/VideoOptionsTextAppearanceLarge</item>
+
+		<item name="textAppearanceSmallPopupMenu">@style/VideoOptionsTextAppearanceSmall</item>
+		<item name="android:textAppearanceSmallPopupMenu">@style/VideoOptionsTextAppearanceSmall</item>
+
+	</style>
+
 
 	<!-- *************************************************************************************** -->
 	<!--
 		Main Activity
 	-->
 
-	<style name="NoActionBarActivityTheme" parent="AppTheme">
+	<style name="NoActionBarActivityTheme" parent="AppTheme_noActionBar">
 		<item name="windowActionBar">false</item>
 		<item name="windowNoTitle">true</item>
 		<item name="md_background_color">@android:color/white</item>

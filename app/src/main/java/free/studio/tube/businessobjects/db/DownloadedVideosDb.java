@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -72,8 +73,8 @@ public class DownloadedVideosDb extends SQLiteOpenHelperEx implements OrderableD
 
 		if(cursor.moveToNext()) {
 			do {
-				byte[] blob = cursor.getBlob(cursor.getColumnIndex(DownloadedVideosTable.COL_YOUTUBE_VIDEO));
-				YouTubeVideo video = new Gson().fromJson(new String(blob), new TypeToken<YouTubeVideo>(){}.getType());
+				String youtubeJson = cursor.getString(cursor.getColumnIndex(DownloadedVideosTable.COL_YOUTUBE_VIDEO));
+				YouTubeVideo video = new Gson().fromJson(youtubeJson, new TypeToken<YouTubeVideo>(){}.getType());
 				videos.add(video);
 			} while(cursor.moveToNext());
 		}
@@ -85,9 +86,11 @@ public class DownloadedVideosDb extends SQLiteOpenHelperEx implements OrderableD
 	public boolean add(YouTubeVideo video, String fileUri) {
 		Gson gson = new Gson();
 		ContentValues values = new ContentValues();
+		String json = gson.toJson(video);
 		values.put(DownloadedVideosTable.COL_YOUTUBE_VIDEO_ID, video.getId());
-		values.put(DownloadedVideosTable.COL_YOUTUBE_VIDEO, gson.toJson(video).getBytes());
+		values.put(DownloadedVideosTable.COL_YOUTUBE_VIDEO, json);
 		values.put(DownloadedVideosTable.COL_FILE_URI, fileUri);
+		Log.v("XX", "json :::" + json);
 
 		int order = getNumDownloads();
 		order++;

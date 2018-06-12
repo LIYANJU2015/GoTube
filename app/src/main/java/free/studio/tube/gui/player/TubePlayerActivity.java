@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.ms.square.android.expandabletextview.ExpandableTextView;
 import java.util.LinkedHashMap;
 
 import free.rm.gotube.R;
+import free.studio.tube.app.GoTubeApp;
 import free.studio.tube.businessobjects.SreentUtils;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeChannel;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeChannelInterface;
@@ -106,6 +108,8 @@ public class TubePlayerActivity extends AppCompatActivity{
 
                         ijkVideoView.setDefinitionVideos(videos);
                         ijkVideoView.start();
+
+                        downloadVideoIV.setVisibility(View.VISIBLE);
                     }
                 }
 
@@ -136,6 +140,7 @@ public class TubePlayerActivity extends AppCompatActivity{
     private SubscribeButton videoDescSubscribeButton;
     private ImageView videoDescChannelThumbnailImageView;
     private ExpandableTextView videoDescriptionTextView;
+    private View downloadVideoIV;
 
     private void initVideoDetailHeader() {
         View headerView = LayoutInflater.from(this).inflate(R.layout.video_description, null);
@@ -158,6 +163,15 @@ public class TubePlayerActivity extends AppCompatActivity{
                     i.setAction(MainActivity.ACTION_VIEW_CHANNEL);
                     i.putExtra(ChannelBrowserFragment.CHANNEL_OBJ, youTubeChannel);
                     startActivity(i);
+                }
+            }
+        });
+        downloadVideoIV = headerView.findViewById(R.id.download_video_iv);
+        downloadVideoIV.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if (youTubeVideo != null && !TextUtils.isEmpty(ijkVideoView.getCurrentUrl())) {
+                    youTubeVideo.downloadVideo(GoTubeApp.getContext(), ijkVideoView.getCurrentUrl());
                 }
             }
         });
