@@ -47,6 +47,8 @@
 	<color name="divider_color">#BDBDBD</color>
 	<color name="light_contrast_background_color">#ededed</color>
 	<color name="color_7f7f7f">#7f7f7f</color>
+	<color name="duration_background_color">#AA000000</color>
+	<color name="duration_text_color">#EEFFFFFF</color>
 
 
 	<!--

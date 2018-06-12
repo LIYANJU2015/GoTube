@@ -36,4 +36,6 @@
 	<string name="player_retry">Retry</string>
 	<string name="player_continue_play">Continue to play</string>
 	<string name="player_wifi_tip">You are using mobile network, continue to play will consume traffic</string>
+
+	<string name="player_not_install">Please install a support video player</string>
 </resources>

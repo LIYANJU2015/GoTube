@@ -1,6 +1,5 @@
 package free.studio.tube.gui.player.controller;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -17,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.admodule.Utils;
 import com.dueeeke.videoplayer.player.IjkVideoView;
 import com.dueeeke.videoplayer.util.L;
 import com.dueeeke.videoplayer.util.WindowUtil;
@@ -29,7 +27,7 @@ import java.util.ListIterator;
 import java.util.Map;
 
 import free.rm.gotube.R;
-import free.studio.tube.businessobjects.SreentUtils;
+import free.studio.tube.businessobjects.Utils;
 
 /**
  * Created by liyanju on 2018/6/8.
@@ -75,7 +73,7 @@ public class DefinitionController extends StandardVideoController {
         switch (playerState) {
             case IjkVideoView.PLAYER_NORMAL:
                 multiRate.setVisibility(GONE);
-                SreentUtils.transparence(WindowUtil.scanForActivity(getContext()));
+                Utils.transparence(WindowUtil.scanForActivity(getContext()));
                 break;
             case IjkVideoView.PLAYER_FULL_SCREEN:
                 multiRate.setVisibility(VISIBLE);

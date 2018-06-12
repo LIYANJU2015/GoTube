@@ -27,7 +27,7 @@ import java.util.LinkedHashMap;
 
 import free.rm.gotube.R;
 import free.studio.tube.app.GoTubeApp;
-import free.studio.tube.businessobjects.SreentUtils;
+import free.studio.tube.businessobjects.Utils;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeChannel;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeChannelInterface;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeVideo;
@@ -76,7 +76,7 @@ public class TubePlayerActivity extends AppCompatActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SreentUtils.transparence(this);
+        Utils.transparence(this);
         setContentView(R.layout.tube_player_layout);
 
         if (youTubeVideo == null) {

@@ -28,18 +28,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -47,15 +43,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.admodule.AdModule;
-import com.admodule.adfb.IFacebookAd;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.SearchSuggestionsAdapter;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
-import com.facebook.ads.NativeAd;
 
 import org.json.JSONArray;
-import org.mozilla.javascript.tools.jsc.Main;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -67,16 +59,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import free.rm.gotube.R;
-import free.studio.tube.app.AdsID;
 import free.studio.tube.app.GoTubeApp;
-import free.studio.tube.businessobjects.SreentUtils;
+import free.studio.tube.businessobjects.Utils;
 import free.studio.tube.businessobjects.TubeSearchSuggistion;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeChannel;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubePlaylist;
 import free.studio.tube.businessobjects.db.DownloadedVideosDb;
 import free.studio.tube.gui.businessobjects.MainActivityListener;
 import free.studio.tube.gui.businessobjects.YouTubePlayer;
-import free.studio.tube.gui.businessobjects.adapters.RecyclerViewAdapterEx;
 import free.studio.tube.gui.businessobjects.adapters.SubsAdapter;
 import free.studio.tube.gui.fragments.ChannelBrowserFragment;
 import free.studio.tube.gui.fragments.MainFragment;
@@ -360,7 +350,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 				}
 				mSearchView.hideProgress();
 			}
-		}.executeOnExecutor(SreentUtils.sExecutorService, newText);
+		}.executeOnExecutor(Utils.sExecutorService, newText);
 	}
 
 	@PermissionSuccess(requestCode = 100)
@@ -463,39 +453,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-
-	/**
-	 * Display the Enter Video URL dialog.
-	 */
-	private void displayEnterVideoUrlDialog() {
-		final AlertDialog alertDialog = new AlertDialog.Builder(this)
-			.setView(R.layout.dialog_enter_video_url)
-			.setTitle(R.string.enter_video_url)
-			.setPositiveButton(R.string.play, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					// get the inputted URL string
-					final String videoUrl = ((EditText)((AlertDialog) dialog).findViewById(R.id.dialog_url_edittext)).getText().toString();
-
-					// play the video
-					YouTubePlayer.launch(videoUrl, MainActivity.this);
-				}
-			})
-			.setNegativeButton(R.string.cancel, null)
-			.show();
-
-		// paste whatever there is in the clipboard (hopefully it is a video url)
-		((EditText) alertDialog.findViewById(R.id.dialog_url_edittext)).setText(getClipboardItem());
-
-		// clear URL edittext button
-		alertDialog.findViewById(R.id.dialog_url_clear_button).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				((EditText) alertDialog.findViewById(R.id.dialog_url_edittext)).setText("");
-			}
-		});
-	}
-
 
 	/**
 	 * Return the last item stored in the clipboard.

@@ -17,7 +17,6 @@
 
 package free.studio.tube.gui.businessobjects.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -36,7 +35,7 @@ import com.bumptech.glide.request.RequestOptions;
 
 import free.rm.gotube.R;
 import free.studio.tube.app.GoTubeApp;
-import free.studio.tube.businessobjects.SreentUtils;
+import free.studio.tube.businessobjects.Utils;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeVideo;
 import free.studio.tube.businessobjects.db.Tasks.IsVideoBookmarkedTask;
 import free.studio.tube.gui.activities.ThumbnailViewerActivity;
@@ -62,6 +61,7 @@ class GridViewHolder extends RecyclerView.ViewHolder {
 	private TextView viewsTextView;
 
 
+
 	/**
 	 * Constructor.
 	 *
@@ -70,7 +70,7 @@ class GridViewHolder extends RecyclerView.ViewHolder {
 	 * @param showChannelInfo   True to display channel information (e.g. channel name) and allows
 	 *                          user to open and browse the channel; false to hide such information.
 	 */
-	GridViewHolder(View view, MainActivityListener listener, boolean showChannelInfo) {
+	public GridViewHolder(View view, MainActivityListener listener, boolean showChannelInfo) {
 		super(view);
 
 		titleTextView = view.findViewById(R.id.title_text_view);
@@ -119,7 +119,7 @@ class GridViewHolder extends RecyclerView.ViewHolder {
 	 *
 	 * @param youTubeVideo		{@link YouTubeVideo} instance.
 	 */
-	void updateInfo(YouTubeVideo youTubeVideo, Context context, MainActivityListener listener) {
+	public void updateInfo(YouTubeVideo youTubeVideo, Context context, MainActivityListener listener) {
 		this.youTubeVideo = youTubeVideo;
 		this.context = context;
 		this.mainActivityListener = listener;
@@ -140,7 +140,7 @@ class GridViewHolder extends RecyclerView.ViewHolder {
 
 		if (!showChannelInfo || TextUtils.isEmpty(video.getChannelName())) {
 			((RelativeLayout.LayoutParams)viewsTextView.getLayoutParams())
-					.topMargin = SreentUtils.dp2px(8);
+					.topMargin = Utils.dp2px(8);
 		}
 		viewsTextView.setText(video.getViewsCount());
 

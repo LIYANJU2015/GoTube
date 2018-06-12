@@ -2,10 +2,7 @@ package free.studio.tube.gui.fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -13,52 +10,19 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.arlib.floatingsearchview.FloatingSearchView;
-import com.arlib.floatingsearchview.suggestions.SearchSuggestionsAdapter;
-import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
-
-import org.json.JSONArray;
-
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import free.rm.gotube.R;
-import free.studio.tube.app.GoTubeApp;
 import free.studio.tube.businessobjects.Logger;
-import free.studio.tube.businessobjects.SreentUtils;
-import free.studio.tube.businessobjects.TubeSearchSuggistion;
 import free.studio.tube.businessobjects.db.BookmarksDb;
-import free.studio.tube.businessobjects.db.DownloadedVideosDb;
-import free.studio.tube.gui.activities.MainActivity;
-import free.studio.tube.gui.activities.PreferencesActivity;
-import free.studio.tube.gui.businessobjects.MainActivityListener;
-import free.studio.tube.gui.businessobjects.adapters.SubsAdapter;
 import free.studio.tube.gui.businessobjects.fragments.FragmentEx;
-import q.rorbin.badgeview.Badge;
-import q.rorbin.badgeview.QBadgeView;
 
 public class MainFragment extends FragmentEx {
 	private TabLayout                   tabLayout = null;

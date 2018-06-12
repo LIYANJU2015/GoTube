@@ -18,6 +18,7 @@
 package free.studio.tube.gui.businessobjects.adapters;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +39,7 @@ import free.studio.tube.gui.businessobjects.fragments.BaseVideosGridFragment;
 /**
  * An adapter that will display videos in a {@link android.widget.GridView}.
  */
-public class VideoGridAdapter extends RecyclerViewAdapterEx<YouTubeVideo, GridViewHolder> {
+public class VideoGridAdapter extends RecyclerViewAdapterEx<YouTubeVideo, RecyclerView.ViewHolder> {
 
 	/** Class used to get YouTube videos from the web. */
 	private GetYouTubeVideos getYouTubeVideos;
@@ -141,9 +142,15 @@ public class VideoGridAdapter extends RecyclerViewAdapterEx<YouTubeVideo, GridVi
 
 
 	@Override
-	public GridViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.video_cell, parent, false);
-		return new GridViewHolder(v, listener, showChannelInfo);
+	public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+		View v;
+		if (currentVideoCategory == VideoCategory.SEARCH_QUERY || currentVideoCategory == VideoCategory.DOWNLOADED_VIDEOS) {
+			v = LayoutInflater.from(parent.getContext()).inflate(R.layout.video_list_item, parent, false);
+			return new ListViewHolder(v);
+		} else {
+			 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.video_cell, parent, false);
+			return new GridViewHolder(v, listener, showChannelInfo);
+		}
 	}
 
 	private BaseVideosGridFragment.SwipeRefreshCallBack mTaskCallBack;
@@ -172,9 +179,11 @@ public class VideoGridAdapter extends RecyclerViewAdapterEx<YouTubeVideo, GridVi
 
 
 	@Override
-	public void onBindViewHolder(GridViewHolder viewHolder, int position) {
-		if (viewHolder != null) {
-			viewHolder.updateInfo(get(position), getContext(), listener);
+	public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+		if (viewHolder != null && viewHolder instanceof GridViewHolder) {
+			((GridViewHolder)viewHolder).updateInfo(get(position), getContext(), listener);
+		} else if (viewHolder != null && viewHolder instanceof ListViewHolder) {
+			((ListViewHolder)viewHolder).updateInfo(getContext(), get(position));
 		}
 
 		// if it reached the bottom of the list, then try to get the next page of videos

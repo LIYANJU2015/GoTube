@@ -1,6 +1,5 @@
 package free.studio.tube.businessobjects;
 
-import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -18,7 +17,6 @@ import com.liulishuo.filedownloader.notification.FileDownloadNotificationListene
 import com.liulishuo.filedownloader.util.FileDownloadHelper;
 
 import java.io.File;
-import java.lang.ref.WeakReference;
 
 import free.rm.gotube.R;
 import free.studio.tube.app.GoTubeApp;
@@ -86,7 +84,7 @@ public class FileDownloaderHelper {
         @Override
         public void destroyNotification(final BaseDownloadTask task) {
             super.destroyNotification(task);
-            SreentUtils.runSingleThread(new Runnable() {
+            Utils.runSingleThread(new Runnable() {
                 @Override
                 public void run() {
                     if (task.getStatus() == FileDownloadStatus.completed) {
@@ -125,7 +123,7 @@ public class FileDownloaderHelper {
         protected void error(BaseDownloadTask task, Throwable e) {
             super.error(task, e);
             e.printStackTrace();
-            SreentUtils.showLongToastSafe(R.string.error_download);
+            Utils.showLongToastSafe(R.string.error_download);
         }
     }
 
