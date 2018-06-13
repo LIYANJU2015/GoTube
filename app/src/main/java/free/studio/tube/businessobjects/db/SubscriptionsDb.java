@@ -47,7 +47,7 @@ public class SubscriptionsDb extends SQLiteOpenHelperEx {
 	private static volatile SubscriptionsDb subscriptionsDb = null;
 
 	private static final int DATABASE_VERSION = 2;
-	private static final String DATABASE_NAME = "subs.db";
+	private static final String DATABASE_NAME = "tube_subs.db";
 
 
 	private SubscriptionsDb(Context context) {

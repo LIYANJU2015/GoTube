@@ -60,8 +60,8 @@ public class GoTubeApp extends MultiDexApplication {
 	/** GoTube Application databaseInstance. */
 	private static GoTubeApp GoTubeApp = null;
 
-	public static final String KEY_SUBSCRIPTIONS_LAST_UPDATED = "GoTubeApp.KEY_SUBSCRIPTIONS_LAST_UPDATED";
-	public static final String NEW_VIDEOS_NOTIFICATION_CHANNEL = "free.rm.GoTube.NEW_VIDEOS_NOTIFICATION_CHANNEL";
+	public static final String KEY_SUBSCRIPTIONS_LAST_UPDATED = "PlayTube.KEY_SUBSCRIPTIONS_LAST_UPDATED";
+	public static final String NEW_VIDEOS_NOTIFICATION_CHANNEL = "com.play.tube.NEW_VIDEOS_NOTIFICATION_CHANNEL";
 	public static final int NEW_VIDEOS_NOTIFICATION_CHANNEL_ID = 1;
 
 	public static boolean isCoolStart = false;

@@ -68,7 +68,7 @@ import hollowsoft.slidingdrawer.SlidingDrawer;
  */
 public class YouTubePlayerFragment extends ImmersiveModeFragment implements MediaPlayer.OnPreparedListener {
 
-	public static final String YOUTUBE_VIDEO_OBJ = "YouTubePlayerFragment.yt_video_obj";
+	public static final String YOUTUBE_VIDEO_OBJ = "YouTubePlayerFragment.Tubeyt_video_obj";
 
 	private YouTubeVideo		youTubeVideo = null;
 	private YouTubeChannel		youTubeChannel = null;
@@ -111,7 +111,7 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 	/** Timeout (in milliseconds) before the navigation bar is hidden (which will occur only after
 	 * the HUD is hidden). */
 	private static final int NAVBAR_VISIBILITY_TIMEOUT = 500;
-	private static final String VIDEO_CURRENT_POSITION = "YouTubePlayerFragment.VideoCurrentPosition";
+	private static final String VIDEO_CURRENT_POSITION = "YouTubePlayerFragment.TubeVideoCurrentPosition";
 	private static final String TAG = YouTubePlayerFragment.class.getSimpleName();
 	private static final String TUTORIAL_COMPLETED = "YouTubePlayerFragment.TutorialCompleted";
 

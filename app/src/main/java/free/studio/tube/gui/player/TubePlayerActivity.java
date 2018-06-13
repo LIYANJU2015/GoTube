@@ -56,7 +56,7 @@ public class TubePlayerActivity extends AppCompatActivity{
 
     public static final String TAG = "TubePlayerActivity";
 
-    public static final String YOUTUBE_VIDEO_OBJ = "YouTubePlayerFragment.yt_video_obj";
+    public static final String YOUTUBE_VIDEO_OBJ = "TubePlayerActivity.yt_video_obj";
 
     private DefinitionIjkVideoView ijkVideoView;
     private ExpandableListView commentsExpandableListView;

@@ -79,8 +79,8 @@ public class SubscriptionsFeedFragment extends VideosGridFragment implements Get
 	@BindView(R.id.noSubscriptionsText)
 	View noSubscriptionsText;
 
-	private static final String FLAG_REFRESH_FEED_FROM_CACHE = "SubscriptionsFeedFragment.FLAG_REFRESH_FEED_FROM_CACHE";
-	private static final String FLAG_REFRESH_FEED_FULL = "SubscriptionsFeedFragment.FLAG_REFRESH_FEED_FULL";
+	private static final String FLAG_REFRESH_FEED_FROM_CACHE = "TubeSubscriptionsFeedFragment.FLAG_REFRESH_FEED_FROM_CACHE";
+	private static final String FLAG_REFRESH_FEED_FULL = "TubeSubscriptionsFeedFragment.FLAG_REFRESH_FEED_FULL";
 	/** Refresh the feed (by querying the YT servers) after 3 hours since the last check. */
 	private static final int    REFRESH_TIME = 3;
 

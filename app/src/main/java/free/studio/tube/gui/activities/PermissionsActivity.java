@@ -38,7 +38,7 @@ public class PermissionsActivity extends AppCompatActivity {
 
 	private PermissionsTask     permissionsTask = null;
 
-	public static final String  PERMISSIONS_TASK_OBJ  = "PermissionsActivity.PERMISSIONS_TASK_OBJ";
+	public static final String  PERMISSIONS_TASK_OBJ  = "PermissionsActivity.TubePERMISSIONS_TASK_OBJ";
 	private static final int    EXT_STORAGE_PERM_CODE = 1949;
 
 

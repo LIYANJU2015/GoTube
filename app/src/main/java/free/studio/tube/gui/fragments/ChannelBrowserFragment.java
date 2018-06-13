@@ -62,8 +62,8 @@ public class ChannelBrowserFragment extends FragmentEx {
 
 	private YouTubeChannel channel = null;
 
-	public static final String FRAGMENT_CHANNEL_VIDEOS = "ChannelBrowserFragment.FRAGMENT_CHANNEL_VIDEOS";
-	public static final String FRAGMENT_CHANNEL_PLAYLISTS = "ChannelBrowserFragment.FRAGMENT_CHANNEL_PLAYLISTS";
+	public static final String FRAGMENT_CHANNEL_VIDEOS = "TubeChannelBrowserFragment.FRAGMENT_CHANNEL_VIDEOS";
+	public static final String FRAGMENT_CHANNEL_PLAYLISTS = "TubeChannelBrowserFragment.FRAGMENT_CHANNEL_PLAYLISTS";
 
 	private ImageView 			channelThumbnailImage = null;
 	private ImageView			channelBannerImage = null;
@@ -71,8 +71,8 @@ public class ChannelBrowserFragment extends FragmentEx {
 	private SubscribeButton channelSubscribeButton = null;
 	private GetChannelInfoTask	task = null;
 
-	public static final String CHANNEL_OBJ = "ChannelBrowserFragment.ChannelObj";
-	public static final String CHANNEL_ID  = "ChannelBrowserFragment.ChannelID";
+	public static final String CHANNEL_OBJ = "TubeChannelBrowserFragment.ChannelObj";
+	public static final String CHANNEL_ID  = "TubeChannelBrowserFragment.ChannelID";
 
 	// The fragments that will be displayed
 	private ChannelVideosFragment       channelVideosFragment;

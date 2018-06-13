@@ -95,12 +95,12 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 
 	/** Set to true of the UpdatesCheckerTask has run; false otherwise. */
 	private static boolean updatesCheckerTaskRan = false;
-	public static final String ACTION_VIEW_CHANNEL = "MainActivity.ViewChannel";
-	public static final String ACTION_VIEW_FEED = "MainActivity.ViewFeed";
-	private static final String MAIN_FRAGMENT   = "MainActivity.MainFragment";
-	private static final String SEARCH_FRAGMENT = "MainActivity.SearchFragment";
-	public static final String CHANNEL_BROWSER_FRAGMENT = "MainActivity.ChannelBrowserFragment";
-	public static final String PLAYLIST_VIDEOS_FRAGMENT = "MainActivity.PlaylistVideosFragment";
+	public static final String ACTION_VIEW_CHANNEL = "MainActivity2.ViewChannel2";
+	public static final String ACTION_VIEW_FEED = "MainActivity2.ViewFeed2";
+	private static final String MAIN_FRAGMENT   = "MainActivity2.MainFragment2";
+	private static final String SEARCH_FRAGMENT = "MainActivity2.SearchFragment2";
+	public static final String CHANNEL_BROWSER_FRAGMENT = "MainActivity2.ChannelBrowserFragment2";
+	public static final String PLAYLIST_VIDEOS_FRAGMENT = "MainActivity2.PlaylistVideosFragment2";
 
 	private boolean dontAddToBackStack = false;
 

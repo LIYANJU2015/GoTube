@@ -28,7 +28,7 @@ public class FeedUpdaterService extends Service implements GetSubscriptionVideos
 	private GetSubscriptionVideosTask getSubscriptionVideosTask;
 	private List<YouTubeVideo> newVideosFetched;
 
-	public static final String NEW_SUBSCRIPTION_VIDEOS_FOUND = "FeedUpdaterService.NEW_SUBSCRIPTION_VIDEOS_FOUND";
+	public static final String NEW_SUBSCRIPTION_VIDEOS_FOUND = "FeedUpdaterService.TubeNEW_SUBSCRIPTION_VIDEOS_FOUND";
 
 	@Override
 	public IBinder onBind(Intent intent) {

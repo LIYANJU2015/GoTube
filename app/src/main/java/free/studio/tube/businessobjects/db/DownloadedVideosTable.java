@@ -4,11 +4,11 @@ package free.studio.tube.businessobjects.db;
  * Downloaded Videos Table
  */
 public class DownloadedVideosTable {
-	public static final String TABLE_NAME = "DownloadedVideos";
-	public static final String COL_YOUTUBE_VIDEO_ID = "YouTube_Video_Id";
-	public static final String COL_YOUTUBE_VIDEO = "YouTube_Video";
-	public static final String COL_FILE_URI = "File_URI";
-	public static final String COL_ORDER = "Order_Index";
+	public static final String TABLE_NAME = "imagedownload";
+	public static final String COL_YOUTUBE_VIDEO_ID = "img_Id";
+	public static final String COL_YOUTUBE_VIDEO = "img_info";
+	public static final String COL_FILE_URI = "img_uri";
+	public static final String COL_ORDER = "img_order";
 
 
 	public static String getCreateStatement() {

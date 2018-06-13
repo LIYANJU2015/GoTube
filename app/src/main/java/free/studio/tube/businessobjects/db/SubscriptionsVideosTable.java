@@ -21,11 +21,11 @@ package free.studio.tube.businessobjects.db;
  * A table that caches metadata about videos published by subbed channels.
  */
 public class SubscriptionsVideosTable {
-	public static final String TABLE_NAME = "SubsVideos";
-	public static final String COL_CHANNEL_ID = "Channel_Id";
-	public static final String COL_YOUTUBE_VIDEO_ID = "YouTube_Video_Id";
-	public static final String COL_YOUTUBE_VIDEO = "YouTube_Video";
-	public static final String COL_YOUTUBE_VIDEO_DATE = "YouTube_Video_Date";
+	public static final String TABLE_NAME = "SubsInfo";
+	public static final String COL_CHANNEL_ID = "sub_Channel_Id";
+	public static final String COL_YOUTUBE_VIDEO_ID = "sub_youTube_Video_Id";
+	public static final String COL_YOUTUBE_VIDEO = "sub_youTube_Video";
+	public static final String COL_YOUTUBE_VIDEO_DATE = "sub_youTube_Video_Date";
 
 	public static String getCreateStatement() {
 		return "CREATE TABLE " + TABLE_NAME + " (" +

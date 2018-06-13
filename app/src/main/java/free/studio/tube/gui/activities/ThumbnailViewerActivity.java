@@ -49,7 +49,7 @@ public class ThumbnailViewerActivity extends AppCompatActivity {
 
 	private YouTubeVideo youTubeVideo;
 
-	public static final String YOUTUBE_VIDEO = "ThumbnailViewerActivity.YouTubeVideo";
+	public static final String YOUTUBE_VIDEO = "ThumbnailViewerActivity.TubeYouTubeVideo";
 
 
 	@Override

@@ -35,16 +35,16 @@ public class MainFragment extends FragmentEx {
 	private BookmarksFragment			bookmarksFragment = null;
 
 	// Constants for saving the state of this Fragment's child Fragments
-	public static final String FEATURED_VIDEOS_FRAGMENT = "MainFragment.featuredVideosFragment";
-	public static final String MOST_POPULAR_VIDEOS_FRAGMENT = "MainFragment.mostPopularVideosFragment";
-	public static final String SUBSCRIPTIONS_FEED_FRAGMENT = "MainFragment.subscriptionsFeedFragment";
-	public static final String BOOKMARKS_FRAGMENT = "MainFragment.bookmarksFragment";
-	public static final String DOWNLOADED_VIDEOS_FRAGMENT = "MainFragment.downloadedVideosFragment";
+	public static final String FEATURED_VIDEOS_FRAGMENT = "MainFragment.TubefeaturedVideosFragment";
+	public static final String MOST_POPULAR_VIDEOS_FRAGMENT = "MainFragment.TubemostPopularVideosFragment";
+	public static final String SUBSCRIPTIONS_FEED_FRAGMENT = "MainFragment.TubesubscriptionsFeedFragment";
+	public static final String BOOKMARKS_FRAGMENT = "MainFragment.TubebookmarksFragment";
+	public static final String DOWNLOADED_VIDEOS_FRAGMENT = "MainFragment.TubedownloadedVideosFragment";
 
 	private VideosPagerAdapter			videosPagerAdapter = null;
 	private ViewPager					viewPager;
 
-	public static final String SHOULD_SELECTED_FEED_TAB = "MainFragment.SHOULD_SELECTED_FEED_TAB";
+	public static final String SHOULD_SELECTED_FEED_TAB = "MainFragment.TUBESHOULD_SELECTED_FEED_TAB";
 
 	private Activity activity;
 

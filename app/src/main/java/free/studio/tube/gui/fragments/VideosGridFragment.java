@@ -28,7 +28,6 @@ import android.widget.GridView;
 import com.bumptech.glide.Glide;
 
 import free.rm.gotube.R;
-import free.studio.tube.app.AdsID;
 import free.studio.tube.businessobjects.VideoCategory;
 import free.studio.tube.gui.businessobjects.AdViewWrapperAdapter;
 import free.studio.tube.gui.businessobjects.MainActivityListener;

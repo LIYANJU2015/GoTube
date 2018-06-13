@@ -32,7 +32,7 @@ public class PlaylistVideosFragment extends VideosGridFragment {
 	@BindView(R.id.playlist_title_text_view)
 	TextView    playlistTitleTextView;
 
-	public static final String PLAYLIST_OBJ = "PlaylistVideosFragment.PLAYLIST_OBJ";
+	public static final String PLAYLIST_OBJ = "TubePlaylistVideosFragment.PLAYLIST_OBJ";
 
 
 	@Override

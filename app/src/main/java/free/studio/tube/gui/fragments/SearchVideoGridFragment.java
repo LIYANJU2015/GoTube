@@ -38,7 +38,7 @@ public class SearchVideoGridFragment extends VideosGridFragment {
 	/** User's search query string. */
 	private String  searchQuery = "";
 
-	public static final String QUERY = "SearchVideoGridFragment.Query";
+	public static final String QUERY = "TubeSearchVideoGridFragment.Query";
 
 
 	@Override

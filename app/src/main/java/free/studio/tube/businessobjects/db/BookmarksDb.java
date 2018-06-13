@@ -40,7 +40,7 @@ public class BookmarksDb extends SQLiteOpenHelperEx implements OrderableDatabase
 	private static boolean hasUpdated = false;
 
 	private static final int DATABASE_VERSION = 1;
-	private static final String DATABASE_NAME = "bookmarks.db";
+	private static final String DATABASE_NAME = "tubebookmarks.db";
 
 	private List<BookmarksDbListener> listeners = new ArrayList<>();
 
