@@ -37,7 +37,7 @@ import android.preference.PreferenceManager;
 import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
 
-import com.admodule.AdModule;
+
 import com.liulishuo.filedownloader.FileDownloader;
 import com.rating.RatingActivity;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -46,8 +46,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import free.rm.gotube.R;
+import free.studio.tube.businessobjects.FBAdUtils;
 import free.studio.tube.businessobjects.FeedUpdaterReceiver;
 import free.studio.tube.businessobjects.SuperVersions;
+import free.studio.tube.businessobjects.Utils;
 import free.studio.tube.gui.activities.SplashActivity;
 
 /**
@@ -107,62 +109,8 @@ public class GoTubeApp extends MultiDexApplication {
 			addShortcut(this, SplashActivity.class, getString(R.string.app_name), R.mipmap.ic_launcher);
 		}
 
-		AdModule.init(new AdModule.AdCallBack() {
-			@Override
-			public Application getApplication() {
-				return GoTubeApp;
-			}
-
-			@Override
-			public String getAppId() {
-				return "";
-			}
-
-			@Override
-			public boolean isAdDebug() {
-				return false;
-			}
-
-			@Override
-			public boolean isLogDebug() {
-				return false;
-			}
-
-			@Override
-			public String getAdMobNativeAdId() {
-				return null;
-			}
-
-			@Override
-			public String getBannerAdId() {
-				return "";
-			}
-
-			@Override
-			public String getInterstitialAdId() {
-				return "";
-			}
-
-			@Override
-			public String getTestDevice() {
-				return null;
-			}
-
-			@Override
-			public String getRewardedVideoAdId() {
-				return null;
-			}
-
-			@Override
-			public String getFBNativeAdId() {
-				return "";
-			}
-		});
-
-		AdModule.getInstance().getAdMob().initInterstitialAd();
-		AdModule.getInstance().getAdMob().requestNewInterstitial();
-
-		AdModule.getInstance().getFacebookAd().loadAds(AdsID.FB_NATIVE_AD_ID);
+		FBAdUtils.init(this);
+		FBAdUtils.loadFBAds(Utils.NATIVE_AD_ID);
 
 		RatingActivity.setRatingClickListener(new RatingActivity.RatingClickListener() {
 			@Override

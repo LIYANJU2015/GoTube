@@ -5,12 +5,15 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.hardware.display.DisplayManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.PowerManager;
 import android.support.annotation.StringRes;
 import android.support.v4.content.FileProvider;
+import android.view.Display;
 import android.view.View;
 import android.widget.Toast;
 
@@ -29,6 +32,10 @@ import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
  */
 
 public class Utils {
+
+    public static final String NATIVE_AD_ID = "";
+    public static final String CHAPING_COMMON_AD = "";
+    public static final String CHAPING_HIGH_AD = "";
 
     public static final ExecutorService sExecutorService2 = Executors.newSingleThreadExecutor();
     public static final ExecutorService sExecutorService = Executors.newSingleThreadExecutor();
@@ -51,6 +58,35 @@ public class Utils {
             decorView.setSystemUiVisibility(option);
             activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
+    }
+
+    public static boolean isScreenOn() {
+        try {
+            if (android.os.Build.VERSION.SDK_INT >= 20) {
+                // I'm counting
+                // STATE_DOZE, STATE_OFF, STATE_DOZE_SUSPENDED
+                // all as "OFF"
+                DisplayManager dm = (DisplayManager) GoTubeApp.getContext().getSystemService(Context.DISPLAY_SERVICE);
+                Display[] displays = dm.getDisplays();
+                for (Display display : displays) {
+                    if (display.getState() == Display.STATE_ON
+                            || display.getState() == Display.STATE_UNKNOWN) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            // If you use less than API20:
+            PowerManager powerManager = (PowerManager) GoTubeApp.getContext().getSystemService(Context.POWER_SERVICE);
+            if (powerManager.isScreenOn()) {
+                return true;
+            }
+            return false;
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     public static void showLongToastSafe(final @StringRes int resId) {

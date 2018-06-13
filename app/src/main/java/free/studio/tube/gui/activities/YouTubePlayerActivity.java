@@ -20,21 +20,10 @@ package free.studio.tube.gui.activities;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.view.View;
-
-import com.admodule.AdModule;
-import com.admodule.LogUtils;
-import com.admodule.adfb.IFacebookAd;
-import com.facebook.ads.Ad;
-import com.facebook.ads.NativeAd;
-
-import java.util.Calendar;
 
 import free.rm.gotube.R;
-import free.studio.tube.app.AdsID;
 import free.studio.tube.app.GoTubeApp;
 import free.studio.tube.businessobjects.FacebookReport;
-import free.studio.tube.businessobjects.Logger;
 import free.studio.tube.gui.businessobjects.BackButtonActivity;
 import free.studio.tube.gui.fragments.YouTubePlayerFragment;
 
@@ -50,59 +39,12 @@ public class YouTubePlayerActivity extends BackButtonActivity {
 		setContentView(R.layout.activity_video_player);
 
 		FacebookReport.logSentVideoPlay();
-
-		AdModule.getInstance().getAdMob().requestNewInterstitial();
-		AdModule.getInstance().getFacebookAd().interstitialLoad(AdsID.FB_INTERSTITIAL_AD_ID, new IFacebookAd.FBInterstitialAdListener(){
-			@Override
-			public void onInterstitialDismissed(Ad ad) {
-				super.onInterstitialDismissed(ad);
-				try {
-					AdModule.getInstance().getFacebookAd().destoryInterstitial();
-				} catch (Throwable e) {
-					e.printStackTrace();
-				}
-			}
-		});
 	}
 
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		AdModule.getInstance().getFacebookAd().loadAd(false, AdsID.FB_NATIVE_AD_ID);
-
-		Calendar calendar = Calendar.getInstance();
-		int day = calendar.get(Calendar.DATE);
-		int month = calendar.get(Calendar.MONTH);
-		Logger.d("xx", "day ::" + day + " month ::" + month);
-		if ((day == 31 || day == 30) && month == Calendar.MARCH) {
-			long time = GoTubeApp.getPreferenceManager().getLong("time_ad", 0);
-			if (time == 0) {
-				GoTubeApp.getPreferenceManager().edit().putLong("time_ad", System.currentTimeMillis()).apply();
-				AdModule.getInstance().getFacebookAd().destoryInterstitial();
-				return;
-			} else if (Math.abs(System.currentTimeMillis() - time) < 1000 * 60 * 15) {
-				AdModule.getInstance().getFacebookAd().destoryInterstitial();
-				return;
-			}
-		}
-
-		try {
-			if (AdModule.getInstance().getFacebookAd().isInterstitialLoaded()) {
-				try {
-					AdModule.getInstance().getFacebookAd().showInterstitial();
-				} catch (Throwable e) {
-					e.printStackTrace();
-					AdModule.getInstance().getFacebookAd().destoryInterstitial();
-					AdModule.getInstance().getAdMob().showInterstitialAd();
-				}
-			} else {
-				AdModule.getInstance().getFacebookAd().destoryInterstitial();
-				AdModule.getInstance().getAdMob().showInterstitialAd();
-			}
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
 	}
 
 	@Override

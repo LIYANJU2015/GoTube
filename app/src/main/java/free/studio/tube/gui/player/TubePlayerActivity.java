@@ -21,12 +21,14 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.dueeeke.videoplayer.player.IjkPlayer;
 import com.dueeeke.videoplayer.player.PlayerConfig;
+import com.facebook.ads.Ad;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 
 import java.util.LinkedHashMap;
 
 import free.rm.gotube.R;
 import free.studio.tube.app.GoTubeApp;
+import free.studio.tube.businessobjects.FBAdUtils;
 import free.studio.tube.businessobjects.Utils;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeChannel;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeChannelInterface;
@@ -127,6 +129,14 @@ public class TubePlayerActivity extends AppCompatActivity{
 
             initVideoDetailHeader();
         }
+
+        FBAdUtils.interstitialLoad(Utils.CHAPING_COMMON_AD, new FBAdUtils.FBInterstitialAdListener(){
+            @Override
+            public void onInterstitialDismissed(Ad ad) {
+                super.onInterstitialDismissed(ad);
+                FBAdUtils.destoryInterstitial();
+            }
+        });
     }
 
     private TextView videoDescTitleTextView;
@@ -329,6 +339,11 @@ public class TubePlayerActivity extends AppCompatActivity{
         if (checkIfUserSubbedToChannelTask != null) {
             checkIfUserSubbedToChannelTask.cancel(true);
         }
+
+        if (FBAdUtils.isInterstitialLoaded()) {
+            FBAdUtils.showInterstitial();
+        }
+        FBAdUtils.destoryInterstitial();
     }
 
 

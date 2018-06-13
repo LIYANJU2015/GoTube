@@ -17,20 +17,17 @@
 
 package free.studio.tube.gui.fragments;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.facebook.ads.Ad;
+
 import free.rm.gotube.R;
+import free.studio.tube.businessobjects.FBAdUtils;
+import free.studio.tube.businessobjects.Utils;
 import free.studio.tube.businessobjects.VideoCategory;
 
 /**
@@ -51,8 +48,24 @@ public class SearchVideoGridFragment extends VideosGridFragment {
 
 		// set the user's search query
 		searchQuery = getArguments().getString(QUERY);
+
+		FBAdUtils.interstitialLoad(Utils.CHAPING_HIGH_AD, new FBAdUtils.FBInterstitialAdListener(){
+			@Override
+			public void onInterstitialDismissed(Ad ad) {
+				super.onInterstitialDismissed(ad);
+				FBAdUtils.destoryInterstitial();
+			}
+		});
 	}
 
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		if (FBAdUtils.isInterstitialLoaded()) {
+			FBAdUtils.showInterstitial();
+		}
+		FBAdUtils.destoryInterstitial();
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -60,6 +60,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import free.rm.gotube.R;
 import free.studio.tube.app.GoTubeApp;
+import free.studio.tube.businessobjects.FBAdUtils;
 import free.studio.tube.businessobjects.Utils;
 import free.studio.tube.businessobjects.TubeSearchSuggistion;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeChannel;
@@ -489,6 +490,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 				startMain.addCategory(Intent.CATEGORY_HOME);
 				startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				startActivity(startMain);
+
+				FBAdUtils.loadFBAds(Utils.NATIVE_AD_ID);
 			}
 		} else {
 			super.onBackPressed();
@@ -515,6 +518,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 		Bundle args = new Bundle();
 		args.putSerializable(ChannelBrowserFragment.CHANNEL_OBJ, channel);
 		switchToChannelBrowserFragment(args);
+
+		if (subsDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+			subsDrawerLayout.closeDrawer(GravityCompat.START);
+		}
 	}
 
 	@Override
@@ -522,6 +529,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 		Bundle args = new Bundle();
 		args.putString(ChannelBrowserFragment.CHANNEL_ID, channelId);
 		switchToChannelBrowserFragment(args);
+
+		if (subsDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+			subsDrawerLayout.closeDrawer(GravityCompat.START);
+		}
 	}
 
 	private void switchToChannelBrowserFragment(Bundle args) {
@@ -538,6 +549,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 		args.putSerializable(PlaylistVideosFragment.PLAYLIST_OBJ, playlist);
 		playlistVideosFragment.setArguments(args);
 		switchToFragment(playlistVideosFragment);
+
+		if (subsDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+			subsDrawerLayout.closeDrawer(GravityCompat.START);
+		}
 	}
 
 }

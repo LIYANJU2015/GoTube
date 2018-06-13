@@ -17,22 +17,18 @@
 
 package free.studio.tube.businessobjects.YouTube.POJOs;
 
-import android.app.DownloadManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.Toast;
 
-import com.admodule.AdModule;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.youtube.model.Thumbnail;
 import com.google.api.services.youtube.model.Video;
-import com.google.gson.annotations.Expose;
 import com.rating.RatingActivity;
 
 import java.io.File;
@@ -499,8 +495,6 @@ public class YouTubeVideo implements Serializable {
 
 		FacebookReport.logSentDownloadStart(title);
 
-		AdModule.getInstance().getAdMob().requestNewInterstitial();
-
 		getStream(new GetStreamListener() {
 			@Override
 			public void onGetStream(StreamMetaDataList streamMetaDataList) {
@@ -580,7 +574,6 @@ public class YouTubeVideo implements Serializable {
 					String.format(GoTubeApp.getContext().getString(R.string.starting_video_download), getTitle()),
 					Toast.LENGTH_LONG).show();
 
-			AdModule.getInstance().getAdMob().showInterstitialAd();
 		}
 
 		@Override

@@ -85,6 +85,10 @@ public class VideoGridAdapter extends RecyclerViewAdapterEx<YouTubeVideo, Recycl
 		this.showChannelInfo = showChannelInfo;
 	}
 
+	@Override
+	public VideoCategory getVideoCategory() {
+		return currentVideoCategory;
+	}
 
 	/**
 	 * Set the video category.  Upon set, the adapter will download the videos of the specified
