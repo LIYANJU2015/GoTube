@@ -144,7 +144,9 @@ public class TubePlayerActivity extends AppCompatActivity implements VideoListen
                         ijkVideoView.setVideoListener(TubePlayerActivity.this);
                         ijkVideoView.start();
 
-                        downloadVideoIV.setVisibility(View.VISIBLE);
+                        if (PlayTubeApp.isSpecial()) {
+                            downloadVideoIV.setVisibility(View.VISIBLE);
+                        }
                     }
                 }
 
@@ -313,7 +315,7 @@ public class TubePlayerActivity extends AppCompatActivity implements VideoListen
             }
             if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
                 try {
-                    if (ijkVideoView != null && ijkVideoView.isPlaying()) {
+                    if (ijkVideoView != null && ijkVideoView.isPlaying() && !PlayTubeApp.isSpecial()) {
                         ijkVideoView.pause();
                     }
                 } catch (Throwable e) {
