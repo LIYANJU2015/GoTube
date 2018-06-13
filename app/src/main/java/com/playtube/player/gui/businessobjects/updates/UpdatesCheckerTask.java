@@ -22,7 +22,7 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
 import com.tube.playtube.R;
-import com.playtube.player.businessobjects.AsyncTaskParallel;
+import com.playtube.player.business.AsyncTaskParallel;
 
 /**
  * A task that will check if any GoTube updates have been published.  If there are, then the

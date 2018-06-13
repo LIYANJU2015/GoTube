@@ -37,10 +37,10 @@ import com.bumptech.glide.request.target.Target;
 
 import java.io.Serializable;
 
-import com.playtube.player.businessobjects.FileDownloader;
+import com.playtube.player.business.FileDownloader;
 import com.tube.playtube.R;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeVideo;
-import com.playtube.player.app.GoTubeApp;
+import com.playtube.player.business.youtube.bean.YouTubeVideo;
+import com.playtube.player.app.PlayTubeApp;
 
 /**
  * An activity that allows the user to view the thumbnail of a YouTube video.
@@ -125,7 +125,7 @@ public class ThumbnailViewerActivity extends AppCompatActivity {
 
 		@Override
 		public void onFileDownloadCompleted(boolean success, Uri localFileUri) {
-			Toast.makeText(GoTubeApp.getContext(),
+			Toast.makeText(PlayTubeApp.getContext(),
 					success  ?  R.string.thumbnail_downloaded  :  R.string.thumbnail_download_error,
 					Toast.LENGTH_LONG)
 					.show();
@@ -133,7 +133,7 @@ public class ThumbnailViewerActivity extends AppCompatActivity {
 
 		@Override
 		public void onExternalStorageNotAvailable() {
-			Toast.makeText(GoTubeApp.getContext(),
+			Toast.makeText(PlayTubeApp.getContext(),
 					R.string.external_storage_not_available,
 					Toast.LENGTH_LONG).show();
 		}

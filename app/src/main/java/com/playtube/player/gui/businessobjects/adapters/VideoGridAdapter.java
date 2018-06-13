@@ -27,14 +27,14 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
-import com.playtube.player.businessobjects.YouTube.GetYouTubeVideos;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeChannel;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeVideo;
-import com.playtube.player.businessobjects.YouTube.Tasks.GetYouTubeVideosTask;
+import com.playtube.player.business.youtube.GetYouTubeVideos;
+import com.playtube.player.business.youtube.bean.YouTubeChannel;
+import com.playtube.player.business.youtube.bean.YouTubeVideo;
+import com.playtube.player.business.youtube.Tasks.GetYouTubeVideosTask;
 import com.playtube.player.gui.businessobjects.MainActivityListener;
 import com.playtube.player.gui.businessobjects.fragments.BaseVideosGridFragment;
 import com.tube.playtube.R;
-import com.playtube.player.businessobjects.VideoCategory;
+import com.playtube.player.business.VideoCategory;
 
 /**
  * An adapter that will display videos in a {@link android.widget.GridView}.

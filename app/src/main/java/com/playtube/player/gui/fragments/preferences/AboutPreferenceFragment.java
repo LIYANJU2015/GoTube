@@ -33,7 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 
-import com.playtube.player.app.GoTubeApp;
+import com.playtube.player.app.PlayTubeApp;
 import com.tube.playtube.BuildConfig;
 import com.tube.playtube.R;
 
@@ -127,7 +127,7 @@ public class AboutPreferenceFragment extends PreferenceFragment {
 		String timeStamp = "???";
 
 		try {
-			ApplicationInfo appInfo = GoTubeApp.getContext().getPackageManager().getApplicationInfo(GoTubeApp.getContext().getPackageName(), 0);
+			ApplicationInfo appInfo = PlayTubeApp.getContext().getPackageManager().getApplicationInfo(PlayTubeApp.getContext().getPackageName(), 0);
 			String appFile = appInfo.sourceDir;
 			long time = new File(appFile).lastModified();
 

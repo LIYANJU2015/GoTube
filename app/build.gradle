@@ -35,9 +35,9 @@ android {
 
     buildTypes {
         release {
-//            minifyEnabled true
+            minifyEnabled true
             zipAlignEnabled true
-            //shrinkResources true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
@@ -71,7 +71,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
 
-    compile(name: 'admodule-release', ext: 'aar')
     compile(name: 'rating-release2', ext: 'aar')
 
     compile 'com.tencent.bugly:crashreport:2.6.6.1'
@@ -101,7 +100,6 @@ dependencies {
     compile 'com.android.support:multidex:1.0.3'    // this is as we have over 65536 lines of code...
 
     compile 'de.hdodenhof:circleimageview:2.2.0'
-    compile 'com.lovedise:permissiongen:0.0.6'
 
     compile 'com.zhy:base-rvadapter:3.0.3'
 

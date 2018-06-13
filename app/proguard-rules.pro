@@ -16,8 +16,38 @@
 #   public *;
 #}
 
-
+-ignorewarning
 -keep class tv.danmaku.ijk.** { *; }
 -dontwarn tv.danmaku.ijk.**
 -keep class com.dueeeke.videoplayer.** { *; }
 -dontwarn com.dueeeke.videoplayer.**
+
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public class * extends com.bumptech.glide.module.AppGlideModule
+-keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
+
+-keep class butterknife.** { *; }
+-dontwarn butterknife.internal.**
+-keep class **$$ViewBinder { *; }
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <fields>;
+}
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <methods>;
+}
+
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
+-keep public class com.playtube.player.business.youtube.bean.**{*;}
+-keep class com.google.api.client.googleapis.services.**{*;}
+-keep class com.google.api.client.http.**{*;}
+-keep class com.google.api.services.youtube.**{*;}
+-keep class org.ocpsoft.prettytime.i18n.**
+-keeppackagenames com.google.api
+
+-keeppackagenames org.jsoup.nodes

@@ -27,7 +27,7 @@ import android.widget.GridView;
 
 import com.bumptech.glide.Glide;
 
-import com.playtube.player.businessobjects.VideoCategory;
+import com.playtube.player.business.VideoCategory;
 import com.playtube.player.gui.businessobjects.AdViewWrapperAdapter;
 import com.playtube.player.gui.businessobjects.MainActivityListener;
 import com.playtube.player.gui.businessobjects.OnegoGridLayoutManager;

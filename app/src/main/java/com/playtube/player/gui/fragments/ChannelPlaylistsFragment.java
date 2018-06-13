@@ -11,10 +11,10 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.tube.playtube.R;
-import com.playtube.player.app.GoTubeApp;
-import com.playtube.player.businessobjects.VideoCategory;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeChannel;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubePlaylist;
+import com.playtube.player.app.PlayTubeApp;
+import com.playtube.player.business.VideoCategory;
+import com.playtube.player.business.youtube.bean.YouTubeChannel;
+import com.playtube.player.business.youtube.bean.YouTubePlaylist;
 import com.playtube.player.gui.businessobjects.MainActivityListener;
 import com.playtube.player.gui.businessobjects.PlaylistClickListener;
 import com.playtube.player.gui.businessobjects.adapters.PlaylistsGridAdapter;
@@ -61,7 +61,7 @@ public class ChannelPlaylistsFragment extends VideosGridFragment implements Play
 
 	@Override
 	public String getFragmentName() {
-		return GoTubeApp.getStr(R.string.playlists);
+		return PlayTubeApp.getStr(R.string.playlists);
 	}
 
 	@Override

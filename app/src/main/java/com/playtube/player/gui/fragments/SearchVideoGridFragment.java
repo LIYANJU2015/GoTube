@@ -26,9 +26,9 @@ import android.view.ViewGroup;
 import com.facebook.ads.Ad;
 
 import com.tube.playtube.R;
-import com.playtube.player.businessobjects.FBAdUtils;
-import com.playtube.player.businessobjects.Utils;
-import com.playtube.player.businessobjects.VideoCategory;
+import com.playtube.player.business.FBAdUtils;
+import com.playtube.player.business.Utils;
+import com.playtube.player.business.VideoCategory;
 
 /**
  * Fragment that will hold a list of videos corresponding to the user's query.

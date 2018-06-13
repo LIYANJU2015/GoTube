@@ -33,10 +33,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
-import com.playtube.player.app.GoTubeApp;
-import com.playtube.player.businessobjects.Utils;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeVideo;
-import com.playtube.player.businessobjects.db.Tasks.IsVideoBookmarkedTask;
+import com.playtube.player.app.PlayTubeApp;
+import com.playtube.player.business.Utils;
+import com.playtube.player.business.youtube.bean.YouTubeVideo;
+import com.playtube.player.business.db.Tasks.IsVideoBookmarkedTask;
 import com.playtube.player.gui.activities.ThumbnailViewerActivity;
 import com.playtube.player.gui.businessobjects.MainActivityListener;
 import com.playtube.player.gui.businessobjects.YouTubePlayer;
@@ -172,14 +172,14 @@ class GridViewHolder extends RecyclerView.ViewHolder {
 			popupMenu.getMenu().findItem(R.id.download_video).setVisible(false);
 		} else {
 			popupMenu.getMenu().findItem(R.id.delete_download).setVisible(false);
-			boolean allowDownloadsOnMobile = GoTubeApp.getPreferenceManager().getBoolean(GoTubeApp.getStr(R.string.pref_key_allow_mobile_downloads), false);
-			if(GoTubeApp.isConnectedToWiFi() || (GoTubeApp.isConnectedToMobile() && allowDownloadsOnMobile))
+			boolean allowDownloadsOnMobile = PlayTubeApp.getPreferenceManager().getBoolean(PlayTubeApp.getStr(R.string.pref_key_allow_mobile_downloads), false);
+			if(PlayTubeApp.isConnectedToWiFi() || (PlayTubeApp.isConnectedToMobile() && allowDownloadsOnMobile))
 				popupMenu.getMenu().findItem(R.id.download_video).setVisible(true);
 			else
 				popupMenu.getMenu().findItem(R.id.download_video).setVisible(false);
 		}
 
-		if (!GoTubeApp.isSpecial()) {
+		if (!PlayTubeApp.isSpecial()) {
 			popupMenu.getMenu().findItem(R.id.delete_download).setVisible(false);
 			popupMenu.getMenu().findItem(R.id.download_video).setVisible(false);
 		}

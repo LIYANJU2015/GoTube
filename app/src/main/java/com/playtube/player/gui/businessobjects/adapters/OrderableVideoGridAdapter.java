@@ -21,7 +21,7 @@ import android.content.Context;
 
 import java.util.Collections;
 
-import com.playtube.player.businessobjects.interfaces.OrderableDatabase;
+import com.playtube.player.business.interfaces.OrderableDatabase;
 
 /**
  * Subclass of VideoGridAdapter that supports drag & drop reordering of the items in the grid.

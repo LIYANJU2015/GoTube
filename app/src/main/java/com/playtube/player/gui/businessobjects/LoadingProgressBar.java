@@ -22,8 +22,8 @@ import android.os.Looper;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
-import com.playtube.player.businessobjects.Logger;
-import com.playtube.player.businessobjects.YouTube.Tasks.GetYouTubeVideosTask;
+import com.playtube.player.business.Logger;
+import com.playtube.player.business.youtube.Tasks.GetYouTubeVideosTask;
 
 /**
  * Loading progress bar that will be displayed by {@link GetYouTubeVideosTask}

@@ -1,4 +1,4 @@
-package free.rm.gotube;
+package free.rm.playtube;
 
 import org.junit.Test;
 

@@ -39,17 +39,17 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import com.playtube.player.businessobjects.AsyncTaskParallel;
+import com.playtube.player.business.AsyncTaskParallel;
 import com.playtube.player.gui.businessobjects.adapters.SubsAdapter;
 import com.tube.playtube.R;
-import com.playtube.player.app.GoTubeApp;
-import com.playtube.player.businessobjects.FeedUpdaterService;
-import com.playtube.player.businessobjects.VideoCategory;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeChannel;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeVideo;
-import com.playtube.player.businessobjects.YouTube.Tasks.GetSubscriptionVideosTask;
-import com.playtube.player.businessobjects.YouTube.Tasks.GetSubscriptionVideosTaskListener;
-import com.playtube.player.businessobjects.db.SubscriptionsDb;
+import com.playtube.player.app.PlayTubeApp;
+import com.playtube.player.business.FeedUpdaterService;
+import com.playtube.player.business.VideoCategory;
+import com.playtube.player.business.youtube.bean.YouTubeChannel;
+import com.playtube.player.business.youtube.bean.YouTubeVideo;
+import com.playtube.player.business.youtube.Tasks.GetSubscriptionVideosTask;
+import com.playtube.player.business.youtube.Tasks.GetSubscriptionVideosTaskListener;
+import com.playtube.player.business.db.SubscriptionsDb;
 import com.playtube.player.gui.businessobjects.SubscriptionsBackupsManager;
 
 /**
@@ -91,7 +91,7 @@ public class SubscriptionsFeedFragment extends VideosGridFragment implements Get
 		super.onCreate(savedInstanceState);
 
 		// Only do an automatic refresh of subscriptions if it's been more than three hours since the last one was done.
-		long l = GoTubeApp.getPreferenceManager().getLong(GoTubeApp.KEY_SUBSCRIPTIONS_LAST_UPDATED, -1);
+		long l = PlayTubeApp.getPreferenceManager().getLong(PlayTubeApp.KEY_SUBSCRIPTIONS_LAST_UPDATED, -1);
 		DateTime subscriptionsLastUpdated = new DateTime(l);
 		DateTime threeHoursAgo = new DateTime().minusHours(REFRESH_TIME);
 		if(subscriptionsLastUpdated.isBefore(threeHoursAgo)) {
@@ -158,21 +158,21 @@ public class SubscriptionsFeedFragment extends VideosGridFragment implements Get
 
 
 	private static void setFlag(String flag) {
-		SharedPreferences.Editor editor = GoTubeApp.getPreferenceManager().edit();
+		SharedPreferences.Editor editor = PlayTubeApp.getPreferenceManager().edit();
 		editor.putBoolean(flag, true);
 		editor.commit();
 	}
 
 
 	private void unsetFlag(String flag) {
-		SharedPreferences.Editor editor = GoTubeApp.getPreferenceManager().edit();
+		SharedPreferences.Editor editor = PlayTubeApp.getPreferenceManager().edit();
 		editor.putBoolean(flag, false);
 		editor.commit();
 	}
 
 
 	private boolean isFlagSet(String flag) {
-		return GoTubeApp.getPreferenceManager().getBoolean(flag, false);
+		return PlayTubeApp.getPreferenceManager().getBoolean(flag, false);
 	}
 
 
@@ -207,7 +207,7 @@ public class SubscriptionsFeedFragment extends VideosGridFragment implements Get
 		numVideosFetched += videosFetched.size();
 		numChannelsFetched++;
 		if(progressDialog != null)
-			progressDialog.setContent(String.format(GoTubeApp.getStr(R.string.fetched_videos_from_channels), numVideosFetched, numChannelsFetched, numChannelsSubscribed));
+			progressDialog.setContent(String.format(PlayTubeApp.getStr(R.string.fetched_videos_from_channels), numVideosFetched, numChannelsFetched, numChannelsSubscribed));
 		if(numChannelsFetched == numChannelsSubscribed) {
 			new Handler().postDelayed(new Runnable() {
 				@Override
@@ -255,7 +255,7 @@ public class SubscriptionsFeedFragment extends VideosGridFragment implements Get
 
 	@Override
 	public String getFragmentName() {
-		return GoTubeApp.getStr(R.string.feed);
+		return PlayTubeApp.getStr(R.string.feed);
 	}
 
 

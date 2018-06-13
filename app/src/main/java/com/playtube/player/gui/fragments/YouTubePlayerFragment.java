@@ -38,24 +38,24 @@ import java.util.List;
 import java.util.Locale;
 
 import com.tube.playtube.R;
-import com.playtube.player.app.GoTubeApp;
-import com.playtube.player.businessobjects.AsyncTaskParallel;
-import com.playtube.player.businessobjects.FacebookReport;
-import com.playtube.player.businessobjects.YouTube.Tasks.GetVideoDescriptionTask;
-import com.playtube.player.businessobjects.YouTube.GetVideosDetailsByIDs;
-import com.playtube.player.businessobjects.YouTube.Tasks.GetYouTubeChannelInfoTask;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeChannel;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeChannelInterface;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeVideo;
-import com.playtube.player.businessobjects.YouTube.VideoStream.StreamMetaDataList;
-import com.playtube.player.businessobjects.db.Tasks.CheckIfUserSubbedToChannelTask;
-import com.playtube.player.businessobjects.db.DownloadedVideosDb;
-import com.playtube.player.businessobjects.interfaces.GetStreamListener;
+import com.playtube.player.app.PlayTubeApp;
+import com.playtube.player.business.AsyncTaskParallel;
+import com.playtube.player.business.FacebookReport;
+import com.playtube.player.business.youtube.Tasks.GetVideoDescriptionTask;
+import com.playtube.player.business.youtube.GetVideosDetailsByIDs;
+import com.playtube.player.business.youtube.Tasks.GetYouTubeChannelInfoTask;
+import com.playtube.player.business.youtube.bean.YouTubeChannel;
+import com.playtube.player.business.youtube.bean.YouTubeChannelInterface;
+import com.playtube.player.business.youtube.bean.YouTubeVideo;
+import com.playtube.player.business.youtube.VideoStream.StreamMetaDataList;
+import com.playtube.player.business.db.Tasks.CheckIfUserSubbedToChannelTask;
+import com.playtube.player.business.db.DownloadedVideosDb;
+import com.playtube.player.business.interfaces.GetStreamListener;
 import com.playtube.player.gui.activities.MainActivity;
 import com.playtube.player.gui.activities.ThumbnailViewerActivity;
 import com.playtube.player.gui.businessobjects.adapters.CommentsAdapter;
-import com.playtube.player.businessobjects.db.Tasks.IsVideoBookmarkedTask;
-import com.playtube.player.businessobjects.Logger;
+import com.playtube.player.business.db.Tasks.IsVideoBookmarkedTask;
+import com.playtube.player.business.Logger;
 import com.playtube.player.gui.businessobjects.MediaControllerEx;
 import com.playtube.player.gui.businessobjects.OnSwipeTouchListener;
 import com.playtube.player.gui.businessobjects.SubscribeButton;
@@ -517,8 +517,8 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 			return;
 		}
 		// Hide the download video option if mobile downloads are not allowed and the device is connected through mobile, and the video isn't already downloaded
-		boolean allowDownloadsOnMobile = GoTubeApp.getPreferenceManager().getBoolean(GoTubeApp.getStr(R.string.pref_key_allow_mobile_downloads), false);
-		if((youTubeVideo != null && !youTubeVideo.isDownloaded()) && (GoTubeApp.isConnectedToWiFi() || (GoTubeApp.isConnectedToMobile() && allowDownloadsOnMobile))) {
+		boolean allowDownloadsOnMobile = PlayTubeApp.getPreferenceManager().getBoolean(PlayTubeApp.getStr(R.string.pref_key_allow_mobile_downloads), false);
+		if((youTubeVideo != null && !youTubeVideo.isDownloaded()) && (PlayTubeApp.isConnectedToWiFi() || (PlayTubeApp.isConnectedToMobile() && allowDownloadsOnMobile))) {
 			menu.findItem(R.id.download_video).setVisible(true);
 		} else {
 			menu.findItem(R.id.download_video).setVisible(false);
@@ -528,7 +528,7 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 			FacebookReport.logSentDownloadPlay();
 		}
 
-		if (!GoTubeApp.isSpecial()) {
+		if (!PlayTubeApp.isSpecial()) {
 			menu.findItem(R.id.download_video).setVisible(false);
 		}
 	}
@@ -698,7 +698,7 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 	 * @return True if the tutorial was completed in the past.
 	 */
 	private boolean wasTutorialDisplayedBefore() {
-		SharedPreferences preferences = GoTubeApp.getPreferenceManager();
+		SharedPreferences preferences = PlayTubeApp.getPreferenceManager();
 		boolean wasTutorialDisplayedBefore = preferences.getBoolean(TUTORIAL_COMPLETED, false);
 
 		preferences.edit().putBoolean(TUTORIAL_COMPLETED, true).commit();

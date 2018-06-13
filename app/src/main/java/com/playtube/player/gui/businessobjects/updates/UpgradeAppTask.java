@@ -34,7 +34,7 @@ import java.io.OutputStream;
 import java.net.URL;
 
 import com.tube.playtube.R;
-import com.playtube.player.businessobjects.AsyncTaskParallel;
+import com.playtube.player.business.AsyncTaskParallel;
 
 /**
  * This task will download the remote APK file and it will install it for the user (provided that

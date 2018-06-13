@@ -13,7 +13,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.playtube.player.businessobjects.FacebookReport;
+import com.playtube.player.business.FacebookReport;
 import com.tube.playtube.R;
 
 /**

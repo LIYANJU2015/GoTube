@@ -25,8 +25,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.tube.playtube.R;
-import com.playtube.player.app.GoTubeApp;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeChannel;
+import com.playtube.player.app.PlayTubeApp;
+import com.playtube.player.business.youtube.bean.YouTubeChannel;
 import com.playtube.player.gui.businessobjects.fragments.TabFragment;
 
 /**
@@ -50,7 +50,7 @@ public class ChannelAboutFragment extends TabFragment {
 
 	@Override
 	public String getFragmentName() {
-		return GoTubeApp.getStr(R.string.about);
+		return PlayTubeApp.getStr(R.string.about);
 	}
 
 }

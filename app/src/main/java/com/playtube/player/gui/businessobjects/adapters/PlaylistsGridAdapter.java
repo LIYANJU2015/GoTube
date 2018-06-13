@@ -26,10 +26,10 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
-import com.playtube.player.businessobjects.YouTube.GetChannelPlaylists;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeChannel;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubePlaylist;
-import com.playtube.player.businessobjects.YouTube.Tasks.GetChannelPlaylistsTask;
+import com.playtube.player.business.youtube.GetChannelPlaylists;
+import com.playtube.player.business.youtube.bean.YouTubeChannel;
+import com.playtube.player.business.youtube.bean.YouTubePlaylist;
+import com.playtube.player.business.youtube.Tasks.GetChannelPlaylistsTask;
 import com.playtube.player.gui.businessobjects.PlaylistClickListener;
 import com.tube.playtube.R;
 

@@ -25,7 +25,7 @@ import android.preference.PreferenceScreen;
 
 import com.tube.playtube.BuildConfig;
 import com.tube.playtube.R;
-import com.playtube.player.businessobjects.YouTube.VideoStream.VideoResolution;
+import com.playtube.player.business.youtube.VideoStream.VideoResolution;
 
 /**
  * Preference fragment for video player related settings.

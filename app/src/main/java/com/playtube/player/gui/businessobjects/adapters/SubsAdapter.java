@@ -34,9 +34,9 @@ import java.util.List;
 
 import com.playtube.player.gui.businessobjects.MainActivityListener;
 import com.tube.playtube.R;
-import com.playtube.player.businessobjects.Logger;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeChannel;
-import com.playtube.player.businessobjects.db.Tasks.GetSubscribedChannelsTask;
+import com.playtube.player.business.Logger;
+import com.playtube.player.business.youtube.bean.YouTubeChannel;
+import com.playtube.player.business.db.Tasks.GetSubscribedChannelsTask;
 
 /**
  * Channel subscriptions adapter: Contains a list of channels (that the user subscribed to) together

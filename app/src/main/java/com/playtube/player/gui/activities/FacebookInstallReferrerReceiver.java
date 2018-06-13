@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.playtube.player.businessobjects.facebook.InstallReferrerReceiverHandler;
+import com.playtube.player.business.facebook.InstallReferrerReceiverHandler;
 
 /**
  * Created by liyanju on 2018/3/22.

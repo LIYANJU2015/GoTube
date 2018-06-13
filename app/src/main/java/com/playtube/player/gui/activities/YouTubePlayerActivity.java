@@ -23,8 +23,8 @@ import android.os.Bundle;
 
 import com.playtube.player.gui.fragments.YouTubePlayerFragment;
 import com.tube.playtube.R;
-import com.playtube.player.app.GoTubeApp;
-import com.playtube.player.businessobjects.FacebookReport;
+import com.playtube.player.app.PlayTubeApp;
+import com.playtube.player.business.FacebookReport;
 import com.playtube.player.gui.businessobjects.BackButtonActivity;
 
 /**
@@ -50,7 +50,7 @@ public class YouTubePlayerActivity extends BackButtonActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		String str = GoTubeApp.getPreferenceManager().getString(getString(R.string.pref_key_screen_orientation), "auto");
+		String str = PlayTubeApp.getPreferenceManager().getString(getString(R.string.pref_key_screen_orientation), "auto");
 		int orientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
 		if("landscape".equals(str)) orientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE;
 		if("portrait".equals(str)) orientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT;

@@ -17,7 +17,6 @@
 
 package com.playtube.player.gui.activities;
 
-import android.Manifest;
 import android.content.ClipDescription;
 import android.content.ClipboardManager;
 import android.content.Intent;
@@ -43,6 +42,21 @@ import android.widget.TextView;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.SearchSuggestionsAdapter;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
+import com.playtube.player.app.PlayTubeApp;
+import com.playtube.player.business.FBAdUtils;
+import com.playtube.player.business.TubeSearchSuggistion;
+import com.playtube.player.business.Utils;
+import com.playtube.player.business.youtube.bean.YouTubeChannel;
+import com.playtube.player.business.youtube.bean.YouTubePlaylist;
+import com.playtube.player.business.db.DownloadedVideosDb;
+import com.playtube.player.gui.businessobjects.MainActivityListener;
+import com.playtube.player.gui.businessobjects.adapters.SubsAdapter;
+import com.playtube.player.gui.fragments.ChannelBrowserFragment;
+import com.playtube.player.gui.fragments.MainFragment;
+import com.playtube.player.gui.fragments.PlaylistVideosFragment;
+import com.playtube.player.gui.fragments.SearchVideoGridFragment;
+import com.playtube.player.gui.fragments.VideosGridFragment;
+import com.tube.playtube.R;
 
 import org.json.JSONArray;
 
@@ -55,25 +69,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import com.playtube.player.app.GoTubeApp;
-import com.playtube.player.businessobjects.FBAdUtils;
-import com.playtube.player.businessobjects.TubeSearchSuggistion;
-import com.playtube.player.businessobjects.Utils;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeChannel;
-import com.playtube.player.businessobjects.db.DownloadedVideosDb;
-import com.playtube.player.gui.businessobjects.MainActivityListener;
-import com.playtube.player.gui.businessobjects.adapters.SubsAdapter;
-import com.playtube.player.gui.fragments.ChannelBrowserFragment;
-import com.playtube.player.gui.fragments.MainFragment;
-import com.playtube.player.gui.fragments.PlaylistVideosFragment;
-import com.playtube.player.gui.fragments.SearchVideoGridFragment;
-import com.tube.playtube.R;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubePlaylist;
-import com.playtube.player.gui.fragments.VideosGridFragment;
-import kr.co.namee.permissiongen.PermissionFail;
-import kr.co.namee.permissiongen.PermissionGen;
-import kr.co.namee.permissiongen.PermissionSuccess;
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
 
@@ -102,11 +97,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 	private boolean dontAddToBackStack = false;
 
 
-	@Override public void onRequestPermissionsResult(int requestCode, String[] permissions,
-													 int[] grantResults) {
-		PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
-	}
-
 	private RecyclerView subsListView = null;
 	private SubsAdapter subsAdapter = null;
 	private DrawerLayout subsDrawerLayout = null;
@@ -120,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 //			updatesCheckerTaskRan = true;
 //		}
 
-		GoTubeApp.setFeedUpdateInterval();
+		PlayTubeApp.setFeedUpdateInterval();
 		// Delete any missing downloaded videos
 		new DownloadedVideosDb.RemoveMissingVideosTask().executeInParallel();
 
@@ -157,11 +147,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 			}
 		}
 
-		PermissionGen.with(this)
-				.addRequestCode(100)
-				.permissions(
-						Manifest.permission.WRITE_EXTERNAL_STORAGE)
-				.request();
+		Utils.checkAndRequestPermissions(this);
 
 		subsDrawerLayout = findViewById(R.id.subs_drawer_layout);
 
@@ -181,8 +167,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 		subsListView.post(new Runnable() {
 			@Override
 			public void run() {
-				if (GoTubeApp.getPreferenceManager().getBoolean("can_referrer", false)) {
-					GoTubeApp.getPreferenceManager().edit().putBoolean("can_referrer", true).apply();
+				if (PlayTubeApp.getPreferenceManager().getBoolean("can_referrer", false)) {
+					PlayTubeApp.getPreferenceManager().edit().putBoolean("can_referrer", true).apply();
 				}
 			}
 		});
@@ -197,9 +183,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 
 		mSearchView.setSearchHint(getString(R.string.app_name));
 
-		if (!GoTubeApp.isSpecial()) {
+		if (!PlayTubeApp.isSpecial()) {
 			mSearchView.inflateOverflowMenu(R.menu.menu_main2);
-		} else if (GoTubeApp.getPreferenceManager().getBoolean("isShowRed", true)){
+		} else if (PlayTubeApp.getPreferenceManager().getBoolean("isShowRed", true)){
 			initSearchRedPoint(mSearchView);
 		}
 
@@ -270,7 +256,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 								public void run() {
 									mRedMenuBadge.hide(true);
 									mRedMenuBadge = null;
-									GoTubeApp.getPreferenceManager().edit().putBoolean("isShowRed", false).apply();
+									PlayTubeApp.getPreferenceManager().edit().putBoolean("isShowRed", false).apply();
 								}
 							});
 						}
@@ -369,17 +355,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 			}
 		}.executeOnExecutor(Utils.sExecutorService, newText);
 	}
-
-	@PermissionSuccess(requestCode = 100)
-	public void permissionsSuccess(){
-
-	}
-
-	@PermissionFail(requestCode = 100)
-	private void permissionsFaild() {
-
-	}
-
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {

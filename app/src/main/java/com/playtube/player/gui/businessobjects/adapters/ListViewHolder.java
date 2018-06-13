@@ -16,12 +16,12 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.io.File;
 
-import com.playtube.player.businessobjects.db.DownloadedVideosDb;
+import com.playtube.player.business.db.DownloadedVideosDb;
 import com.playtube.player.gui.businessobjects.YouTubePlayer;
 import com.tube.playtube.R;
-import com.playtube.player.businessobjects.Utils;
-import com.playtube.player.businessobjects.VideoCategory;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeVideo;
+import com.playtube.player.business.Utils;
+import com.playtube.player.business.VideoCategory;
+import com.playtube.player.business.youtube.bean.YouTubeVideo;
 import com.playtube.player.gui.fragments.DownloadedVideosFragment;
 
 /**

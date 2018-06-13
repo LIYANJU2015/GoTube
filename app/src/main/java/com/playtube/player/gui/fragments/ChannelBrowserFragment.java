@@ -40,10 +40,10 @@ import java.util.List;
 
 import com.playtube.player.gui.businessobjects.SubscribeButton;
 import com.tube.playtube.R;
-import com.playtube.player.businessobjects.FacebookReport;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeChannel;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeVideo;
-import com.playtube.player.businessobjects.YouTube.Tasks.GetYouTubeChannelInfoTask;
+import com.playtube.player.business.FacebookReport;
+import com.playtube.player.business.youtube.bean.YouTubeChannel;
+import com.playtube.player.business.youtube.bean.YouTubeVideo;
+import com.playtube.player.business.youtube.Tasks.GetYouTubeChannelInfoTask;
 import com.playtube.player.gui.businessobjects.adapters.SubsAdapter;
 import com.playtube.player.gui.businessobjects.fragments.FragmentEx;
 import com.playtube.player.gui.businessobjects.fragments.TabFragment;

@@ -27,23 +27,23 @@ import com.ms.square.android.expandabletextview.ExpandableTextView;
 
 import java.util.LinkedHashMap;
 
-import com.playtube.player.app.GoTubeApp;
-import com.playtube.player.businessobjects.FBAdUtils;
-import com.playtube.player.businessobjects.FacebookReport;
-import com.playtube.player.businessobjects.Utils;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeChannel;
-import com.playtube.player.businessobjects.YouTube.Tasks.GetYouTubeChannelInfoTask;
-import com.playtube.player.businessobjects.YouTube.VideoStream.StreamMetaDataList;
-import com.playtube.player.businessobjects.interfaces.GetStreamListener;
+import com.playtube.player.app.PlayTubeApp;
+import com.playtube.player.business.FBAdUtils;
+import com.playtube.player.business.FacebookReport;
+import com.playtube.player.business.Utils;
+import com.playtube.player.business.youtube.bean.YouTubeChannel;
+import com.playtube.player.business.youtube.Tasks.GetYouTubeChannelInfoTask;
+import com.playtube.player.business.youtube.VideoStream.StreamMetaDataList;
+import com.playtube.player.business.interfaces.GetStreamListener;
 import com.playtube.player.gui.businessobjects.SubscribeButton;
 import com.playtube.player.gui.fragments.ChannelBrowserFragment;
 import com.playtube.player.gui.player.widget.DefinitionIjkVideoView;
 import com.tube.playtube.R;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeChannelInterface;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeVideo;
-import com.playtube.player.businessobjects.YouTube.Tasks.GetVideoDescriptionTask;
-import com.playtube.player.businessobjects.YouTube.VideoStream.StreamMetaData;
-import com.playtube.player.businessobjects.db.Tasks.CheckIfUserSubbedToChannelTask;
+import com.playtube.player.business.youtube.bean.YouTubeChannelInterface;
+import com.playtube.player.business.youtube.bean.YouTubeVideo;
+import com.playtube.player.business.youtube.Tasks.GetVideoDescriptionTask;
+import com.playtube.player.business.youtube.VideoStream.StreamMetaData;
+import com.playtube.player.business.db.Tasks.CheckIfUserSubbedToChannelTask;
 import com.playtube.player.gui.activities.MainActivity;
 import com.playtube.player.gui.businessobjects.adapters.CommentsAdapter;
 import com.playtube.player.gui.player.controller.DefinitionController;
@@ -215,8 +215,11 @@ public class TubePlayerActivity extends AppCompatActivity implements VideoListen
         downloadVideoIV.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                if (!Utils.checkAndRequestPermissions(TubePlayerActivity.this)) {
+                    return;
+                }
                 if (youTubeVideo != null && !TextUtils.isEmpty(ijkVideoView.getCurrentUrl())) {
-                    youTubeVideo.downloadVideo(GoTubeApp.getContext(), ijkVideoView.getCurrentUrl());
+                    youTubeVideo.downloadVideo(PlayTubeApp.getContext(), ijkVideoView.getCurrentUrl());
                 }
             }
         });

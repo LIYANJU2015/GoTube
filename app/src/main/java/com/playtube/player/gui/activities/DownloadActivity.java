@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.playtube.player.businessobjects.db.DownloadedVideosDb;
+import com.playtube.player.business.db.DownloadedVideosDb;
 import com.tube.playtube.R;
 import com.playtube.player.gui.fragments.DownloadedVideosFragment;
 

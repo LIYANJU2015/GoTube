@@ -8,10 +8,10 @@ import com.rating.RatingActivity;
 
 import butterknife.BindView;
 
-import com.playtube.player.app.GoTubeApp;
-import com.playtube.player.businessobjects.AsyncTaskParallel;
-import com.playtube.player.businessobjects.VideoCategory;
-import com.playtube.player.businessobjects.db.DownloadedVideosDb;
+import com.playtube.player.app.PlayTubeApp;
+import com.playtube.player.business.AsyncTaskParallel;
+import com.playtube.player.business.VideoCategory;
+import com.playtube.player.business.db.DownloadedVideosDb;
 import com.playtube.player.gui.businessobjects.adapters.VideoGridAdapter;
 import com.tube.playtube.R;
 import com.playtube.player.gui.businessobjects.fragments.OrderableVideosGridFragment;
@@ -61,8 +61,8 @@ public class DownloadedVideosFragment extends OrderableVideosGridFragment implem
 	 */
 	private void displayDownloadsDisabledWarning() {
 		if (downloadsDisabledWarning != null) {
-			boolean allowDownloadsOnMobile = GoTubeApp.getPreferenceManager().getBoolean(GoTubeApp.getStr(R.string.pref_key_allow_mobile_downloads), false);
-			downloadsDisabledWarning.setVisibility(GoTubeApp.isConnectedToMobile() && !allowDownloadsOnMobile ? View.VISIBLE : View.GONE);
+			boolean allowDownloadsOnMobile = PlayTubeApp.getPreferenceManager().getBoolean(PlayTubeApp.getStr(R.string.pref_key_allow_mobile_downloads), false);
+			downloadsDisabledWarning.setVisibility(PlayTubeApp.isConnectedToMobile() && !allowDownloadsOnMobile ? View.VISIBLE : View.GONE);
 		}
 	}
 
@@ -73,7 +73,7 @@ public class DownloadedVideosFragment extends OrderableVideosGridFragment implem
 
 	@Override
 	public String getFragmentName() {
-		return GoTubeApp.getStr(R.string.downloads);
+		return PlayTubeApp.getStr(R.string.downloads);
 	}
 
 	@Override
@@ -123,7 +123,7 @@ public class DownloadedVideosFragment extends OrderableVideosGridFragment implem
 		super.onDestroyView();
 		if (videoGridAdapter.getItemCount() > 0 && sIsPlayDownload) {
 			sIsPlayDownload = false;
-			RatingActivity.launch(GoTubeApp.getContext(), "", getString(R.string.rating_text));
+			RatingActivity.launch(PlayTubeApp.getContext(), "", getString(R.string.rating_text));
 		}
 	}
 }

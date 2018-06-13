@@ -17,9 +17,9 @@
 
 package com.playtube.player.gui.fragments;
 
-import com.playtube.player.app.GoTubeApp;
+import com.playtube.player.app.PlayTubeApp;
 import com.tube.playtube.R;
-import com.playtube.player.businessobjects.VideoCategory;
+import com.playtube.player.business.VideoCategory;
 
 /**
  * A fragment that holds today's most popular videos.
@@ -33,7 +33,7 @@ public class MostPopularVideosFragment extends VideosGridFragment {
 
 	@Override
 	public String getFragmentName() {
-		return GoTubeApp.getStr(R.string.most_popular);
+		return PlayTubeApp.getStr(R.string.most_popular);
 	}
 
 }

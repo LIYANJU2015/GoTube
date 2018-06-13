@@ -21,9 +21,9 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
 import com.facebook.ads.NativeAd;
-import com.playtube.player.businessobjects.FBAdUtils;
-import com.playtube.player.businessobjects.Logger;
-import com.playtube.player.businessobjects.VideoCategory;
+import com.playtube.player.business.FBAdUtils;
+import com.playtube.player.business.Logger;
+import com.playtube.player.business.VideoCategory;
 import com.playtube.player.gui.businessobjects.AdViewWrapperAdapter;
 
 import java.util.ArrayList;

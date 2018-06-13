@@ -18,8 +18,8 @@
 package com.playtube.player.gui.fragments;
 
 import com.tube.playtube.R;
-import com.playtube.player.app.GoTubeApp;
-import com.playtube.player.businessobjects.VideoCategory;
+import com.playtube.player.app.PlayTubeApp;
+import com.playtube.player.business.VideoCategory;
 
 /**
  * A fragment that holds featured videos.
@@ -34,7 +34,7 @@ public class FeaturedVideosFragment extends VideosGridFragment {
 
 	@Override
 	public String getFragmentName() {
-		return GoTubeApp.getStr(R.string.featured);
+		return PlayTubeApp.getStr(R.string.featured);
 	}
 
 }

@@ -19,8 +19,8 @@ package com.playtube.player.gui.businessobjects.preferences;
 
 import android.os.Environment;
 
-import com.playtube.player.businessobjects.db.BookmarksDb;
-import com.playtube.player.businessobjects.db.SubscriptionsDb;
+import com.playtube.player.business.db.BookmarksDb;
+import com.playtube.player.business.db.SubscriptionsDb;
 
 import java.io.File;
 import java.io.IOException;

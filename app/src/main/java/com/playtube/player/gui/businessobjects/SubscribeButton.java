@@ -24,10 +24,10 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import com.playtube.player.businessobjects.db.Tasks.SubscribeToChannelTask;
+import com.playtube.player.business.db.Tasks.SubscribeToChannelTask;
 import com.tube.playtube.R;
-import com.playtube.player.businessobjects.YouTube.Tasks.GetChannelVideosTask;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeChannel;
+import com.playtube.player.business.youtube.Tasks.GetChannelVideosTask;
+import com.playtube.player.business.youtube.bean.YouTubeChannel;
 
 /**
  * The (channel) subscribe button.

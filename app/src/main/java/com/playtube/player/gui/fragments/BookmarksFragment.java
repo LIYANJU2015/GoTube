@@ -23,12 +23,12 @@ import android.view.View;
 
 import butterknife.BindView;
 
-import com.playtube.player.businessobjects.AsyncTaskParallel;
+import com.playtube.player.business.AsyncTaskParallel;
 import com.playtube.player.gui.businessobjects.adapters.OrderableVideoGridAdapter;
 import com.tube.playtube.R;
-import com.playtube.player.app.GoTubeApp;
-import com.playtube.player.businessobjects.VideoCategory;
-import com.playtube.player.businessobjects.db.BookmarksDb;
+import com.playtube.player.app.PlayTubeApp;
+import com.playtube.player.business.VideoCategory;
+import com.playtube.player.business.db.BookmarksDb;
 import com.playtube.player.gui.businessobjects.fragments.OrderableVideosGridFragment;
 
 /**
@@ -84,7 +84,7 @@ public class BookmarksFragment extends OrderableVideosGridFragment implements Bo
 
 	@Override
 	public String getFragmentName() {
-		return GoTubeApp.getStr(R.string.bookmarks);
+		return PlayTubeApp.getStr(R.string.bookmarks);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////

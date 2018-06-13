@@ -6,10 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeChannel;
+import com.playtube.player.business.youtube.bean.YouTubeChannel;
 import com.tube.playtube.R;
-import com.playtube.player.app.GoTubeApp;
-import com.playtube.player.businessobjects.VideoCategory;
+import com.playtube.player.app.PlayTubeApp;
+import com.playtube.player.business.VideoCategory;
 import com.playtube.player.gui.businessobjects.adapters.VideoGridAdapter;
 
 /**
@@ -61,7 +61,7 @@ public class ChannelVideosFragment extends VideosGridFragment {
 
 	@Override
 	public String getFragmentName() {
-		return GoTubeApp.getStr(R.string.videos);
+		return PlayTubeApp.getStr(R.string.videos);
 	}
 
 

@@ -17,8 +17,8 @@
 
 package com.playtube.player.gui.businessobjects;
 
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeChannel;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubePlaylist;
+import com.playtube.player.business.youtube.bean.YouTubeChannel;
+import com.playtube.player.business.youtube.bean.YouTubePlaylist;
 
 /**
  * This methods will be called when the user clicks on the view whose aim is to open the ChannelBrowser.

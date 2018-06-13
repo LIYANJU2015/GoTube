@@ -29,7 +29,7 @@ import com.bumptech.glide.request.RequestOptions;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.tube.playtube.R;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubePlaylist;
+import com.playtube.player.business.youtube.bean.YouTubePlaylist;
 import com.playtube.player.gui.businessobjects.PlaylistClickListener;
 
 /**

@@ -37,14 +37,14 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.playtube.player.businessobjects.AsyncTaskParallel;
-import com.playtube.player.businessobjects.Logger;
+import com.playtube.player.business.AsyncTaskParallel;
+import com.playtube.player.business.Logger;
 import com.playtube.player.gui.businessobjects.adapters.SubsAdapter;
 import com.playtube.player.gui.fragments.SubscriptionsFeedFragment;
 import com.tube.playtube.R;
-import com.playtube.player.app.GoTubeApp;
-import com.playtube.player.businessobjects.YouTube.Tasks.GetSubscriptionVideosTask;
-import com.playtube.player.businessobjects.db.SubscriptionsDb;
+import com.playtube.player.app.PlayTubeApp;
+import com.playtube.player.business.youtube.Tasks.GetSubscriptionVideosTask;
+import com.playtube.player.business.db.SubscriptionsDb;
 import com.playtube.player.gui.businessobjects.adapters.ImportSubscriptionsAdapter;
 import com.playtube.player.gui.businessobjects.preferences.BackupDatabases;
 
@@ -237,7 +237,7 @@ public class SubscriptionsBackupsManager {
 							.setNeutralButton(R.string.restart, new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
-									GoTubeApp.restartApp();
+									PlayTubeApp.restartApp();
 								}
 							})
 							.show();
@@ -441,7 +441,7 @@ public class SubscriptionsBackupsManager {
 			dialog.dismiss();
 
 			Toast.makeText(activity,
-							String.format(GoTubeApp.getStr(R.string.subscriptions_to_channels_imported), totalChannelsSubscribedTo),
+							String.format(PlayTubeApp.getStr(R.string.subscriptions_to_channels_imported), totalChannelsSubscribedTo),
 							Toast.LENGTH_SHORT).show();
 
 			// refresh the Feed tab so it shows videos from the newly subscribed channels

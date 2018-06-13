@@ -22,7 +22,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.playtube.player.businessobjects.Logger;
+import com.playtube.player.business.Logger;
 
 /**
  * Detects user's swipe motions and taps.

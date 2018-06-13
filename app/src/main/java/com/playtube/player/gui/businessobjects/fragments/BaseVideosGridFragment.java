@@ -26,8 +26,8 @@ import android.view.View;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import com.playtube.player.businessobjects.Logger;
-import com.playtube.player.businessobjects.YouTube.Tasks.GetYouTubeVideosTask;
+import com.playtube.player.business.Logger;
+import com.playtube.player.business.youtube.Tasks.GetYouTubeVideosTask;
 import com.tube.playtube.R;
 import com.playtube.player.gui.businessobjects.adapters.VideoGridAdapter;
 import com.playtube.player.gui.fragments.VideosGridFragment;

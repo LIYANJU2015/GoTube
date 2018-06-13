@@ -19,7 +19,7 @@ package com.playtube.player.gui.businessobjects;
 
 import android.content.Context;
 
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeVideo;
+import com.playtube.player.business.youtube.bean.YouTubeVideo;
 import com.playtube.player.gui.player.TubePlayerActivity;
 
 /**

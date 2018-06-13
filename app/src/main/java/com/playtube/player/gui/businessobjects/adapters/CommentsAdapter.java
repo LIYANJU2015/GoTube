@@ -37,13 +37,13 @@ import com.bumptech.glide.request.RequestOptions;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.playtube.player.app.GoTubeApp;
-import com.playtube.player.businessobjects.YouTube.GetCommentThreads;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeChannel;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeChannelInterface;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeComment;
-import com.playtube.player.businessobjects.YouTube.POJOs.YouTubeCommentThread;
-import com.playtube.player.businessobjects.YouTube.Tasks.GetYouTubeChannelInfoTask;
+import com.playtube.player.app.PlayTubeApp;
+import com.playtube.player.business.youtube.GetCommentThreads;
+import com.playtube.player.business.youtube.bean.YouTubeChannel;
+import com.playtube.player.business.youtube.bean.YouTubeChannelInterface;
+import com.playtube.player.business.youtube.bean.YouTubeComment;
+import com.playtube.player.business.youtube.bean.YouTubeCommentThread;
+import com.playtube.player.business.youtube.Tasks.GetYouTubeChannelInfoTask;
 import com.playtube.player.gui.activities.MainActivity;
 import com.playtube.player.gui.fragments.ChannelBrowserFragment;
 import com.tube.playtube.R;
@@ -226,7 +226,7 @@ public class CommentsAdapter extends BaseExpandableListAdapter {
 
 			// change the width dimensions depending on whether the comment is a top level or a child
 			ViewGroup.LayoutParams lp = thumbnailImageView.getLayoutParams();
-			lp.width = (int) GoTubeApp.getDimension(isTopLevelComment  ?  R.dimen.top_level_comment_thumbnail_width  :  R.dimen.child_comment_thumbnail_width);
+			lp.width = (int) PlayTubeApp.getDimension(isTopLevelComment  ?  R.dimen.top_level_comment_thumbnail_width  :  R.dimen.child_comment_thumbnail_width);
 
 			if (isTopLevelComment  &&  getChildrenCount(groupPosition) > 0) {
 				viewRepliesTextView.setVisibility(View.VISIBLE);

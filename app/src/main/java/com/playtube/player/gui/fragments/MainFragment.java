@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tube.playtube.R;
-import com.playtube.player.businessobjects.Logger;
-import com.playtube.player.businessobjects.db.BookmarksDb;
+import com.playtube.player.business.Logger;
+import com.playtube.player.business.db.BookmarksDb;
 import com.playtube.player.gui.businessobjects.fragments.FragmentEx;
 
 public class MainFragment extends FragmentEx {
