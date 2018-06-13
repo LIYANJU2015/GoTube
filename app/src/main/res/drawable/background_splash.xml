@@ -8,7 +8,7 @@
 
     <item>
         <bitmap
-            android:src="@mipmap/ic_launcher_splash"
+            android:src="@mipmap/ic_logo_splash"
             android:gravity="center" />
     </item>
 

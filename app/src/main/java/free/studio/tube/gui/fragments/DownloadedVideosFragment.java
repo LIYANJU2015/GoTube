@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.rating.RatingActivity;
+
 import butterknife.BindView;
 import free.rm.gotube.R;
 import free.studio.tube.app.GoTubeApp;
@@ -11,6 +13,7 @@ import free.studio.tube.businessobjects.AsyncTaskParallel;
 import free.studio.tube.businessobjects.VideoCategory;
 import free.studio.tube.businessobjects.db.DownloadedVideosDb;
 import free.studio.tube.gui.businessobjects.adapters.OrderableVideoGridAdapter;
+import free.studio.tube.gui.businessobjects.adapters.VideoGridAdapter;
 import free.studio.tube.gui.businessobjects.fragments.OrderableVideosGridFragment;
 
 /**
@@ -22,10 +25,12 @@ public class DownloadedVideosFragment extends OrderableVideosGridFragment implem
 	@BindView(R.id.downloadsDisabledWarning)
 	View downloadsDisabledWarning;
 
+	public static boolean sIsPlayDownload = false;
+
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		videoGridAdapter = new OrderableVideoGridAdapter(getActivity(), DownloadedVideosDb.getVideoDownloadsDb());
+		videoGridAdapter = new VideoGridAdapter(getActivity(), false);
 		setLayoutResource(R.layout.fragment_downloads);
 	}
 
@@ -111,5 +116,14 @@ public class DownloadedVideosFragment extends OrderableVideosGridFragment implem
 			}
 		}
 
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		if (videoGridAdapter.getItemCount() > 0 && sIsPlayDownload) {
+			sIsPlayDownload = false;
+			RatingActivity.launch(GoTubeApp.getContext());
+		}
 	}
 }

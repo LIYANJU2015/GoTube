@@ -32,6 +32,7 @@ import org.joda.time.format.ISODateTimeFormat;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import free.studio.tube.app.GoTubeApp;
@@ -315,7 +316,10 @@ public class SubscriptionsDb extends SQLiteOpenHelperEx {
 	public void saveChannelVideos(YouTubeChannel channel) {
 		Gson gson = new Gson();
 		DateTimeFormatter fmt = ISODateTimeFormat.dateTime();
-		for (YouTubeVideo video : channel.getYouTubeVideos()) {
+		Iterator<YouTubeVideo> iterator = channel.getYouTubeVideos().iterator();
+
+		while (iterator.hasNext()) {
+			YouTubeVideo video = iterator.next();
 			if(!hasVideo(video)) {
 				ContentValues values = new ContentValues();
 				values.put(SubscriptionsVideosTable.COL_CHANNEL_ID, channel.getId());

@@ -146,7 +146,7 @@ public class VideoGridAdapter extends RecyclerViewAdapterEx<YouTubeVideo, Recycl
 		View v;
 		if (currentVideoCategory == VideoCategory.SEARCH_QUERY || currentVideoCategory == VideoCategory.DOWNLOADED_VIDEOS) {
 			v = LayoutInflater.from(parent.getContext()).inflate(R.layout.video_list_item, parent, false);
-			return new ListViewHolder(v);
+			return new ListViewHolder(v, currentVideoCategory);
 		} else {
 			 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.video_cell, parent, false);
 			return new GridViewHolder(v, listener, showChannelInfo);

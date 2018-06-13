@@ -147,7 +147,7 @@ class GridViewHolder extends RecyclerView.ViewHolder {
 
 		Glide.with(context)
 				.load(video.getThumbnailUrl())
-				.apply(new RequestOptions().placeholder(R.drawable.dummy_thumbnail))
+				.apply(new RequestOptions().placeholder(R.drawable.default_thumbnail))
 				.into(thumbnailImageView);
 
 		if (video.getThumbsUpPercentageStr() != null) {

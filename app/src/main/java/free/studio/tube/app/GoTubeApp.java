@@ -39,6 +39,7 @@ import android.text.TextUtils;
 
 import com.admodule.AdModule;
 import com.liulishuo.filedownloader.FileDownloader;
+import com.rating.RatingActivity;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.Arrays;
@@ -163,7 +164,18 @@ public class GoTubeApp extends MultiDexApplication {
 
 		AdModule.getInstance().getFacebookAd().loadAds(AdsID.FB_NATIVE_AD_ID);
 
-		setSpecial();
+		RatingActivity.setRatingClickListener(new RatingActivity.RatingClickListener() {
+			@Override
+			public void onClickFiveStart() {
+
+			}
+
+			@Override
+			public void onClickReject() {
+
+			}
+		});
+		RatingActivity.setPopTotalCount(this, 2);
 	}
 
 	public static void addShortcut(Context context, Class clazz, String appName, int ic_launcher) {
