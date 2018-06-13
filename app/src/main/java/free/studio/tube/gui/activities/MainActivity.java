@@ -163,10 +163,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 		PermissionGen.with(this)
 				.addRequestCode(100)
 				.permissions(
-						Manifest.permission.WRITE_EXTERNAL_STORAGE,
-						Manifest.permission.ACCESS_COARSE_LOCATION,
-						Manifest.permission.ACCESS_FINE_LOCATION,
-						Manifest.permission.READ_PHONE_STATE)
+						Manifest.permission.WRITE_EXTERNAL_STORAGE)
 				.request();
 
 		subsDrawerLayout = findViewById(R.id.subs_drawer_layout);
@@ -184,6 +181,14 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 
 		initSearchView();
 
+		subsListView.post(new Runnable() {
+			@Override
+			public void run() {
+				if (GoTubeApp.getPreferenceManager().getBoolean("can_referrer", false)) {
+					GoTubeApp.getPreferenceManager().edit().putBoolean("can_referrer", true).apply();
+				}
+			}
+		});
 	}
 
 	private FloatingSearchView mSearchView;
@@ -195,7 +200,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 
 		mSearchView.setSearchHint(getString(R.string.app_name));
 
-		initSearchRedPoint(mSearchView);
+		if (!GoTubeApp.isSpecial()) {
+			mSearchView.inflateOverflowMenu(R.menu.menu_main2);
+		} else if (GoTubeApp.getPreferenceManager().getBoolean("isShowRed", true)){
+			initSearchRedPoint(mSearchView);
+		}
 
 		mSearchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
 			@Override
@@ -258,6 +267,16 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 						break;
 					case R.id.menu_downloads:
 						DownloadActivity.launch(getApplicationContext());
+						if (mRedMenuBadge != null) {
+							mSearchView.post(new Runnable() {
+								@Override
+								public void run() {
+									mRedMenuBadge.hide(true);
+									mRedMenuBadge = null;
+									GoTubeApp.getPreferenceManager().edit().putBoolean("isShowRed", false).apply();
+								}
+							});
+						}
 						break;
 				}
 			}

@@ -299,7 +299,7 @@ public class FBAdUtils {
 
         ImageView nativeAdIcon = adView.findViewById(R.id.image2_ad);
         imageAdFrame.setVisibility(View.VISIBLE);
-        imageAdFrame.setBackground(ContextCompat.getDrawable(context, R.drawable.default_thumbnail));
+        imageAdFrame.setBackground(ContextCompat.getDrawable(context, R.drawable.fb_ad_bg1));
 
         FrameLayout adChoicesFrame = adView.findViewById(R.id.fb_adChoices2);
         TextView nativeAdTitle = adView.findViewById(R.id.title);

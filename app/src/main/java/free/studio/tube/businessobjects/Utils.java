@@ -60,6 +60,22 @@ public class Utils {
         }
     }
 
+    public static boolean isRoot(){
+        boolean bool = false;
+
+        try{
+            if ((!new File("/system/bin/su").exists())
+                    && (!new File("/system/xbin/su").exists())){
+                bool = false;
+            } else {
+                bool = true;
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return bool;
+    }
+
     public static boolean isScreenOn() {
         try {
             if (android.os.Build.VERSION.SDK_INT >= 20) {

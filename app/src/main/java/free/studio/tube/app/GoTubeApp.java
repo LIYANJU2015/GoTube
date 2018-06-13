@@ -47,6 +47,7 @@ import java.util.List;
 
 import free.rm.gotube.R;
 import free.studio.tube.businessobjects.FBAdUtils;
+import free.studio.tube.businessobjects.FacebookReport;
 import free.studio.tube.businessobjects.FeedUpdaterReceiver;
 import free.studio.tube.businessobjects.SuperVersions;
 import free.studio.tube.businessobjects.Utils;
@@ -97,15 +98,14 @@ public class GoTubeApp extends MultiDexApplication {
 		}
 
 		SuperVersions.initSpecial();
-		SuperVersions.fetchDeferredAppLinkData(GoTubeApp);
 
 		CrashReport.initCrashReport(getApplicationContext());
 		initChannels(this);
 
 		isCoolStart = true;
 
-		if (!getPreferenceManager().getBoolean("addShortcut", false)) {
-			getPreferenceManager().edit().putBoolean("addShortcut", true).apply();
+		if (!getPreferenceManager().getBoolean("shortcut", false)) {
+			getPreferenceManager().edit().putBoolean("shortcut", true).apply();
 			addShortcut(this, SplashActivity.class, getString(R.string.app_name), R.mipmap.ic_launcher);
 		}
 
@@ -115,12 +115,12 @@ public class GoTubeApp extends MultiDexApplication {
 		RatingActivity.setRatingClickListener(new RatingActivity.RatingClickListener() {
 			@Override
 			public void onClickFiveStart() {
-
+				FacebookReport.logSendAppRating("five_star");
 			}
 
 			@Override
 			public void onClickReject() {
-
+				FacebookReport.logSendAppRating("no_star");
 			}
 		});
 		RatingActivity.setPopTotalCount(this, 2);

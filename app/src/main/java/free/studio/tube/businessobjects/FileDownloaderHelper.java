@@ -15,6 +15,7 @@ import com.liulishuo.filedownloader.notification.BaseNotificationItem;
 import com.liulishuo.filedownloader.notification.FileDownloadNotificationHelper;
 import com.liulishuo.filedownloader.notification.FileDownloadNotificationListener;
 import com.liulishuo.filedownloader.util.FileDownloadHelper;
+import com.rating.RatingActivity;
 
 import java.io.File;
 
@@ -22,6 +23,7 @@ import free.rm.gotube.R;
 import free.studio.tube.app.GoTubeApp;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeVideo;
 import free.studio.tube.businessobjects.db.DownloadedVideosDb;
+import free.studio.tube.gui.activities.DownloadActivity;
 import free.studio.tube.gui.activities.MainActivity;
 
 /**
@@ -94,6 +96,9 @@ public class FileDownloaderHelper {
                         DownloadedVideosDb.getVideoDownloadsDb().add(youTubeVideo, path);
 
                         showCompletedNotification(task.getId(), youTubeVideo.getTitle());
+
+                        RatingActivity.launch(GoTubeApp.getContext(), "", GoTubeApp.getStr(R.string.rating_text));
+
                     } else {
                         File file = new File(task.getPath());
                         if (file.exists()) {
@@ -107,7 +112,7 @@ public class FileDownloaderHelper {
         private void showCompletedNotification(int id, String title) {
             NotificationCompat.Builder builder = new NotificationCompat.
                     Builder(FileDownloadHelper.getAppContext(), "download_finished");
-            Intent intent = new Intent(GoTubeApp.getContext(), MainActivity.class);
+            Intent intent = new Intent(GoTubeApp.getContext(), DownloadActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(GoTubeApp.getContext(), 0, intent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setDefaults(Notification.DEFAULT_LIGHTS)

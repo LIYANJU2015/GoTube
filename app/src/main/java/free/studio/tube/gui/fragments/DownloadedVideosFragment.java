@@ -123,7 +123,7 @@ public class DownloadedVideosFragment extends OrderableVideosGridFragment implem
 		super.onDestroyView();
 		if (videoGridAdapter.getItemCount() > 0 && sIsPlayDownload) {
 			sIsPlayDownload = false;
-			RatingActivity.launch(GoTubeApp.getContext());
+			RatingActivity.launch(GoTubeApp.getContext(), "", getString(R.string.rating_text));
 		}
 	}
 }

@@ -582,20 +582,6 @@ public class YouTubeVideo implements Serializable {
 				success = DownloadedVideosDb.getVideoDownloadsDb().add(YouTubeVideo.this, localFileUri.toString());
 			}
 
-			RatingActivity.setPopTotalCount(GoTubeApp.getContext(), 2);
-			RatingActivity.setRatingClickListener(new RatingActivity.RatingClickListener() {
-				@Override
-				public void onClickFiveStart() {
-					FacebookReport.logSendAppRating("five");
-				}
-
-				@Override
-				public void onClickReject() {
-					FacebookReport.logSendAppRating("no");
-				}
-			});
-			RatingActivity.launch(GoTubeApp.getContext());
-
 			Toast.makeText(GoTubeApp.getContext(),
 					String.format(GoTubeApp.getContext().getString(success ? R.string.video_downloaded : R.string.video_download_stream_error), getTitle()),
 					Toast.LENGTH_LONG).show();

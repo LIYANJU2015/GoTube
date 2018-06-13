@@ -38,4 +38,6 @@
 	<string name="player_wifi_tip">You are using mobile network, continue to play will consume traffic</string>
 
 	<string name="player_not_install">Please install a support video player</string>
+
+	<string name="rating_text">For you to complete a video, please give me a five-star praise</string>
 </resources>

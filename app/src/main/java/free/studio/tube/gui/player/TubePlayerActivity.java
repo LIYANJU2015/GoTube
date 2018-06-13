@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.dueeeke.videoplayer.listener.VideoListener;
 import com.dueeeke.videoplayer.player.IjkPlayer;
 import com.dueeeke.videoplayer.player.PlayerConfig;
 import com.facebook.ads.Ad;
@@ -29,6 +30,7 @@ import java.util.LinkedHashMap;
 import free.rm.gotube.R;
 import free.studio.tube.app.GoTubeApp;
 import free.studio.tube.businessobjects.FBAdUtils;
+import free.studio.tube.businessobjects.FacebookReport;
 import free.studio.tube.businessobjects.Utils;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeChannel;
 import free.studio.tube.businessobjects.YouTube.POJOs.YouTubeChannelInterface;
@@ -52,7 +54,7 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
  * Created by liyanju on 2018/6/8.
  */
 
-public class TubePlayerActivity extends AppCompatActivity{
+public class TubePlayerActivity extends AppCompatActivity implements VideoListener{
 
     public static final String TAG = "TubePlayerActivity";
 
@@ -70,9 +72,39 @@ public class TubePlayerActivity extends AppCompatActivity{
 
     public static void launch(Context context, YouTubeVideo youTubeVideo) {
         Intent i = new Intent(context, TubePlayerActivity.class);
-        i.putExtra(YouTubePlayerFragment.YOUTUBE_VIDEO_OBJ, youTubeVideo);
+        i.putExtra(YOUTUBE_VIDEO_OBJ, youTubeVideo);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(i);
+    }
+
+    @Override
+    public void onVideoStarted() {
+        FacebookReport.logSentVideoPlayStart();
+    }
+
+    @Override
+    public void onVideoPaused() {
+
+    }
+
+    @Override
+    public void onComplete() {
+
+    }
+
+    @Override
+    public void onPrepared() {
+
+    }
+
+    @Override
+    public void onError() {
+
+    }
+
+    @Override
+    public void onInfo(int i, int i1) {
+
     }
 
     @Override
@@ -109,6 +141,7 @@ public class TubePlayerActivity extends AppCompatActivity{
                         }
 
                         ijkVideoView.setDefinitionVideos(videos);
+                        ijkVideoView.setVideoListener(TubePlayerActivity.this);
                         ijkVideoView.start();
 
                         downloadVideoIV.setVisibility(View.VISIBLE);
@@ -128,6 +161,8 @@ public class TubePlayerActivity extends AppCompatActivity{
             new CommentsAdapter(this, youTubeVideo.getId(), commentsExpandableListView, commentsProgressBar, noVideoCommentsView);
 
             initVideoDetailHeader();
+
+            FacebookReport.logSentVideoPlay();
         }
 
         FBAdUtils.interstitialLoad(Utils.CHAPING_COMMON_AD, new FBAdUtils.FBInterstitialAdListener(){
@@ -326,6 +361,7 @@ public class TubePlayerActivity extends AppCompatActivity{
     protected void onDestroy() {
         super.onDestroy();
         ijkVideoView.release();
+        ijkVideoView.setVideoListener(null);
         unregisterScreen();
         if (youTubeVideo != null) {
             youTubeVideo.cancelGetStream();
