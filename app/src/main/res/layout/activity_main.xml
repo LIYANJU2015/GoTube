@@ -48,7 +48,7 @@
         app:floatingSearch_searchHint="Search..."
         app:floatingSearch_showSearchKey="true"
         app:floatingSearch_suggestionsListAnimDuration="250"
-        app:layout_behavior="free.studio.tube.gui.FloatSearchBehavior" />
+        app:layout_behavior="com.playtube.player.gui.FloatSearchBehavior" />
 
 </android.support.design.widget.CoordinatorLayout>
 

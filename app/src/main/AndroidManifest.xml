@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="free.rm.gotube">
+          package="com.tube.playtube">
 
 	<uses-permission android:name="android.permission.INTERNET"/>                   <!-- Mandatory permission -->
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>     <!-- [Optional]  Used for database backups and to download videos/thumbnails -->
@@ -14,7 +14,7 @@
 	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
 	<application
-		android:name="free.studio.tube.app.GoTubeApp"
+		android:name="com.playtube.player.app.GoTubeApp"
 		android:allowBackup="true"
 		android:hardwareAccelerated="true"
 		android:icon="@mipmap/ic_launcher"
@@ -35,14 +35,14 @@
 		</provider>
 
 		<activity
-			android:name="free.studio.tube.gui.activities.MainActivity"
+			android:name="com.playtube.player.gui.activities.MainActivity"
 			android:launchMode="singleTask"
 			android:screenOrientation="portrait"
 			android:theme="@style/NoActionBarActivityTheme">
 
 		</activity>
 
-		<activity android:name="free.studio.tube.gui.activities.SplashActivity"
+		<activity android:name="com.playtube.player.gui.activities.SplashActivity"
 			android:theme="@style/SplashTheme"
 			android:screenOrientation="portrait"
 			>
@@ -53,21 +53,21 @@
 			</intent-filter>
 		</activity>
 
-		<activity android:name="free.studio.tube.gui.player.TubePlayerActivity"
+		<activity android:name="com.playtube.player.gui.player.TubePlayerActivity"
 			android:configChanges="orientation|keyboardHidden|screenSize"
 			android:screenOrientation="portrait"
 			android:launchMode="singleTask"
 			android:theme="@style/videoplayer"
 			/>
 
-		<activity android:name="free.studio.tube.gui.activities.PreferencesActivity"/>
+		<activity android:name="com.playtube.player.gui.activities.PreferencesActivity"/>
 
 		<activity
-			android:name="free.studio.tube.gui.activities.ThumbnailViewerActivity"
+			android:name="com.playtube.player.gui.activities.ThumbnailViewerActivity"
 			android:theme="@style/NoActionBarActivityTheme">
 		</activity>
 
-		<activity android:name="free.studio.tube.gui.activities.DownloadActivity"
+		<activity android:name="com.playtube.player.gui.activities.DownloadActivity"
 			android:theme="@style/NoActionBarActivityTheme"
 			android:launchMode="singleTask"
 			android:configChanges="orientation|keyboardHidden|screenSize"
@@ -88,12 +88,12 @@
 		<!--</receiver>-->
 
 		<activity
-			android:name="free.studio.tube.gui.activities.PermissionsActivity"
+			android:name="com.playtube.player.gui.activities.PermissionsActivity"
 		    android:theme="@style/TransparentActivity">
 		</activity>
 
 		<receiver
-			android:name="free.studio.tube.gui.activities.FacebookInstallReferrerReceiver"
+			android:name="com.playtube.player.gui.activities.FacebookInstallReferrerReceiver"
 			android:exported="true">
 			<intent-filter>
 				<action android:name="com.android.vending.INSTALL_REFERRER" />

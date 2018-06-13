@@ -19,25 +19,25 @@
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
 
 	<header
-		android:fragment="free.studio.tube.gui.fragments.preferences.VideoPlayerPreferenceFragment"
+		android:fragment="com.playtube.player.gui.fragments.preferences.VideoPlayerPreferenceFragment"
 		android:icon="@drawable/ic_pref_video_player"
 		android:title="@string/pref_video_player_category">
 	</header>
 
 	<header
-		android:fragment="free.studio.tube.gui.fragments.preferences.LanguagesPreferenceFragment"
+		android:fragment="com.playtube.player.gui.fragments.preferences.LanguagesPreferenceFragment"
 		android:icon="@drawable/ic_pref_languages_regions"
 		android:title="@string/pref_languages_category">
 	</header>
 
 	<header
-		android:fragment="free.studio.tube.gui.fragments.preferences.BackupPreferenceFragment"
+		android:fragment="com.playtube.player.gui.fragments.preferences.BackupPreferenceFragment"
 		android:icon="@drawable/ic_pref_backup"
 		android:title="@string/pref_backup_category">
 	</header>
 
 	<header
-		android:fragment="free.studio.tube.gui.fragments.preferences.OthersPreferenceFragment"
+		android:fragment="com.playtube.player.gui.fragments.preferences.OthersPreferenceFragment"
 		android:icon="@drawable/ic_pref_others"
 		android:title="@string/pref_other_category">
 	</header>

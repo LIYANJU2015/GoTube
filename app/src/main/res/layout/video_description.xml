@@ -82,7 +82,7 @@
                         android:text="Channel Name" />
 
                     <!-- SUB BUTTON -->
-                    <free.studio.tube.gui.businessobjects.SubscribeButton
+                    <com.playtube.player.gui.businessobjects.SubscribeButton
                         android:id="@+id/video_desc_subscribe_button"
                         style="@style/SubscribeButton"
                         android:layout_below="@id/video_desc_channel"

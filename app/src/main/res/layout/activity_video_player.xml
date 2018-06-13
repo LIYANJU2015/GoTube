@@ -4,11 +4,11 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	tools:context="free.studio.tube.gui.activities.YouTubePlayerActivity">
+	tools:context="com.playtube.player.gui.activities.YouTubePlayerActivity">
 
 	<fragment
 		android:id="@+id/b_fragment"
-		android:name="free.studio.tube.gui.fragments.YouTubePlayerFragment"
+		android:name="com.playtube.player.gui.fragments.YouTubePlayerFragment"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent" />
 

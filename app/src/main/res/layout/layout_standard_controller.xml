@@ -25,7 +25,7 @@
             android:visibility="gone"
             tools:visibility="visible" />
 
-        <free.studio.tube.gui.player.widget.MarqueeTextView
+        <com.playtube.player.gui.player.widget.MarqueeTextView
             android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
