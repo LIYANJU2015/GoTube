@@ -31,6 +31,13 @@ android {
             keyAlias "lisi"
             keyPassword "1234asdf"
         }
+
+//        release {
+//            storeFile file("keystore")
+//            storePassword "!@c123456"
+//            keyAlias "playtube6666"
+//            keyPassword "!@c123456"
+//        }
     }
 
     buildTypes {
