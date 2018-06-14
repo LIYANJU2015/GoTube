@@ -25,6 +25,7 @@ import com.playtube.player.business.FBAdUtils;
 import com.playtube.player.business.Logger;
 import com.playtube.player.business.VideoCategory;
 import com.playtube.player.gui.businessobjects.AdViewWrapperAdapter;
+import com.tube.playtube.R;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -102,7 +103,7 @@ public abstract class RecyclerViewAdapterEx<T, HolderType extends RecyclerView.V
 									AdViewItem(FBAdUtils.setUpItemNativeAdView(getContext(), nativeAd), adPostion));
 						} else {
 							adViewWrapperAdapter.addAdView(oldSize + l.size(), new AdViewWrapperAdapter.
-									AdViewItem(FBAdUtils.getBigAdView(nativeAd), adPostion));
+									AdViewItem(FBAdUtils.getBigAdView(nativeAd, R.layout.big_item_ad), adPostion));
 						}
 					}
 				}

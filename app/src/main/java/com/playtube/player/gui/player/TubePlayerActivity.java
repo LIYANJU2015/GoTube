@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import com.dueeeke.videoplayer.listener.VideoListener;
 import com.dueeeke.videoplayer.player.IjkPlayer;
 import com.dueeeke.videoplayer.player.PlayerConfig;
 import com.facebook.ads.Ad;
+import com.facebook.ads.NativeAd;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 
 import java.util.LinkedHashMap;
@@ -229,6 +231,16 @@ public class TubePlayerActivity extends AppCompatActivity implements VideoListen
         commentsExpandableListView.addHeaderView(headerView);
 
         setVideoDetail();
+
+        FrameLayout adFrameLayout = headerView.findViewById(R.id.ad_frame);
+        NativeAd nativeAd = FBAdUtils.nextNativieAd();
+        if (nativeAd != null && nativeAd.isAdLoaded()) {
+            adFrameLayout.setVisibility(View.VISIBLE);
+            adFrameLayout.removeAllViews();
+            adFrameLayout.addView(FBAdUtils.setUpItemNativeAdView(this, nativeAd));
+        } else {
+            adFrameLayout.setVisibility(View.GONE);
+        }
     }
 
     private void setVideoDetail() {

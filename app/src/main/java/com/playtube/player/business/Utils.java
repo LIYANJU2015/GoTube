@@ -38,9 +38,9 @@ import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
 
 public class Utils {
 
-    public static final String NATIVE_AD_ID = "";
-    public static final String CHAPING_COMMON_AD = "";
-    public static final String CHAPING_HIGH_AD = "";
+    public static final String NATIVE_AD_ID = "1905416809510951_1905418192844146";
+    public static final String CHAPING_COMMON_AD = "1905416809510951_1905418706177428";
+    public static final String CHAPING_HIGH_AD = "1905416809510951_1905419082844057";
 
     public static final ExecutorService sExecutorService2 = Executors.newSingleThreadExecutor();
     public static final ExecutorService sExecutorService = Executors.newSingleThreadExecutor();

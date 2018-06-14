@@ -9,6 +9,9 @@ import android.os.Environment;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
+import com.facebook.ads.Ad;
+import com.facebook.ads.AdError;
+import com.facebook.ads.InterstitialAd;
 import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.model.FileDownloadStatus;
 import com.liulishuo.filedownloader.notification.BaseNotificationItem;
@@ -63,6 +66,31 @@ public class FileDownloaderHelper {
         Toast.makeText(PlayTubeApp.getContext(),
                 String.format(PlayTubeApp.getContext().getString(R.string.starting_video_download), youTubeVideo.getTitle()),
                 Toast.LENGTH_LONG).show();
+
+        FBAdUtils.interstitialLoad(Utils.CHAPING_HIGH_AD, new FBAdUtils.FBInterstitialAdListener(){
+            @Override
+            public void onInterstitialDismissed(Ad ad) {
+                super.onInterstitialDismissed(ad);
+            }
+
+            @Override
+            public void onLoaded(InterstitialAd interstitialAd) {
+                super.onLoaded(interstitialAd);
+                try {
+                    if (interstitialAd != null && interstitialAd.isAdLoaded()) {
+                        interstitialAd.show();
+                    }
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Ad ad, AdError adError) {
+                super.onError(ad, adError);
+                FBAdUtils.destoryInterstitial();
+            }
+        });
 
     }
 

@@ -172,6 +172,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 				}
 			}
 		});
+
+		FBAdUtils.showAdDialog(this, Utils.CHAPING_COMMON_AD);
 	}
 
 	private FloatingSearchView mSearchView;

@@ -7,7 +7,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.FrameLayout;
 
+import com.facebook.ads.NativeAd;
+import com.playtube.player.business.FBAdUtils;
 import com.playtube.player.business.db.DownloadedVideosDb;
 import com.tube.playtube.R;
 import com.playtube.player.gui.fragments.DownloadedVideosFragment;
@@ -42,6 +45,16 @@ public class DownloadActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.download_frame, downloadedVideosFragment)
                 .commitAllowingStateLoss();
+
+        FrameLayout adFrameLayout = findViewById(R.id.ad_frame);
+        NativeAd nativeAd = FBAdUtils.nextNativieAd();
+        if (nativeAd != null && nativeAd.isAdLoaded()) {
+            adFrameLayout.setVisibility(View.VISIBLE);
+            adFrameLayout.removeAllViews();
+            adFrameLayout.addView(FBAdUtils.setUpItemNativeAdView(this, nativeAd));
+        } else {
+            adFrameLayout.setVisibility(View.GONE);
+        }
     }
 
     @Override

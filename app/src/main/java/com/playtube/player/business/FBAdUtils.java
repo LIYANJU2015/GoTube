@@ -192,7 +192,7 @@ public class FBAdUtils {
     public static void showAdDialog(final Activity activity, final String adId, final Runnable errorCallBack) {
         NativeAd nativeAd = nextNativieAd();
         if (nativeAd != null && nativeAd.isAdLoaded()) {
-            View view = getBigAdView(nativeAd);
+            View view = getBigAdView(nativeAd, R.layout.big_ad_fb_layout);
             showDialog(view, activity);
             loadAd(adId, null);
             return;
@@ -211,7 +211,7 @@ public class FBAdUtils {
                 if (sNativeAd == null || !sNativeAd.isAdLoaded()) {
                     return;
                 }
-                View view = getBigAdView(sNativeAd);
+                View view = getBigAdView(sNativeAd, R.layout.big_ad_fb_layout);
                 showDialog(view, activity);
                 loadAd(adId, null);
             }
@@ -253,10 +253,10 @@ public class FBAdUtils {
         }
     }
 
-    public static View getBigAdView(NativeAd nativeAd) {
+    public static View getBigAdView(NativeAd nativeAd, int res) {
         try {
             View currentAdView = LayoutInflater.from(sContext)
-                    .inflate(R.layout.big_ad_fb_layout, null);
+                    .inflate(res, null);
             MediaView nativeAdMedia = currentAdView.findViewById(R.id.fb_half_mv_view);
             FrameLayout adChoicesFrame = currentAdView.findViewById(R.id.fb_adChoices_view);
             ImageView nativeAdIcon = currentAdView.findViewById(R.id.fb_half_icon_iv);
