@@ -34,9 +34,9 @@ android {
 
         release {
             storeFile file("playtube.jks")
-            storePassword "!@c123456"
+            storePassword "!@C123456"
             keyAlias "playtube6666"
-            keyPassword "!@c123456"
+            keyPassword "!@C123456"
         }
     }
 
