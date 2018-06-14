@@ -234,7 +234,7 @@ public class TubePlayerActivity extends AppCompatActivity implements VideoListen
 
         FrameLayout adFrameLayout = headerView.findViewById(R.id.ad_frame);
         NativeAd nativeAd = FBAdUtils.nextNativieAd();
-        if (nativeAd != null && nativeAd.isAdLoaded()) {
+        if (nativeAd != null && nativeAd.isAdLoaded() && PlayTubeApp.isSpecial()) {
             adFrameLayout.setVisibility(View.VISIBLE);
             adFrameLayout.removeAllViews();
             adFrameLayout.addView(FBAdUtils.setUpItemNativeAdView(this, nativeAd));
