@@ -14,7 +14,7 @@
 	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
 	<application
-		android:name="com.playtube.player.app.PlayTubeApp"
+		android:name="com.tubeplayer.player.app.PlayTubeApp"
 		android:allowBackup="true"
 		android:hardwareAccelerated="true"
 		android:icon="@mipmap/ic_launcher"
@@ -35,14 +35,14 @@
 		</provider>
 
 		<activity
-			android:name="com.playtube.player.gui.activities.MainActivity"
+			android:name="com.tubeplayer.player.gui.activities.MainActivity"
 			android:launchMode="singleTask"
 			android:screenOrientation="portrait"
 			android:theme="@style/NoActionBarActivityTheme">
 
 		</activity>
 
-		<activity android:name="com.playtube.player.gui.activities.SplashActivity"
+		<activity android:name="com.tubeplayer.player.gui.activities.SplashActivity"
 			android:theme="@style/SplashTheme"
 			android:screenOrientation="portrait"
 			>
@@ -53,21 +53,21 @@
 			</intent-filter>
 		</activity>
 
-		<activity android:name="com.playtube.player.gui.player.TubePlayerActivity"
+		<activity android:name="com.tubeplayer.player.gui.player.TubePlayerActivity"
 			android:configChanges="orientation|keyboardHidden|screenSize"
 			android:screenOrientation="portrait"
 			android:launchMode="singleTask"
 			android:theme="@style/videoplayer"
 			/>
 
-		<activity android:name="com.playtube.player.gui.activities.PreferencesActivity"/>
+		<activity android:name="com.tubeplayer.player.gui.activities.PreferencesActivity"/>
 
 		<activity
-			android:name="com.playtube.player.gui.activities.ThumbnailViewerActivity"
+			android:name="com.tubeplayer.player.gui.activities.ThumbnailViewerActivity"
 			android:theme="@style/NoActionBarActivityTheme">
 		</activity>
 
-		<activity android:name="com.playtube.player.gui.activities.DownloadActivity"
+		<activity android:name="com.tubeplayer.player.gui.activities.DownloadActivity"
 			android:theme="@style/NoActionBarActivityTheme"
 			android:launchMode="singleTask"
 			android:configChanges="orientation|keyboardHidden|screenSize"
@@ -88,12 +88,12 @@
 		<!--</receiver>-->
 
 		<activity
-			android:name="com.playtube.player.gui.activities.PermissionsActivity"
+			android:name="com.tubeplayer.player.gui.activities.PermissionsActivity"
 		    android:theme="@style/TransparentActivity">
 		</activity>
 
 		<receiver
-			android:name="com.playtube.player.gui.activities.FacebookInstallReferrerReceiver"
+			android:name="com.tubeplayer.player.gui.activities.FacebookInstallReferrerReceiver"
 			android:exported="true">
 			<intent-filter>
 				<action android:name="com.android.vending.INSTALL_REFERRER" />

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.playtube.player.gui.player.widget.DefinitionIjkVideoView
+    <com.tubeplayer.player.gui.player.widget.DefinitionIjkVideoView
         android:id="@+id/player"
         android:layout_width="match_parent"
         android:layout_height="250dp" />

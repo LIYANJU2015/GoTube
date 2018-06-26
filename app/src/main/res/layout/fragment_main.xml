@@ -7,19 +7,6 @@
 		android:orientation="vertical"
 		tools:showIn="@layout/activity_main">
 
-		<!-- TABS -->
-		<android.support.design.widget.TabLayout
-			android:id="@+id/tab_layout"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:background="@color/colorPrimary"
-			android:layout_gravity="center_horizontal"
-			app:tabBackground="?selectableItemBackgroundBorderless"
-			app:tabIndicatorColor="@android:color/transparent"
-			app:tabSelectedTextColor="@color/colorPrimaryTextWhite"
-			app:tabTextColor="@color/colorSubTextWhite"
-			app:tabMode="scrollable"/>
-
 		<View
 			android:visibility="visible"
 			android:id="@+id/toolbar_shadow"
@@ -30,8 +17,9 @@
 
 		<android.support.v4.widget.NestedScrollView
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
+			android:layout_height="0dp"
 			android:fillViewport="true"
+			android:layout_weight="1"
 			>
 
 			<!-- Scrolling content -->
@@ -45,8 +33,14 @@
 		</android.support.v4.widget.NestedScrollView>
 
 
-
-
+	<android.support.design.widget.BottomNavigationView
+		android:id="@+id/main_navigation"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="bottom"
+		android:background="@color/white"
+		app:menu="@menu/menu_main_bottom"
+		/>
 
 
 	</LinearLayout>
