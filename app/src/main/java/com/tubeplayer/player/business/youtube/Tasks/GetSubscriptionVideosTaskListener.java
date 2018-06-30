@@ -19,14 +19,14 @@ package com.tubeplayer.player.business.youtube.Tasks;
 
 import java.util.List;
 
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannel;
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 
 /**
  * A listener that will be notified when a new YouTube video is published to a channel that the user
  * is subscribed to.
  */
 public interface GetSubscriptionVideosTaskListener {
-	void onChannelVideosFetched(YouTubeChannel channel, List<YouTubeVideo> videosFetched, boolean videosDeleted);
+	void onChannelVideosFetched(YTubeChannel channel, List<YTubeVideo> videosFetched, boolean videosDeleted);
 	void onAllChannelVideosFetched();
 }

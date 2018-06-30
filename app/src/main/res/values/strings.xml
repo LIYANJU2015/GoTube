@@ -1,5 +1,5 @@
 <resources>
-	<string name="app_name">Play Tube</string>
+	<string name="app_name">Tube Player</string>
 	<string name="could_not_get_videos">Could not get %s videos.</string>
 	<string name="views">%,d views</string>
 	<string name="error">Error</string>
@@ -23,8 +23,8 @@
 	<string name="downloaded_tip">Video has been downloaded !</string>
 	<string name="download_add_tip">Video added successfully to download</string>
 
-	<string name="facebook_app_id">1905416809510951</string>
-	<string name="fb_login_protocol_scheme">fb1905416809510951</string>
+	<string name="facebook_app_id">614083172292849</string>
+	<string name="fb_login_protocol_scheme">fb614083172292849</string>
 
 
 	<string name="lock_tip">Please unlock the screen first!</string>

@@ -42,7 +42,7 @@ import com.tubeplayer.player.business.Logger;
 import com.tubeplayer.player.gui.businessobjects.adapters.SubsAdapter;
 import com.tubeplayer.player.gui.fragments.SubscriptionsFeedFragment;
 import com.tube.playtube.R;
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.youtube.Tasks.GetSubscriptionVideosTask;
 import com.tubeplayer.player.business.db.SubscriptionsDb;
 import com.tubeplayer.player.gui.businessobjects.adapters.ImportSubscriptionsAdapter;
@@ -237,7 +237,7 @@ public class SubscriptionsBackupsManager {
 							.setNeutralButton(R.string.restart, new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
-									PlayTubeApp.restartApp();
+									TubeApp.restartApp();
 								}
 							})
 							.show();
@@ -441,7 +441,7 @@ public class SubscriptionsBackupsManager {
 			dialog.dismiss();
 
 			Toast.makeText(activity,
-							String.format(PlayTubeApp.getStr(R.string.subscriptions_to_channels_imported), totalChannelsSubscribedTo),
+							String.format(TubeApp.getStr(R.string.subscriptions_to_channels_imported), totalChannelsSubscribedTo),
 							Toast.LENGTH_SHORT).show();
 
 			// refresh the Feed tab so it shows videos from the newly subscribed channels

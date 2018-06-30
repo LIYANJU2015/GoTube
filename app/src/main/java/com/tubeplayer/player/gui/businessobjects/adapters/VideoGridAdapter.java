@@ -28,8 +28,8 @@ import android.widget.Toast;
 import java.io.IOException;
 
 import com.tubeplayer.player.business.youtube.GetYouTubeVideos;
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannel;
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 import com.tubeplayer.player.business.youtube.Tasks.GetYouTubeVideosTask;
 import com.tubeplayer.player.gui.businessobjects.MainActivityListener;
 import com.tubeplayer.player.gui.businessobjects.fragments.BaseVideosGridFragment;
@@ -39,7 +39,7 @@ import com.tubeplayer.player.business.VideoCategory;
 /**
  * An adapter that will display videos in a {@link android.widget.GridView}.
  */
-public class VideoGridAdapter extends RecyclerViewAdapterEx<YouTubeVideo, RecyclerView.ViewHolder> {
+public class VideoGridAdapter extends RecyclerViewAdapterEx<YTubeVideo, RecyclerView.ViewHolder> {
 
 	/** Class used to get YouTube videos from the web. */
 	private GetYouTubeVideos getYouTubeVideos;
@@ -54,7 +54,7 @@ public class VideoGridAdapter extends RecyclerViewAdapterEx<YouTubeVideo, Recycl
 
 	/** If this is set, new videos being displayed will be saved to the database, if subscribed.
 	 *  RM:  This is only set and used by ChannelBrowserFragment */
-	private YouTubeChannel youTubeChannel;
+	private YTubeChannel youTubeChannel;
 
 	private View					progressBar = null;
 
@@ -204,11 +204,11 @@ public class VideoGridAdapter extends RecyclerViewAdapterEx<YouTubeVideo, Recycl
 		this.progressBar = progressBar;
 	}
 
-	public void setYouTubeChannel(YouTubeChannel youTubeChannel) {
+	public void setYouTubeChannel(YTubeChannel youTubeChannel) {
 		this.youTubeChannel = youTubeChannel;
 	}
 
-	public YouTubeChannel getYouTubeChannel() {
+	public YTubeChannel getYouTubeChannel() {
 		return youTubeChannel;
 	}
 }

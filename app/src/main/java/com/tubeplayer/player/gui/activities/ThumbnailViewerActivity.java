@@ -39,15 +39,15 @@ import java.io.Serializable;
 
 import com.tubeplayer.player.business.FileDownloader;
 import com.tube.playtube.R;
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
+import com.tubeplayer.player.app.TubeApp;
 
 /**
  * An activity that allows the user to view the thumbnail of a YouTube video.
  */
 public class ThumbnailViewerActivity extends AppCompatActivity {
 
-	private YouTubeVideo youTubeVideo;
+	private YTubeVideo youTubeVideo;
 
 	public static final String YOUTUBE_VIDEO = "ThumbnailViewerActivity.TubeYouTubeVideo";
 
@@ -74,7 +74,7 @@ public class ThumbnailViewerActivity extends AppCompatActivity {
 		});
 
 		Intent intent = getIntent();
-		youTubeVideo = (YouTubeVideo) intent.getExtras().getSerializable(YOUTUBE_VIDEO);
+		youTubeVideo = (YTubeVideo) intent.getExtras().getSerializable(YOUTUBE_VIDEO);
 
 		ImageView   thumbnailImageView = findViewById(R.id.thumbnail_image_view);
 		final View  loadingVideoView = findViewById(R.id.loadingVideoView);
@@ -125,7 +125,7 @@ public class ThumbnailViewerActivity extends AppCompatActivity {
 
 		@Override
 		public void onFileDownloadCompleted(boolean success, Uri localFileUri) {
-			Toast.makeText(PlayTubeApp.getContext(),
+			Toast.makeText(TubeApp.getContext(),
 					success  ?  R.string.thumbnail_downloaded  :  R.string.thumbnail_download_error,
 					Toast.LENGTH_LONG)
 					.show();
@@ -133,7 +133,7 @@ public class ThumbnailViewerActivity extends AppCompatActivity {
 
 		@Override
 		public void onExternalStorageNotAvailable() {
-			Toast.makeText(PlayTubeApp.getContext(),
+			Toast.makeText(TubeApp.getContext(),
 					R.string.external_storage_not_available,
 					Toast.LENGTH_LONG).show();
 		}

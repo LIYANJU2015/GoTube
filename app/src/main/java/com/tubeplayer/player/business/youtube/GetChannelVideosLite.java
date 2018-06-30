@@ -27,9 +27,9 @@ import com.google.api.services.youtube.model.ActivityListResponse;
 import java.io.IOException;
 import java.util.List;
 
-import com.tubeplayer.player.business.youtube.bean.YouTubeAPI;
-import com.tubeplayer.player.business.youtube.bean.YouTubeAPIKey;
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
+import com.tubeplayer.player.business.youtube.bean.YTubeAPI;
+import com.tubeplayer.player.business.youtube.bean.YTubeAPIKey;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 
 /**
  * Returns the videos of a channel.
@@ -48,9 +48,9 @@ public class GetChannelVideosLite extends GetYouTubeVideos implements GetChannel
 
 	@Override
 	public void init() throws IOException {
-		activitiesList = YouTubeAPI.create().activities().list("contentDetails");
+		activitiesList = YTubeAPI.create().activities().list("contentDetails");
 		activitiesList.setFields("items(contentDetails/upload/videoId), nextPageToken");
-		activitiesList.setKey(YouTubeAPIKey.get().getYouTubeAPIKey());
+		activitiesList.setKey(YTubeAPIKey.get().getYouTubeAPIKey());
 		activitiesList.setMaxResults(MAX_RESULTS);
 		nextPageToken = null;
 	}
@@ -64,8 +64,8 @@ public class GetChannelVideosLite extends GetYouTubeVideos implements GetChannel
 
 
 	@Override
-	public List<YouTubeVideo> getNextVideos() {
-		List<YouTubeVideo> videosList = null;
+	public List<YTubeVideo> getNextVideos() {
+		List<YTubeVideo> videosList = null;
 
 		if (!noMoreVideoPages) {
 			try {
@@ -100,10 +100,10 @@ public class GetChannelVideosLite extends GetYouTubeVideos implements GetChannel
 	 * given video list.</p>
 	 *
 	 * @param activityList Search results
-	 * @return List of {@link YouTubeVideo}s.
+	 * @return List of {@link YTubeVideo}s.
 	 * @throws IOException
 	 */
-	private List<YouTubeVideo> getVideosList(List<Activity> activityList) throws IOException {
+	private List<YTubeVideo> getVideosList(List<Activity> activityList) throws IOException {
 		StringBuilder videoIds = new StringBuilder();
 
 		// append the video IDs into a strings (CSV)

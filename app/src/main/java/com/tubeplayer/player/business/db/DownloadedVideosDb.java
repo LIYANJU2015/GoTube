@@ -14,9 +14,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.AsyncTaskParallel;
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 import com.tubeplayer.player.business.interfaces.OrderableDatabase;
 
 /**
@@ -27,13 +27,13 @@ public class DownloadedVideosDb extends SQLiteOpenHelperEx implements OrderableD
 	private static boolean hasUpdated = false;
 
 	private static final int DATABASE_VERSION = 1;
-	private static final String DATABASE_NAME = "videodownloads.db";
+	private static final String DATABASE_NAME = "tubedownloads.db";
 
 	private DownloadedVideosListener listener;
 
 	public static synchronized DownloadedVideosDb getVideoDownloadsDb() {
 		if (downloadsDb == null) {
-			downloadsDb = new DownloadedVideosDb(PlayTubeApp.getContext());
+			downloadsDb = new DownloadedVideosDb(TubeApp.getContext());
 		}
 
 		return downloadsDb;
@@ -63,18 +63,18 @@ public class DownloadedVideosDb extends SQLiteOpenHelperEx implements OrderableD
 	 *
 	 * @return List of Videos
 	 */
-	public List<YouTubeVideo> getDownloadedVideos() {
+	public List<YTubeVideo> getDownloadedVideos() {
 		Cursor	cursor = getReadableDatabase().query(
 						DownloadedVideosTable.TABLE_NAME,
 						new String[]{DownloadedVideosTable.COL_YOUTUBE_VIDEO, DownloadedVideosTable.COL_FILE_URI},
 						null,
 						null, null, null, null);
-		List<YouTubeVideo> videos = new ArrayList<>();
+		List<YTubeVideo> videos = new ArrayList<>();
 
 		if(cursor.moveToNext()) {
 			do {
 				String youtubeJson = cursor.getString(cursor.getColumnIndex(DownloadedVideosTable.COL_YOUTUBE_VIDEO));
-				YouTubeVideo video = new Gson().fromJson(youtubeJson, new TypeToken<YouTubeVideo>(){}.getType());
+				YTubeVideo video = new Gson().fromJson(youtubeJson, new TypeToken<YTubeVideo>(){}.getType());
 				videos.add(video);
 			} while(cursor.moveToNext());
 		}
@@ -83,7 +83,7 @@ public class DownloadedVideosDb extends SQLiteOpenHelperEx implements OrderableD
 		return videos;
 	}
 
-	public boolean add(YouTubeVideo video, String fileUri) {
+	public boolean add(YTubeVideo video, String fileUri) {
 		Gson gson = new Gson();
 		ContentValues values = new ContentValues();
 		String json = gson.toJson(video);
@@ -110,11 +110,11 @@ public class DownloadedVideosDb extends SQLiteOpenHelperEx implements OrderableD
 		return (rowsDeleted >= 0);
 	}
 
-	public boolean remove(YouTubeVideo video) {
+	public boolean remove(YTubeVideo video) {
 		return remove(video.getId());
 	}
 
-	public boolean isVideoDownloaded(YouTubeVideo video) {
+	public boolean isVideoDownloaded(YTubeVideo video) {
 		Cursor cursor = getReadableDatabase().query(
 						DownloadedVideosTable.TABLE_NAME,
 						new String[]{DownloadedVideosTable.COL_FILE_URI},
@@ -130,7 +130,7 @@ public class DownloadedVideosDb extends SQLiteOpenHelperEx implements OrderableD
 		return isDownloaded;
 	}
 
-	public Uri getVideoFileUri(YouTubeVideo video) {
+	public Uri getVideoFileUri(YTubeVideo video) {
 		Cursor cursor = null;
 		try {
 			cursor = getReadableDatabase().query(
@@ -173,10 +173,10 @@ public class DownloadedVideosDb extends SQLiteOpenHelperEx implements OrderableD
 	 * @param videos List of Videos to update their order.
 	 */
 	@Override
-	public void updateOrder(List<YouTubeVideo> videos) {
+	public void updateOrder(List<YTubeVideo> videos) {
 		int order = videos.size();
 
-		for(YouTubeVideo video : videos) {
+		for(YTubeVideo video : videos) {
 			ContentValues cv = new ContentValues();
 			cv.put(DownloadedVideosTable.COL_ORDER, order--);
 			getWritableDatabase().update(DownloadedVideosTable.TABLE_NAME, cv, DownloadedVideosTable.COL_YOUTUBE_VIDEO_ID + " = ?", new String[]{video.getId()});

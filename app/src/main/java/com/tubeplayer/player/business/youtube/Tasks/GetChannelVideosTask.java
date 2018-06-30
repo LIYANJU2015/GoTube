@@ -26,25 +26,25 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.AsyncTaskParallel;
 import com.tubeplayer.player.business.youtube.GetChannelVideos;
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannel;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
 import com.tubeplayer.player.business.db.SubscriptionsDb;
 import com.tube.playtube.R;
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 
 /**
  * Task to asynchronously get videos for a specific channel.
  */
-public class GetChannelVideosTask extends AsyncTaskParallel<Void, Void, List<YouTubeVideo>> {
+public class GetChannelVideosTask extends AsyncTaskParallel<Void, Void, List<YTubeVideo>> {
 
 	private GetChannelVideos getChannelVideos = new GetChannelVideos();
-	private YouTubeChannel channel;
+	private YTubeChannel channel;
 	private GetChannelVideosTaskInterface getChannelVideosTaskInterface;
 
 
-	public GetChannelVideosTask(YouTubeChannel channel) {
+	public GetChannelVideosTask(YTubeChannel channel) {
 		try {
 			getChannelVideos.init();
 			getChannelVideos.setPublishedAfter(getOneMonthAgo());
@@ -52,8 +52,8 @@ public class GetChannelVideosTask extends AsyncTaskParallel<Void, Void, List<You
 			this.channel = channel;
 		} catch (IOException e) {
 			e.printStackTrace();
-			Toast.makeText(PlayTubeApp.getContext(),
-							String.format(PlayTubeApp.getContext().getString(R.string.could_not_get_videos), channel.getTitle()),
+			Toast.makeText(TubeApp.getContext(),
+							String.format(TubeApp.getContext().getString(R.string.could_not_get_videos), channel.getTitle()),
 							Toast.LENGTH_LONG).show();
 		}
 	}
@@ -73,15 +73,15 @@ public class GetChannelVideosTask extends AsyncTaskParallel<Void, Void, List<You
 	}
 
 	@Override
-	protected List<YouTubeVideo> doInBackground(Void... voids) {
-		List<YouTubeVideo> videos = null;
+	protected List<YTubeVideo> doInBackground(Void... voids) {
+		List<YTubeVideo> videos = null;
 
 		if (!isCancelled()) {
 			videos = getChannelVideos.getNextVideos();
 		}
 
 		if(videos != null) {
-			for (YouTubeVideo video : videos)
+			for (YTubeVideo video : videos)
 				channel.addYouTubeVideo(video);
 			if(channel.isUserSubscribed())
 				SubscriptionsDb.getSubscriptionsDb().saveChannelVideos(channel);
@@ -91,7 +91,7 @@ public class GetChannelVideosTask extends AsyncTaskParallel<Void, Void, List<You
 
 
 	@Override
-	protected void onPostExecute(List<YouTubeVideo> youTubeVideos) {
+	protected void onPostExecute(List<YTubeVideo> youTubeVideos) {
 		if(getChannelVideosTaskInterface != null)
 			getChannelVideosTaskInterface.onGetVideos(youTubeVideos);
 	}

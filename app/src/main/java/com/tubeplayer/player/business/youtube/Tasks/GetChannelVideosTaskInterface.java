@@ -19,11 +19,11 @@ package com.tubeplayer.player.business.youtube.Tasks;
 
 import java.util.List;
 
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 
 /**
  * Interface used by {@link GetChannelVideosTask} to return the videos belonging to a channel.
  */
 public interface GetChannelVideosTaskInterface {
-	void onGetVideos(List<YouTubeVideo> videos);
+	void onGetVideos(List<YTubeVideo> videos);
 }

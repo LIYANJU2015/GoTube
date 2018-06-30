@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * A POJO class to store a YouTube Playlist.
  */
-public class YouTubePlaylist implements Serializable {
+public class YTubePlaylist implements Serializable {
 
 	private String              id;
 	private String              title;
@@ -36,12 +36,12 @@ public class YouTubePlaylist implements Serializable {
 	private DateTime            publishDate;
 	private int                 videoCount = 0;
 	private String              thumbnailUrl;
-	private List<YouTubeVideo>  videos = new ArrayList<>();
+	private List<YTubeVideo>  videos = new ArrayList<>();
 
 	/** The YouTube Channel object that this playlist belongs to. */
-	private YouTubeChannel channel;
+	private YTubeChannel channel;
 
-	public YouTubePlaylist(Playlist playlist, YouTubeChannel channel) {
+	public YTubePlaylist(Playlist playlist, YTubeChannel channel) {
 		id = playlist.getId();
 		this.channel = channel;
 
@@ -82,7 +82,7 @@ public class YouTubePlaylist implements Serializable {
 		return videoCount;
 	}
 
-	public List<YouTubeVideo> getVideos() {
+	public List<YTubeVideo> getVideos() {
 		return videos;
 	}
 
@@ -90,7 +90,7 @@ public class YouTubePlaylist implements Serializable {
 		return channel.getBannerUrl();
 	}
 
-	public YouTubeChannel getChannel() {
+	public YTubeChannel getChannel() {
 		return channel;
 	}
 

@@ -1,6 +1,7 @@
 package com.tubeplayer.player.business;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -24,9 +25,9 @@ import java.io.File;
 
 import com.tubeplayer.player.business.db.DownloadedVideosDb;
 import com.tube.playtube.R;
-import com.tubeplayer.player.app.PlayTubeApp;
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
-import com.tubeplayer.player.gui.activities.DownloadActivity;
+import com.tubeplayer.player.app.TubeApp;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
+import com.tubeplayer.player.gui.activities.GetVideoActivity;
 import com.tubeplayer.player.gui.activities.MainActivity;
 
 /**
@@ -36,9 +37,9 @@ import com.tubeplayer.player.gui.activities.MainActivity;
 public class FileDownloaderHelper {
 
     public static File defaultfile = new File(Environment.getExternalStorageDirectory(),
-            PlayTubeApp.getContext().getString(R.string.app_name));
+            TubeApp.getContext().getString(R.string.app_name));
 
-    public static void addDownloadTask(YouTubeVideo youTubeVideo, String downloadurl) {
+    public static void addDownloadTask(YTubeVideo youTubeVideo, String downloadurl) {
         if (youTubeVideo == null) {
             return;
         }
@@ -48,7 +49,7 @@ public class FileDownloaderHelper {
         }
 
         if (!defaultfile.exists() || !defaultfile.canWrite() || !defaultfile.canRead()) {
-            Toast.makeText(PlayTubeApp.getContext(),
+            Toast.makeText(TubeApp.getContext(),
                     R.string.external_storage_not_available,
                     Toast.LENGTH_LONG).show();
             return;
@@ -63,34 +64,9 @@ public class FileDownloaderHelper {
                 .setListener(new SelfNotificationListener(new FileDownloadNotificationHelper()))
                 .start();
 
-        Toast.makeText(PlayTubeApp.getContext(),
-                String.format(PlayTubeApp.getContext().getString(R.string.starting_video_download), youTubeVideo.getTitle()),
+        Toast.makeText(TubeApp.getContext(),
+                String.format(TubeApp.getContext().getString(R.string.starting_video_download), youTubeVideo.getTitle()),
                 Toast.LENGTH_LONG).show();
-
-        FBAdUtils.interstitialLoad(Utils.CHAPING_HIGH_AD, new FBAdUtils.FBInterstitialAdListener(){
-            @Override
-            public void onInterstitialDismissed(Ad ad) {
-                super.onInterstitialDismissed(ad);
-            }
-
-            @Override
-            public void onLoaded(InterstitialAd interstitialAd) {
-                super.onLoaded(interstitialAd);
-                try {
-                    if (interstitialAd != null && interstitialAd.isAdLoaded()) {
-                        interstitialAd.show();
-                    }
-                } catch (Throwable e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onError(Ad ad, AdError adError) {
-                super.onError(ad, adError);
-                FBAdUtils.destoryInterstitial();
-            }
-        });
 
     }
 
@@ -107,7 +83,7 @@ public class FileDownloaderHelper {
 
         @Override
         protected BaseNotificationItem create(BaseDownloadTask task) {
-            return new NotificationItem(task.getId(), ((YouTubeVideo) task.getTag()).getTitle(),
+            return new NotificationItem(task.getId(), ((YTubeVideo) task.getTag()).getTitle(),
                     "");
         }
 
@@ -118,14 +94,39 @@ public class FileDownloaderHelper {
                 @Override
                 public void run() {
                     if (task.getStatus() == FileDownloadStatus.completed) {
-                        YouTubeVideo youTubeVideo = (YouTubeVideo) task.getTag();
+                        YTubeVideo youTubeVideo = (YTubeVideo) task.getTag();
                         String path = task.getPath();
 
                         DownloadedVideosDb.getVideoDownloadsDb().add(youTubeVideo, path);
 
                         showCompletedNotification(task.getId(), youTubeVideo.getTitle());
 
-                        RatingActivity.launch(PlayTubeApp.getContext(), "", PlayTubeApp.getStr(R.string.rating_text));
+                        RatingActivity.launch(TubeApp.getContext(), "", TubeApp.getStr(R.string.rating_text));
+
+                        FBAdUtils.interstitialLoad(Utils.CHAPING_HIGH_AD, new FBAdUtils.FBInterstitialAdListener(){
+                            @Override
+                            public void onInterstitialDismissed(Ad ad) {
+                                super.onInterstitialDismissed(ad);
+                            }
+
+                            @Override
+                            public void onLoaded(InterstitialAd interstitialAd) {
+                                super.onLoaded(interstitialAd);
+                                try {
+                                    if (interstitialAd != null && interstitialAd.isAdLoaded()) {
+                                        interstitialAd.show();
+                                    }
+                                } catch (Throwable e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void onError(Ad ad, AdError adError) {
+                                super.onError(ad, adError);
+                                FBAdUtils.destoryInterstitial();
+                            }
+                        });
 
                     } else {
                         File file = new File(task.getPath());
@@ -140,13 +141,14 @@ public class FileDownloaderHelper {
         private void showCompletedNotification(int id, String title) {
             NotificationCompat.Builder builder = new NotificationCompat.
                     Builder(FileDownloadHelper.getAppContext(), "download_finished");
-            Intent intent = new Intent(PlayTubeApp.getContext(), DownloadActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(PlayTubeApp.getContext(), 0, intent,
+            Intent intent = new Intent(TubeApp.getContext(), GetVideoActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(TubeApp.getContext(), 0, intent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setDefaults(Notification.DEFAULT_LIGHTS)
                     .setAutoCancel(true)
+                    .setOnlyAlertOnce(true)
                     .setContentTitle(title)
-                    .setContentText(String.format(PlayTubeApp.getContext().getResources().getString(R.string.video_downloaded), title))
+                    .setContentText(String.format(TubeApp.getContext().getResources().getString(R.string.video_downloaded), title))
                     .setContentIntent(pendingIntent)
                     .setSmallIcon(android.R.drawable.stat_sys_download_done);
             manager.notify(id, builder.build());
@@ -167,15 +169,22 @@ public class FileDownloaderHelper {
 
         private NotificationItem(int id, String title, String desc) {
             super(id, title, desc);
-            Intent intent = new Intent(PlayTubeApp.getContext(), MainActivity.class);
+            Intent intent = new Intent(TubeApp.getContext(), MainActivity.class);
 
-            this.pendingIntent = PendingIntent.getActivity(PlayTubeApp.getContext(), 0, intent,
+            this.pendingIntent = PendingIntent.getActivity(TubeApp.getContext(), 0, intent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
 
-            builder = new NotificationCompat.
-                    Builder(FileDownloadHelper.getAppContext(), "image_download");
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                NotificationChannel channel = new NotificationChannel("22", FileDownloadHelper.getAppContext().getString(R.string.app_name), NotificationManager.IMPORTANCE_DEFAULT);
+                getManager().createNotificationChannel(channel);
+                builder = new NotificationCompat.Builder(FileDownloadHelper.getAppContext(), "22");
+            } else {
+                builder = new NotificationCompat.
+                        Builder(FileDownloadHelper.getAppContext(), FileDownloadHelper.getAppContext().getString(R.string.app_name));
+            }
 
             builder.setDefaults(Notification.DEFAULT_LIGHTS)
+                    .setOnlyAlertOnce(true)
                     .setOngoing(true)
                     .setAutoCancel(true)
                     .setContentTitle(getTitle())

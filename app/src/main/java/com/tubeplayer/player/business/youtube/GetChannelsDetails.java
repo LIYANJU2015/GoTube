@@ -20,11 +20,11 @@ package com.tubeplayer.player.business.youtube;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.Channel;
 import com.google.api.services.youtube.model.ChannelListResponse;
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.Logger;
-import com.tubeplayer.player.business.youtube.bean.YouTubeAPI;
-import com.tubeplayer.player.business.youtube.bean.YouTubeAPIKey;
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannel;
+import com.tubeplayer.player.business.youtube.bean.YTubeAPI;
+import com.tubeplayer.player.business.youtube.bean.YTubeAPIKey;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class GetChannelsDetails {
 
 
 	/**
-	 * Retrieve a list of {@link YouTubeChannel} by communicating with YouTube.
+	 * Retrieve a list of {@link YTubeChannel} by communicating with YouTube.
 	 *
 	 * This should not be called from the main thread.
 	 *
@@ -49,25 +49,25 @@ public class GetChannelsDetails {
 	 *                          otherwise it means that we currently do not know if the user is
 	 *                          subbed or not (hence we need to check).
 	 *
-	 * @return List of {@link YouTubeChannel}.
+	 * @return List of {@link YTubeChannel}.
 	 * @throws IOException
 	 */
-	public List<YouTubeChannel> getYouTubeChannels(List<String> channelIdsList, boolean isUserSubscribed, boolean shouldCheckForNewVideos) throws IOException {
-		String  bannerType = PlayTubeApp.isTablet() ? "bannerTabletHdImageUrl" : "bannerMobileHdImageUrl";
+	public List<YTubeChannel> getYouTubeChannels(List<String> channelIdsList, boolean isUserSubscribed, boolean shouldCheckForNewVideos) throws IOException {
+		String  bannerType = TubeApp.isTablet() ? "bannerTabletHdImageUrl" : "bannerMobileHdImageUrl";
 
-		List<YouTubeChannel> youTubeChannelsList = new ArrayList<>();
+		List<YTubeChannel> youTubeChannelsList = new ArrayList<>();
 
 		// YouTube can only return information about 50 (or so) channels at a time.  Hence we need
 		// to divide the given channelIdsList into smaller lists... then we need to regroup them
 		// into youTubeChannelsList.
 		List<List<String>> dividedChannelIdsLists = divideList(channelIdsList);
 		for (List<String> subChannelIdsList : dividedChannelIdsLists) {
-			YouTube youtube = YouTubeAPI.create();
+			YouTube youtube = YTubeAPI.create();
 			YouTube.Channels.List channelInfo = youtube.channels().list("snippet, statistics, brandingSettings");
 			channelInfo.setFields("items(id, snippet/title, snippet/description, snippet/thumbnails/default," +
 								"statistics/subscriberCount, brandingSettings/image/" + bannerType + ")," +
 								"nextPageToken")
-					.setKey(YouTubeAPIKey.get().getYouTubeAPIKey())
+					.setKey(YTubeAPIKey.get().getYouTubeAPIKey())
 					.setId(convertListToCSV(subChannelIdsList))
 					.setMaxResults(MAX_RESULTS);
 
@@ -83,7 +83,7 @@ public class GetChannelsDetails {
 
 
 	/**
-	 * Retrieve a list of {@link YouTubeChannel} by communicating with YouTube.
+	 * Retrieve a list of {@link YTubeChannel} by communicating with YouTube.
 	 *
 	 * This should not be called from the main thread.
 	 *
@@ -91,11 +91,11 @@ public class GetChannelsDetails {
 	 *
 	 * @return YouTubeChannel
 	 */
-	public YouTubeChannel getYouTubeChannel(final String channelId) throws IOException {
+	public YTubeChannel getYouTubeChannel(final String channelId) throws IOException {
 		List<String> c = new ArrayList<>();
 		c.add(channelId);
 
-		List<YouTubeChannel> channelList = getYouTubeChannels(c, false, true);
+		List<YTubeChannel> channelList = getYouTubeChannels(c, false, true);
 
 		return (channelList != null  &&  channelList.size() > 0)  ?  channelList.get(0)  :  null;
 	}
@@ -150,7 +150,7 @@ public class GetChannelsDetails {
 
 	/**
 	 * Get the channels info from the remote YouTube server and then return a list of
-	 * {@link YouTubeChannel}.
+	 * {@link YTubeChannel}.
 	 *
 	 * @param channelInfo
 	 * @param isUserSubscribed	        if set to true, then it means the user is subscribed to this
@@ -159,10 +159,10 @@ public class GetChannelsDetails {
 	 * @param shouldCheckForNewVideos   if set to true it will check with the database whether new
 	 *                                  videos have been published since last visit.
 	 *
-	 * @return A list of {@link YouTubeChannel}.
+	 * @return A list of {@link YTubeChannel}.
 	 */
-	private List<YouTubeChannel> getYouTubeChannels(YouTube.Channels.List channelInfo, boolean isUserSubscribed, boolean shouldCheckForNewVideos) {
-		List<YouTubeChannel>    youTubeChannelList = new ArrayList<>();
+	private List<YTubeChannel> getYouTubeChannels(YouTube.Channels.List channelInfo, boolean isUserSubscribed, boolean shouldCheckForNewVideos) {
+		List<YTubeChannel>    youTubeChannelList = new ArrayList<>();
 
 		try {
 			// communicate with YouTube
@@ -171,12 +171,12 @@ public class GetChannelsDetails {
 			// get channel
 			List<Channel> channelList = response.getItems();
 
-			YouTubeChannel youTubeChannel;
+			YTubeChannel youTubeChannel;
 
 			// set the instance variables
 			for (Channel channel : channelList) {
 				try {
-					youTubeChannel = new YouTubeChannel();
+					youTubeChannel = new YTubeChannel();
 					youTubeChannel.init(channel, isUserSubscribed, shouldCheckForNewVideos);
 					youTubeChannelList.add(youTubeChannel);
 				} catch (Throwable tr) {
@@ -200,12 +200,12 @@ public class GetChannelsDetails {
 	 *
 	 * @return  Sorted list of YouTube Channels.
 	 */
-	private List<YouTubeChannel> sortYouTubeChannelsList(List<String> channelIdsList, List<YouTubeChannel> youTubeChannelsList) {
-		List<YouTubeChannel> sortedList = new ArrayList<>(youTubeChannelsList.size());
+	private List<YTubeChannel> sortYouTubeChannelsList(List<String> channelIdsList, List<YTubeChannel> youTubeChannelsList) {
+		List<YTubeChannel> sortedList = new ArrayList<>(youTubeChannelsList.size());
 		boolean channelFound = false;
 
 		for (String channelId : channelIdsList) {
-			for (YouTubeChannel channel : youTubeChannelsList) {
+			for (YTubeChannel channel : youTubeChannelsList) {
 				if (channel.getId().equals(channelId)) {
 					sortedList.add(channel);
 					channelFound = true;

@@ -24,8 +24,8 @@ import com.google.api.client.util.DateTime;
 import java.io.IOException;
 import java.util.List;
 
-import com.tubeplayer.player.business.youtube.bean.YouTubeAPIKey;
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
+import com.tubeplayer.player.business.youtube.bean.YTubeAPIKey;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 
 /**
  * Returns the videos of a channel.  The channel is specified by calling {@link #setQuery(String)}.
@@ -41,7 +41,7 @@ public class GetChannelVideos extends GetYouTubeVideos implements GetChannelVide
 
 	@Override
 	public void init() throws IOException {
-		if (YouTubeAPIKey.get().isUserApiKeySet()) {
+		if (YTubeAPIKey.get().isUserApiKeySet()) {
 			getChannelVideos = new GetChannelVideosFull();
 			Log.d(TAG, "Using GetChannelVideosFull...");
 		} else {
@@ -65,7 +65,7 @@ public class GetChannelVideos extends GetYouTubeVideos implements GetChannelVide
 	}
 
 	@Override
-	public List<YouTubeVideo> getNextVideos() {
+	public List<YTubeVideo> getNextVideos() {
 		return getChannelVideos.getNextVideos();
 	}
 

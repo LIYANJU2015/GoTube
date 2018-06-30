@@ -21,7 +21,7 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.view.View;
 
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.Logger;
 import com.tube.playtube.R;
 
@@ -32,7 +32,7 @@ import com.tube.playtube.R;
 public class ImmersiveModeFragment extends FragmentEx {
 
 	protected boolean userWantsImmersiveMode() {
-		return ! PlayTubeApp.getPreferenceManager().getBoolean(getString(R.string.pref_key_disable_immersive_mode), false);
+		return ! TubeApp.getPreferenceManager().getBoolean(getString(R.string.pref_key_disable_immersive_mode), false);
 	}
 
 

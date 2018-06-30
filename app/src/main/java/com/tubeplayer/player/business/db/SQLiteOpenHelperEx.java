@@ -22,7 +22,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.io.File;
 
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 
 /**
  * An extended {@link SQLiteOpenHelper} with extra goodies.
@@ -56,7 +56,7 @@ public abstract class SQLiteOpenHelperEx extends SQLiteOpenHelper {
 	 * @return The database (full) path.
 	 */
 	public String getDatabasePath() {
-		return PlayTubeApp.getContext().getDatabasePath(getDatabaseName()).getPath();
+		return TubeApp.getContext().getDatabasePath(getDatabaseName()).getPath();
 	}
 
 
@@ -64,7 +64,7 @@ public abstract class SQLiteOpenHelperEx extends SQLiteOpenHelper {
 	 * @return The database directory (as a {@link File}).
 	 */
 	public File getDatabaseDirectory() {
-		return PlayTubeApp.getContext().getDatabasePath(getDatabaseName()).getParentFile();
+		return TubeApp.getContext().getDatabasePath(getDatabaseName()).getParentFile();
 	}
 
 }

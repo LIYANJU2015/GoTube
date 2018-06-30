@@ -21,7 +21,7 @@ import com.tubeplayer.player.gui.businessobjects.YouTubePlayer;
 import com.tube.playtube.R;
 import com.tubeplayer.player.business.Utils;
 import com.tubeplayer.player.business.VideoCategory;
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 import com.tubeplayer.player.gui.fragments.DownloadedVideosFragment;
 
 /**
@@ -47,7 +47,7 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
         this.videoCategory = videoCategory;
     }
 
-    public void updateInfo(final Context context, final YouTubeVideo video) {
+    public void updateInfo(final Context context, final YTubeVideo video) {
         Glide.with(context)
                 .load(video.getThumbnailUrl())
                 .apply(new RequestOptions().placeholder(R.drawable.default_thumbnail))

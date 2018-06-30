@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.os.SystemClock;
 
 import com.tube.playtube.R;
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 
 /**
  * A BroadcastReceiver that will receive a Broadcast when the device boots up. It will check if the user has set the app to
@@ -17,7 +17,7 @@ import com.tubeplayer.player.app.PlayTubeApp;
 public class FeedUpdaterSetupReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		int feedUpdaterInterval = Integer.parseInt(PlayTubeApp.getPreferenceManager().getString(PlayTubeApp.getStr(R.string.pref_key_feed_notification), "0"));
+		int feedUpdaterInterval = Integer.parseInt(TubeApp.getPreferenceManager().getString(TubeApp.getStr(R.string.pref_key_feed_notification), "0"));
 
 		Intent i = new Intent(context, FeedUpdaterReceiver.class);
 		PendingIntent intentExecuted = PendingIntent.getBroadcast(context, 0, i,

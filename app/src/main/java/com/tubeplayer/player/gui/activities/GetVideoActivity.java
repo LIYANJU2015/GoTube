@@ -19,10 +19,10 @@ import com.tubeplayer.player.gui.fragments.DownloadedVideosFragment;
  * Created by liyanju on 2018/6/12.
  */
 
-public class DownloadActivity extends AppCompatActivity {
+public class GetVideoActivity extends AppCompatActivity {
 
     public static void launch(Context context) {
-        Intent intent = new Intent(context, DownloadActivity.class);
+        Intent intent = new Intent(context, GetVideoActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }

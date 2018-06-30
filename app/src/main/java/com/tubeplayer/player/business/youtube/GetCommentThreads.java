@@ -22,14 +22,14 @@ import android.util.Log;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.CommentThread;
 import com.google.api.services.youtube.model.CommentThreadListResponse;
-import com.tubeplayer.player.business.youtube.bean.YouTubeCommentThread;
+import com.tubeplayer.player.business.youtube.bean.YTubeCommentThread;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tubeplayer.player.business.youtube.bean.YouTubeAPI;
-import com.tubeplayer.player.business.youtube.bean.YouTubeAPIKey;
+import com.tubeplayer.player.business.youtube.bean.YTubeAPI;
+import com.tubeplayer.player.business.youtube.bean.YTubeAPIKey;
 
 /**
  * Queries the YouTube service and gets the comments of a video.
@@ -47,10 +47,10 @@ public class GetCommentThreads {
 
 	public void init(String videoId) throws IOException {
 		this.videoId = videoId;
-		this.commentsList = YouTubeAPI.create().commentThreads()
+		this.commentsList = YTubeAPI.create().commentThreads()
 				.list("snippet, replies")
 				.setFields("items(snippet, replies), nextPageToken")
-				.setKey(YouTubeAPIKey.get().getYouTubeAPIKey())
+				.setKey(YTubeAPIKey.get().getYouTubeAPIKey())
 				.setVideoId(videoId)
 				.setTextFormat("plainText")
 				.setMaxResults(MAX_RESULTS)
@@ -62,10 +62,10 @@ public class GetCommentThreads {
 	 * Will return the next page of comment threads.  If there are no more pages, then it will
 	 * return null.
 	 *
-	 * @return	A list/page of {@link YouTubeCommentThread}.
+	 * @return	A list/page of {@link YTubeCommentThread}.
 	 */
-	public List<YouTubeCommentThread> get() {
-		List<YouTubeCommentThread> commentThreadList = new ArrayList<>();
+	public List<YTubeCommentThread> get() {
+		List<YTubeCommentThread> commentThreadList = new ArrayList<>();
 
 		if (noMoreCommentPages  ||  commentsList == null) {
 			commentThreadList = null;
@@ -81,7 +81,7 @@ public class GetCommentThreads {
 				// convert the comments from CommentThread to YouTubeCommentThread
 				if (!videoComments.isEmpty()) {
 					for (CommentThread thread : videoComments) {
-						commentThreadList.add(new YouTubeCommentThread(thread));
+						commentThreadList.add(new YTubeCommentThread(thread));
 					}
 				}
 

@@ -20,25 +20,25 @@ package com.tubeplayer.player.business.youtube.Tasks;
 import java.io.IOException;
 import java.util.List;
 
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.AsyncTaskParallel;
 import com.tubeplayer.player.business.Logger;
 import com.tubeplayer.player.business.youtube.GetVideoDescription;
 import com.tube.playtube.R;
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 
 /**
  * Get the video's description.
  */
 public class GetVideoDescriptionTask extends AsyncTaskParallel<Void, Void, String> {
-	private YouTubeVideo youTubeVideo;
+	private YTubeVideo youTubeVideo;
 	private GetVideoDescriptionTaskListener listener;
 
 	public interface GetVideoDescriptionTaskListener {
 		void onFinished(String description);
 	}
 
-	public GetVideoDescriptionTask(YouTubeVideo youTubeVideo, GetVideoDescriptionTaskListener listener) {
+	public GetVideoDescriptionTask(YTubeVideo youTubeVideo, GetVideoDescriptionTaskListener listener) {
 		this.youTubeVideo = youTubeVideo;
 		this.listener = listener;
 	}
@@ -46,11 +46,11 @@ public class GetVideoDescriptionTask extends AsyncTaskParallel<Void, Void, Strin
 	@Override
 	protected String doInBackground(Void... params) {
 		GetVideoDescription getVideoDescription = new GetVideoDescription();
-		String description = PlayTubeApp.getStr(R.string.error_get_video_desc);
+		String description = TubeApp.getStr(R.string.error_get_video_desc);
 
 		try {
 			getVideoDescription.init(youTubeVideo.getId());
-			List<YouTubeVideo> list = getVideoDescription.getNextVideos();
+			List<YTubeVideo> list = getVideoDescription.getNextVideos();
 
 			if (list.size() > 0) {
 				description = list.get(0).getDescription();

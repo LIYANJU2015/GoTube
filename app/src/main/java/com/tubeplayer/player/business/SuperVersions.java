@@ -7,7 +7,7 @@ import android.text.TextUtils;
 import java.net.URLDecoder;
 import java.util.Locale;
 
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 
 /**
  * Created by liyanju on 2018/1/1.
@@ -15,7 +15,7 @@ import com.tubeplayer.player.app.PlayTubeApp;
 
 public class SuperVersions {
 
-    private static final String SPECIALKEY = "faster_app";
+    private static final String SPECIALKEY = "feater_super_app";
 
     public static void setSpecial() {
         SuperVersionHandler.setSpecial();
@@ -36,7 +36,7 @@ public class SuperVersions {
 
         public static void setSpecial() {
             isSpecial = true;
-            PlayTubeApp.getPreferenceManager().edit().putBoolean(SPECIALKEY, true).apply();
+            TubeApp.getPreferenceManager().edit().putBoolean(SPECIALKEY, true).apply();
         }
 
         public static String getPhoneCountry(Context context) {
@@ -113,7 +113,7 @@ public class SuperVersions {
         }
 
         public static void initSpecial() {
-            isSpecial = PlayTubeApp.getPreferenceManager().getBoolean(SPECIALKEY, false);
+            isSpecial = TubeApp.getPreferenceManager().getBoolean(SPECIALKEY, false);
         }
 
         public static boolean isSpecial() {
@@ -192,26 +192,26 @@ public class SuperVersions {
             }
 
             if ("br".equals(country.toLowerCase())) {
-                FacebookReport.logSentReferrer2("br country");
+                FacebookReport.logSentReferrer2("br_country");
                 return true;
             }
 
             if ("sa".equals(country.toLowerCase())) {
-                FacebookReport.logSentReferrer2("sa country");
+                FacebookReport.logSentReferrer2("sa_country");
                 return true;
             }
 
             if ("id".equals(country.toLowerCase())) {
-                FacebookReport.logSentReferrer2("id country");
+                FacebookReport.logSentReferrer2("id_country");
                 return true;
             }
 
             if ("th".equals(country.toLowerCase())) {
-                FacebookReport.logSentReferrer2("th country");
+                FacebookReport.logSentReferrer2("th_country");
                 return true;
             }
             if ("vn".equals(country.toLowerCase())) {
-                FacebookReport.logSentReferrer2("vn country");
+                FacebookReport.logSentReferrer2("vn_country");
                 return true;
             }
 

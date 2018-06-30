@@ -24,13 +24,13 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.interfaces.OrderableDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 
 /**
  * A database (DB) that stores user's bookmarked videos.
@@ -52,7 +52,7 @@ public class BookmarksDb extends SQLiteOpenHelperEx implements OrderableDatabase
 
 	public static synchronized BookmarksDb getBookmarksDb() {
 		if (bookmarksDb == null) {
-			bookmarksDb = new BookmarksDb(PlayTubeApp.getContext());
+			bookmarksDb = new BookmarksDb(TubeApp.getContext());
 		}
 
 		return bookmarksDb;
@@ -85,7 +85,7 @@ public class BookmarksDb extends SQLiteOpenHelperEx implements OrderableDatabase
 	 *
 	 * @return True if the video was successfully saved/bookmarked to the DB.
 	 */
-	public boolean add(YouTubeVideo video) {
+	public boolean add(YTubeVideo video) {
 		Gson gson = new Gson();
 		ContentValues values = new ContentValues();
 		values.put(BookmarksTable.COL_YOUTUBE_VIDEO_ID, video.getId());
@@ -109,7 +109,7 @@ public class BookmarksDb extends SQLiteOpenHelperEx implements OrderableDatabase
 	 *
 	 * @return True if the video has been unbookmarked; false otherwise.
 	 */
-	public boolean remove(YouTubeVideo video) {
+	public boolean remove(YTubeVideo video) {
 		getWritableDatabase().delete(BookmarksTable.TABLE_NAME,
 						BookmarksTable.COL_YOUTUBE_VIDEO_ID + " = ?",
 						new String[]{video.getId()});
@@ -130,7 +130,7 @@ public class BookmarksDb extends SQLiteOpenHelperEx implements OrderableDatabase
 			if(cursor.moveToNext()) {
 				do {
 					byte[] blob = cursor.getBlob(cursor.getColumnIndex(BookmarksTable.COL_YOUTUBE_VIDEO));
-					YouTubeVideo uvideo = new Gson().fromJson(new String(blob), new TypeToken<YouTubeVideo>(){}.getType());
+					YTubeVideo uvideo = new Gson().fromJson(new String(blob), new TypeToken<YTubeVideo>(){}.getType());
 					ContentValues contentValues = new ContentValues();
 					contentValues.put(BookmarksTable.COL_ORDER, order++);
 
@@ -157,10 +157,10 @@ public class BookmarksDb extends SQLiteOpenHelperEx implements OrderableDatabase
 	 * @param videos List of Videos to update their order.
 	 */
 	@Override
-	public void updateOrder(List<YouTubeVideo> videos) {
+	public void updateOrder(List<YTubeVideo> videos) {
 		int order = videos.size();
 
-		for(YouTubeVideo video : videos) {
+		for(YTubeVideo video : videos) {
 			ContentValues cv = new ContentValues();
 			cv.put(BookmarksTable.COL_ORDER, order--);
 			getWritableDatabase().update(BookmarksTable.TABLE_NAME, cv, BookmarksTable.COL_YOUTUBE_VIDEO_ID + " = ?", new String[]{video.getId()});
@@ -175,7 +175,7 @@ public class BookmarksDb extends SQLiteOpenHelperEx implements OrderableDatabase
 	 *
 	 * @return True if it has been bookmarked, false if not.
 	 */
-	public boolean isBookmarked(YouTubeVideo video) {
+	public boolean isBookmarked(YTubeVideo video) {
 		Cursor cursor = getReadableDatabase().query(
 						BookmarksTable.TABLE_NAME,
 						new String[]{BookmarksTable.COL_YOUTUBE_VIDEO_ID},
@@ -210,20 +210,20 @@ public class BookmarksDb extends SQLiteOpenHelperEx implements OrderableDatabase
 	 *
 	 * @return List of Videos
 	 */
-	public List<YouTubeVideo> getBookmarkedVideos() {
+	public List<YTubeVideo> getBookmarkedVideos() {
 		Cursor	cursor = getReadableDatabase().query(
 						BookmarksTable.TABLE_NAME,
 						new String[]{BookmarksTable.COL_YOUTUBE_VIDEO, BookmarksTable.COL_ORDER},
 						null,
 						null, null, null, BookmarksTable.COL_ORDER + " DESC");
-		List<YouTubeVideo> videos = new ArrayList<>();
+		List<YTubeVideo> videos = new ArrayList<>();
 
 		if(cursor.moveToNext()) {
 			do {
 				byte[] blob = cursor.getBlob(cursor.getColumnIndex(BookmarksTable.COL_YOUTUBE_VIDEO));
 
 				// convert JSON into YouTubeVideo
-				YouTubeVideo video = new Gson().fromJson(new String(blob), new TypeToken<YouTubeVideo>(){}.getType());
+				YTubeVideo video = new Gson().fromJson(new String(blob), new TypeToken<YTubeVideo>(){}.getType());
 				// regenerate the video's PublishDatePretty (e.g. 5 hours ago)
 				video.forceRefreshPublishDatePretty();
 				// add the video to the list

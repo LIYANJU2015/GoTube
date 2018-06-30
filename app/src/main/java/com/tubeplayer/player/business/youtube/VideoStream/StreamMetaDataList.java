@@ -22,7 +22,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import com.tube.playtube.R;
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 
 /**
  * A list of {@link StreamMetaData}.
@@ -39,7 +39,7 @@ public class StreamMetaDataList extends ArrayList<StreamMetaData> {
 
 
 	public StreamMetaDataList(int errorMessageId) {
-		this.errorMessage = PlayTubeApp.getStr(errorMessageId);
+		this.errorMessage = TubeApp.getStr(errorMessageId);
 	}
 
 
@@ -93,8 +93,8 @@ public class StreamMetaDataList extends ArrayList<StreamMetaData> {
 	 * @return Desired {@link VideoResolution}.
 	 */
 	private VideoResolution getDesiredVideoResolution() {
-		String resIdValue = PlayTubeApp.getPreferenceManager()
-							.getString(PlayTubeApp.getStr(R.string.pref_key_preferred_res),
+		String resIdValue = TubeApp.getPreferenceManager()
+							.getString(TubeApp.getStr(R.string.pref_key_preferred_res),
 										Integer.toString(VideoResolution.DEFAULT_VIDEO_RES_ID));
 
 		return VideoResolution.videoResIdToVideoResolution(resIdValue);

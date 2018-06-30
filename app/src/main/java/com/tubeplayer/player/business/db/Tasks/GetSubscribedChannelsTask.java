@@ -24,7 +24,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import com.tubeplayer.player.business.AsyncTaskParallel;
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannel;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
 import com.tubeplayer.player.gui.businessobjects.adapters.SubsAdapter;
 import com.tube.playtube.R;
 import com.tubeplayer.player.business.db.SubscriptionsDb;
@@ -33,7 +33,7 @@ import com.tubeplayer.player.business.db.SubscriptionsDb;
  * Gets a list of channels (from the DB) that the user is subscribed to and then passes the channels
  * list to the given {@link SubsAdapter}.
  */
-public class GetSubscribedChannelsTask extends AsyncTaskParallel<Void, Void, List<YouTubeChannel>> {
+public class GetSubscribedChannelsTask extends AsyncTaskParallel<Void, Void, List<YTubeChannel>> {
 
 	private SubsAdapter adapter;
 	private View progressBar;
@@ -55,8 +55,8 @@ public class GetSubscribedChannelsTask extends AsyncTaskParallel<Void, Void, Lis
 
 
 	@Override
-	protected List<YouTubeChannel> doInBackground(Void... params) {
-		List<YouTubeChannel> subbedChannelsList = null;
+	protected List<YTubeChannel> doInBackground(Void... params) {
+		List<YTubeChannel> subbedChannelsList = null;
 
 		try {
 			subbedChannelsList = SubscriptionsDb.getSubscriptionsDb().getSubscribedChannels();
@@ -69,7 +69,7 @@ public class GetSubscribedChannelsTask extends AsyncTaskParallel<Void, Void, Lis
 
 
 	@Override
-	protected void onPostExecute(List<YouTubeChannel> subbedChannelsList) {
+	protected void onPostExecute(List<YTubeChannel> subbedChannelsList) {
 		if (progressBar != null) {
 			progressBar.setVisibility(View.INVISIBLE);
 			progressBar = null;

@@ -10,7 +10,7 @@ import com.tubeplayer.player.business.facebook.InstallReferrerReceiverHandler;
  * Created by liyanju on 2018/3/22.
  */
 
-public class FacebookInstallReferrerReceiver extends BroadcastReceiver {
+public class FBInstallReferrerReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {

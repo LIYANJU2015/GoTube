@@ -21,7 +21,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.db.SubscriptionsDb;
 import com.tubeplayer.player.gui.businessobjects.SubscribeButton;
 import com.tube.playtube.R;
@@ -65,7 +65,7 @@ public class CheckIfUserSubbedToChannelTask extends AsyncTask<Void, Void, Boolea
 	@Override
 	protected void onPostExecute(Boolean isUserSubbed) {
 		if (isUserSubbed == null) {
-			String err = String.format(PlayTubeApp.getStr(R.string.error_check_if_user_has_subbed), channelId);
+			String err = String.format(TubeApp.getStr(R.string.error_check_if_user_has_subbed), channelId);
 			Toast.makeText(subscribeButton.getContext(), err, Toast.LENGTH_LONG).show();
 		} else if (isUserSubbed) {
 			subscribeButton.setUnsubscribeState();

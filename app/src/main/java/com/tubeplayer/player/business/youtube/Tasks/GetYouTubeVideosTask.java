@@ -26,8 +26,8 @@ import com.tubeplayer.player.business.youtube.GetYouTubeVideos;
 import java.util.Collections;
 import java.util.List;
 
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannel;
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 import com.tubeplayer.player.business.db.SubscriptionsDb;
 import com.tubeplayer.player.gui.businessobjects.LoadingProgressBar;
 import com.tubeplayer.player.gui.businessobjects.adapters.VideoGridAdapter;
@@ -36,7 +36,7 @@ import com.tubeplayer.player.gui.businessobjects.fragments.BaseVideosGridFragmen
 /**
  * An asynchronous task that will retrieve YouTube videos and displays them in the supplied Adapter.
  */
-public class GetYouTubeVideosTask extends AsyncTaskParallel<Void, Void, List<YouTubeVideo>> {
+public class GetYouTubeVideosTask extends AsyncTaskParallel<Void, Void, List<YTubeVideo>> {
 
 	/** Object used to retrieve the desired YouTube videos. */
 	private GetYouTubeVideos getYouTubeVideos;
@@ -56,7 +56,7 @@ public class GetYouTubeVideosTask extends AsyncTaskParallel<Void, Void, List<You
 	/** Runnable to be run when this task completes */
 	private Runnable onFinished;
 
-	private YouTubeChannel channel;
+	private YTubeChannel channel;
 
 	private BaseVideosGridFragment.SwipeRefreshCallBack refreshCallBack;
 
@@ -108,15 +108,15 @@ public class GetYouTubeVideosTask extends AsyncTaskParallel<Void, Void, List<You
 	}
 
 	@Override
-	protected List<YouTubeVideo> doInBackground(Void... params) {
-		List<YouTubeVideo> videosList = null;
+	protected List<YTubeVideo> doInBackground(Void... params) {
+		List<YTubeVideo> videosList = null;
 
 		if (!isCancelled()) {
 			// get videos from YouTube
 			videosList = getYouTubeVideos.getNextVideos();
 
 			if (videosList != null  &&  channel != null  &&  channel.isUserSubscribed()) {
-				for (YouTubeVideo video : videosList) {
+				for (YTubeVideo video : videosList) {
 					channel.addYouTubeVideo(video);
 				}
 
@@ -128,14 +128,16 @@ public class GetYouTubeVideosTask extends AsyncTaskParallel<Void, Void, List<You
 	}
 
 	@Override
-	protected void onCancelled(List<YouTubeVideo> youTubeVideos) {
+	protected void onCancelled(List<YTubeVideo> youTubeVideos) {
 		super.onCancelled(youTubeVideos);
 		sIsLoadMore = false;
 	}
 
 	@Override
-	protected void onPostExecute(List<YouTubeVideo> videosList) {
-		Collections.shuffle(videosList);
+	protected void onPostExecute(List<YTubeVideo> videosList) {
+		if (videosList != null) {
+			Collections.shuffle(videosList);
+		}
 		videoGridAdapter.appendList(videosList);
 		if(progressBar != null)
 			progressBar.setVisibility(View.GONE);

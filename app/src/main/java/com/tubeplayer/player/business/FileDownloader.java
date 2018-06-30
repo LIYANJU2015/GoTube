@@ -31,7 +31,7 @@ import java.io.File;
 import java.io.Serializable;
 
 import com.tubeplayer.player.gui.activities.PermissionsActivity;
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 
 /**
  * Downloads remote files by using Android's {@link DownloadManager}.
@@ -65,7 +65,7 @@ public abstract class FileDownloader implements Serializable, PermissionsActivit
 	 * will start downloading the file.
 	 */
 	public void displayPermissionsActivity(Context context) {
-		Intent i = new Intent(PlayTubeApp.getContext(), PermissionsActivity.class);
+		Intent i = new Intent(TubeApp.getContext(), PermissionsActivity.class);
 		i.putExtra(PermissionsActivity.PERMISSIONS_TASK_OBJ, this);
 		context.startActivity(i);
 	}
@@ -114,7 +114,7 @@ public abstract class FileDownloader implements Serializable, PermissionsActivit
 		}
 
 		// onComplete.onReceive() will be executed once the file is downloaded
-		PlayTubeApp.getContext().registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+		TubeApp.getContext().registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 
 		// start downloading
 		downloadId = getDownloadManager().enqueue(request);
@@ -188,7 +188,7 @@ public abstract class FileDownloader implements Serializable, PermissionsActivit
 			cursor.close();
 		}
 
-		PlayTubeApp.getContext().unregisterReceiver(onComplete);
+		TubeApp.getContext().unregisterReceiver(onComplete);
 
 		// file download is now completed
 		onFileDownloadCompleted(downloadSuccessful, downloadedFileUri);
@@ -255,7 +255,7 @@ public abstract class FileDownloader implements Serializable, PermissionsActivit
 	}
 
 	private DownloadManager getDownloadManager() {
-		return (DownloadManager) PlayTubeApp.getContext().getSystemService(Context.DOWNLOAD_SERVICE);
+		return (DownloadManager) TubeApp.getContext().getSystemService(Context.DOWNLOAD_SERVICE);
 	}
 
 

@@ -37,12 +37,12 @@ import com.bumptech.glide.request.RequestOptions;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.youtube.GetCommentThreads;
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannel;
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannelInterface;
-import com.tubeplayer.player.business.youtube.bean.YouTubeComment;
-import com.tubeplayer.player.business.youtube.bean.YouTubeCommentThread;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannelInterface;
+import com.tubeplayer.player.business.youtube.bean.YTubeComment;
+import com.tubeplayer.player.business.youtube.bean.YTubeCommentThread;
 import com.tubeplayer.player.business.youtube.Tasks.GetYouTubeChannelInfoTask;
 import com.tubeplayer.player.gui.activities.MainActivity;
 import com.tubeplayer.player.gui.fragments.ChannelBrowserFragment;
@@ -54,7 +54,7 @@ import com.tube.playtube.R;
 public class CommentsAdapter extends BaseExpandableListAdapter {
 
 	private String						videoId;
-	private List<YouTubeCommentThread>	commentThreadsList = new ArrayList<>();
+	private List<YTubeCommentThread>	commentThreadsList = new ArrayList<>();
 	private GetCommentsTask				getCommentsTask = null;
 	private GetCommentThreads getCommentThreads = null;
 	private ExpandableListView			expandableListView;
@@ -149,12 +149,12 @@ public class CommentsAdapter extends BaseExpandableListAdapter {
 		}
 
 		if (viewHolder != null) {
-			YouTubeComment comment;
+			YTubeComment comment;
 
 			if (getParentView)
-				comment = ((YouTubeCommentThread)getGroup(groupPosition)).getTopLevelComment();
+				comment = ((YTubeCommentThread)getGroup(groupPosition)).getTopLevelComment();
 			else
-				comment = (YouTubeComment)getChild(groupPosition, childPosition);
+				comment = (YTubeComment)getChild(groupPosition, childPosition);
 
 			viewHolder.updateInfo(comment, getParentView, groupPosition);
 		}
@@ -196,7 +196,7 @@ public class CommentsAdapter extends BaseExpandableListAdapter {
 		}
 
 
-		protected void updateInfo(final YouTubeComment comment, boolean isTopLevelComment, final int groupPosition) {
+		protected void updateInfo(final YTubeComment comment, boolean isTopLevelComment, final int groupPosition) {
 			paddingView.setVisibility(isTopLevelComment ? View.GONE : View.VISIBLE);
 			authorTextView.setText(comment.getAuthor());
 			commentTextView.setText(comment.getComment());
@@ -211,9 +211,9 @@ public class CommentsAdapter extends BaseExpandableListAdapter {
 				@Override
 				public void onClick(View view) {
 					if(comment.getAuthorChannelId() != null) {
-						new GetYouTubeChannelInfoTask(new YouTubeChannelInterface() {
+						new GetYouTubeChannelInfoTask(new YTubeChannelInterface() {
 							@Override
-							public void onGetYouTubeChannel(YouTubeChannel youTubeChannel) {
+							public void onGetYouTubeChannel(YTubeChannel youTubeChannel) {
 								Intent i = new Intent(context, MainActivity.class);
 								i.setAction(MainActivity.ACTION_VIEW_CHANNEL);
 								i.putExtra(ChannelBrowserFragment.CHANNEL_OBJ, youTubeChannel);
@@ -226,7 +226,7 @@ public class CommentsAdapter extends BaseExpandableListAdapter {
 
 			// change the width dimensions depending on whether the comment is a top level or a child
 			ViewGroup.LayoutParams lp = thumbnailImageView.getLayoutParams();
-			lp.width = (int) PlayTubeApp.getDimension(isTopLevelComment  ?  R.dimen.top_level_comment_thumbnail_width  :  R.dimen.child_comment_thumbnail_width);
+			lp.width = (int) TubeApp.getDimension(isTopLevelComment  ?  R.dimen.top_level_comment_thumbnail_width  :  R.dimen.child_comment_thumbnail_width);
 
 			if (isTopLevelComment  &&  getChildrenCount(groupPosition) > 0) {
 				viewRepliesTextView.setVisibility(View.VISIBLE);
@@ -253,7 +253,7 @@ public class CommentsAdapter extends BaseExpandableListAdapter {
 
 	////////////////////////////////////////////////////////////////////////////////////////////////
 
-	private class GetCommentsTask extends AsyncTask<Void, Void, List<YouTubeCommentThread>> {
+	private class GetCommentsTask extends AsyncTask<Void, Void, List<YTubeCommentThread>> {
 
 		protected GetCommentsTask(String videoId) {
 			if (getCommentThreads == null) {
@@ -273,12 +273,12 @@ public class CommentsAdapter extends BaseExpandableListAdapter {
 		}
 
 		@Override
-		protected  List<YouTubeCommentThread> doInBackground(Void... params) {
+		protected  List<YTubeCommentThread> doInBackground(Void... params) {
 			return getCommentThreads.get();
 		}
 
 		@Override
-		protected void onPostExecute(List<YouTubeCommentThread> commentThreadsList) {
+		protected void onPostExecute(List<YTubeCommentThread> commentThreadsList) {
 			if (commentThreadsList != null) {
 				if (commentThreadsList.size() > 0) {
 					CommentsAdapter.this.commentThreadsList.addAll(commentThreadsList);

@@ -5,7 +5,7 @@ android {
     buildToolsVersion '26.0.2'
 
     defaultConfig {
-        applicationId "com.musictube.weplaytube.first"
+        applicationId "com.wetube.playtube.tubeplayer"
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
@@ -13,13 +13,10 @@ android {
         // Third party devs:  pls be ethical and change the below keys
         buildConfigField 'String[]', 'YOUTUBE_API_KEYS',
                 '{' +
-                        '"AIzaSyBGMm_BbAX_fo2VWO-5oDdPCwthdCEZjQ4",' +
-                        '"AIzaSyCeAdoPkQwNeJgHzKUN3uF-hKmy1GII-Vg",' +
-                        '"AIzaSyAyOFXjB7LQUnBs88s-Cx8vIY9SednWEn4"'  +
+                        '"AIzaSyArKpVSYj7TSp0PAk76qo6AbJ-QBONDf1I",' +
+                        '"AIzaSyBLvL_R0Kxd_te876hdRtRDLg6z0aQYe_M",' +
+                        '"AIzaSyAMM7NHUwZGQa3RfqbJXWifxksOvWgzRr0"'  +
                 '}'
-        buildConfigField 'String', 'GoTube_WEBSITE',         '"http://Tube-app.com"'
-        buildConfigField 'String', 'GoTube_WEBSITE_CREDITS', '"http://Tube-app.com/credits.html"'
-        buildConfigField 'String', 'GoTube_UPDATES_URL',     '"https://api.github.com/repos/ram-on/Tube/releases/latest"'
         vectorDrawables.useSupportLibrary true
         multiDexEnabled true    // this is as we have over 65536 lines of code...
     }
@@ -33,10 +30,10 @@ android {
 //        }
 
         release {
-            storeFile file("playtube.jks")
-            storePassword "qwer1234"
-            keyAlias "weplaytube"
-            keyPassword "qwer1234"
+            storeFile file("tubeplayer.jks")
+            storePassword "zxcv1234"
+            keyAlias "wetubeplayer"
+            keyPassword "zxcv1234"
         }
     }
 
@@ -48,7 +45,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
+
+        debug {
+            multiDexEnabled true
+            debuggable true
+            applicationIdSuffix ".wedebug"
+        }
     }
+
 }
 
 configurations {

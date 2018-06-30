@@ -11,10 +11,10 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.tube.playtube.R;
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.VideoCategory;
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannel;
-import com.tubeplayer.player.business.youtube.bean.YouTubePlaylist;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
+import com.tubeplayer.player.business.youtube.bean.YTubePlaylist;
 import com.tubeplayer.player.gui.businessobjects.MainActivityListener;
 import com.tubeplayer.player.gui.businessobjects.PlaylistClickListener;
 import com.tubeplayer.player.gui.businessobjects.adapters.PlaylistsGridAdapter;
@@ -24,7 +24,7 @@ import com.tubeplayer.player.gui.businessobjects.adapters.PlaylistsGridAdapter;
  */
 public class ChannelPlaylistsFragment extends VideosGridFragment implements PlaylistClickListener, SwipeRefreshLayout.OnRefreshListener {
 	private PlaylistsGridAdapter    playlistsGridAdapter;
-	private YouTubeChannel          channel;
+	private YTubeChannel channel;
 	private MainActivityListener mainActivityListener;
 
 	@BindView(R.id.swipeRefreshLayout)
@@ -48,7 +48,7 @@ public class ChannelPlaylistsFragment extends VideosGridFragment implements Play
 		}
 
 
-		channel = (YouTubeChannel)getArguments().getSerializable(ChannelBrowserFragment.CHANNEL_OBJ);
+		channel = (YTubeChannel)getArguments().getSerializable(ChannelBrowserFragment.CHANNEL_OBJ);
 		playlistsGridAdapter.setYouTubeChannel(channel);
 
 
@@ -61,11 +61,11 @@ public class ChannelPlaylistsFragment extends VideosGridFragment implements Play
 
 	@Override
 	public String getFragmentName() {
-		return PlayTubeApp.getStr(R.string.playlists);
+		return TubeApp.getStr(R.string.playlists);
 	}
 
 	@Override
-	public void onClickPlaylist(YouTubePlaylist playlist) {
+	public void onClickPlaylist(YTubePlaylist playlist) {
 		if (mainActivityListener != null)
 			mainActivityListener.onPlaylistClick(playlist);
 	}

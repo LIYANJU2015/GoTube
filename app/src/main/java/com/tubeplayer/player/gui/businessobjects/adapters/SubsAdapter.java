@@ -35,14 +35,14 @@ import java.util.List;
 import com.tubeplayer.player.gui.businessobjects.MainActivityListener;
 import com.tube.playtube.R;
 import com.tubeplayer.player.business.Logger;
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannel;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
 import com.tubeplayer.player.business.db.Tasks.GetSubscribedChannelsTask;
 
 /**
  * Channel subscriptions adapter: Contains a list of channels (that the user subscribed to) together
  * with a notification whether the channel has new videos since last visit to the channel or not.
  */
-public class SubsAdapter extends RecyclerViewAdapterEx<YouTubeChannel, SubsAdapter.SubChannelViewHolder> {
+public class SubsAdapter extends RecyclerViewAdapterEx<YTubeChannel, SubsAdapter.SubChannelViewHolder> {
 
 	private static SubsAdapter subsAdapter = null;
 	private static final String TAG = SubsAdapter.class.getSimpleName();
@@ -85,7 +85,7 @@ public class SubsAdapter extends RecyclerViewAdapterEx<YouTubeChannel, SubsAdapt
 	 *
 	 * @param channel Channel to append.
 	 */
-	public void appendChannel(YouTubeChannel channel) {
+	public void appendChannel(YTubeChannel channel) {
 		append(channel);
 	}
 
@@ -95,7 +95,7 @@ public class SubsAdapter extends RecyclerViewAdapterEx<YouTubeChannel, SubsAdapt
 	 *
 	 * @param channel Channel to remove.
 	 */
-	public void removeChannel(YouTubeChannel channel) {
+	public void removeChannel(YTubeChannel channel) {
 		removeChannel(channel.getId());
 	}
 
@@ -129,10 +129,10 @@ public class SubsAdapter extends RecyclerViewAdapterEx<YouTubeChannel, SubsAdapt
 	 * @return	True if the operations have been successful; false otherwise.
 	 */
 	public boolean changeChannelNewVideosStatus(String channelId, boolean newVideos) {
-		YouTubeChannel channel;
+		YTubeChannel channel;
 		int position = 0;
 
-		for (Iterator<YouTubeChannel> i = getIterator();  i.hasNext(); position++) {
+		for (Iterator<YTubeChannel> i = getIterator(); i.hasNext(); position++) {
 			channel = i.next();
 
 			if (channel.getId() != null  &&  channel.getId().equals(channelId)) {
@@ -199,7 +199,7 @@ public class SubsAdapter extends RecyclerViewAdapterEx<YouTubeChannel, SubsAdapt
 	 *
 	 * @return List of YouTube channels the user is subscribed to.
 	 */
-	public List<YouTubeChannel> getSubsLists() {
+	public List<YTubeChannel> getSubsLists() {
 		SubsAdapter.Bool isSubsListRetrieved = isSubsListRetrieved();
 
 		synchronized (isSubsListRetrieved) {
@@ -238,7 +238,7 @@ public class SubsAdapter extends RecyclerViewAdapterEx<YouTubeChannel, SubsAdapt
 		private ImageView			thumbnailImageView;
 		private TextView			channelNameTextView;
 		private View				newVideosNotificationView;
-		private YouTubeChannel		channel = null;
+		private YTubeChannel channel = null;
 
 		SubChannelViewHolder(View rowView) {
 			super(rowView);
@@ -256,7 +256,7 @@ public class SubsAdapter extends RecyclerViewAdapterEx<YouTubeChannel, SubsAdapt
 			});
 		}
 
-		void updateInfo(YouTubeChannel channel) {
+		void updateInfo(YTubeChannel channel) {
 			Glide.with(getContext().getApplicationContext())
 					.load(channel.getThumbnailNormalUrl())
 					.apply(new RequestOptions().placeholder(R.drawable.buddy_channel_item))

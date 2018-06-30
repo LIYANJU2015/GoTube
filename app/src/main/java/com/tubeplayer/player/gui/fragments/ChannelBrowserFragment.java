@@ -41,8 +41,8 @@ import java.util.List;
 import com.tubeplayer.player.gui.businessobjects.SubscribeButton;
 import com.tube.playtube.R;
 import com.tubeplayer.player.business.FacebookReport;
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannel;
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 import com.tubeplayer.player.business.youtube.Tasks.GetYouTubeChannelInfoTask;
 import com.tubeplayer.player.gui.businessobjects.adapters.SubsAdapter;
 import com.tubeplayer.player.gui.businessobjects.fragments.FragmentEx;
@@ -59,7 +59,7 @@ import com.tubeplayer.player.gui.businessobjects.fragments.TabFragment;
  */
 public class ChannelBrowserFragment extends FragmentEx {
 
-	private YouTubeChannel channel = null;
+	private YTubeChannel channel = null;
 
 	public static final String FRAGMENT_CHANNEL_VIDEOS = "TubeChannelBrowserFragment.FRAGMENT_CHANNEL_VIDEOS";
 	public static final String FRAGMENT_CHANNEL_PLAYLISTS = "TubeChannelBrowserFragment.FRAGMENT_CHANNEL_PLAYLISTS";
@@ -98,7 +98,7 @@ public class ChannelBrowserFragment extends FragmentEx {
 		//   (2) passing the channel ID... a task is then created to create a YouTubeChannel
 		//       instance using the given channel ID
 		if (bundle != null  &&  bundle.getSerializable(CHANNEL_OBJ) != null) {
-			this.channel = (YouTubeChannel) bundle.getSerializable(CHANNEL_OBJ);
+			this.channel = (YTubeChannel) bundle.getSerializable(CHANNEL_OBJ);
 			channelId = channel.getId();
 		} else {
 			channelId = bundle.getString(CHANNEL_ID);
@@ -157,7 +157,7 @@ public class ChannelBrowserFragment extends FragmentEx {
 			public void onClick(View v) {
 				// If we're subscribing to the channel, save the list of videos we have into the channel (to be stored in the database by SubscribeToChannelTask)
 				if (channel != null && !channel.isUserSubscribed()) {
-					Iterator<YouTubeVideo> iterator = channelVideosFragment.getVideoGridAdapter().getIterator();
+					Iterator<YTubeVideo> iterator = channelVideosFragment.getVideoGridAdapter().getIterator();
 					while (iterator.hasNext()) {
 						channel.addYouTubeVideo(iterator.next());
 					}
@@ -245,7 +245,7 @@ public class ChannelBrowserFragment extends FragmentEx {
 	////////////////////////////////////////////////////////////////////////////////////////////////
 
 	/**
-	 * A task that given a channel ID it will try to initialize and return {@link YouTubeChannel}.
+	 * A task that given a channel ID it will try to initialize and return {@link YTubeChannel}.
 	 */
 	private class GetChannelInfoTask extends GetYouTubeChannelInfoTask {
 
@@ -254,7 +254,7 @@ public class ChannelBrowserFragment extends FragmentEx {
 		}
 
 		@Override
-		protected void onPostExecute(YouTubeChannel youTubeChannel) {
+		protected void onPostExecute(YTubeChannel youTubeChannel) {
 			// In the event this fragment is passed a channel id and not a channel object, set the
 			// channel the subscribe button is for since there wasn't a channel object to set when
 			// the button was created.

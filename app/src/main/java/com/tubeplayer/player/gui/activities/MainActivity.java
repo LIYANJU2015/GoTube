@@ -42,12 +42,12 @@ import android.widget.TextView;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.SearchSuggestionsAdapter;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.FBAdUtils;
 import com.tubeplayer.player.business.TubeSearchSuggistion;
 import com.tubeplayer.player.business.Utils;
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannel;
-import com.tubeplayer.player.business.youtube.bean.YouTubePlaylist;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
+import com.tubeplayer.player.business.youtube.bean.YTubePlaylist;
 import com.tubeplayer.player.business.db.DownloadedVideosDb;
 import com.tubeplayer.player.gui.businessobjects.MainActivityListener;
 import com.tubeplayer.player.gui.businessobjects.adapters.SubsAdapter;
@@ -87,12 +87,12 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 
 	/** Set to true of the UpdatesCheckerTask has run; false otherwise. */
 	private static boolean updatesCheckerTaskRan = false;
-	public static final String ACTION_VIEW_CHANNEL = "MainActivity2.ViewChannel2";
-	public static final String ACTION_VIEW_FEED = "MainActivity2.ViewFeed2";
-	private static final String MAIN_FRAGMENT   = "MainActivity2.MainFragment2";
-	private static final String SEARCH_FRAGMENT = "MainActivity2.SearchFragment2";
-	public static final String CHANNEL_BROWSER_FRAGMENT = "MainActivity2.ChannelBrowserFragment2";
-	public static final String PLAYLIST_VIDEOS_FRAGMENT = "MainActivity2.PlaylistVideosFragment2";
+	public static final String ACTION_VIEW_CHANNEL = "1MainActivity.ViewChannel2";
+	public static final String ACTION_VIEW_FEED = "1MainActivity.ViewFeed2";
+	private static final String MAIN_FRAGMENT   = "1MainActivity.MainFragment2";
+	private static final String SEARCH_FRAGMENT = "1MainActivity.SearchFragment2";
+	public static final String CHANNEL_BROWSER_FRAGMENT = "1MainActivity.ChannelBrowserFragment2";
+	public static final String PLAYLIST_VIDEOS_FRAGMENT = "1MainActivity.PlaylistVideosFragment2";
 
 	private boolean dontAddToBackStack = false;
 
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 //			updatesCheckerTaskRan = true;
 //		}
 
-		PlayTubeApp.setFeedUpdateInterval();
+		TubeApp.setFeedUpdateInterval();
 		// Delete any missing downloaded videos
 		new DownloadedVideosDb.RemoveMissingVideosTask().executeInParallel();
 
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 			String action = getIntent().getAction();
 			if(ACTION_VIEW_CHANNEL.equals(action)) {
 				dontAddToBackStack = true;
-				YouTubeChannel channel = (YouTubeChannel) getIntent().getSerializableExtra(ChannelBrowserFragment.CHANNEL_OBJ);
+				YTubeChannel channel = (YTubeChannel) getIntent().getSerializableExtra(ChannelBrowserFragment.CHANNEL_OBJ);
 				onChannelClick(channel);
 			} else {
 				if(mainFragment == null) {
@@ -167,13 +167,13 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 		subsListView.post(new Runnable() {
 			@Override
 			public void run() {
-				if (PlayTubeApp.getPreferenceManager().getBoolean("can_referrer", false)) {
-					PlayTubeApp.getPreferenceManager().edit().putBoolean("can_referrer", true).apply();
+				if (TubeApp.getPreferenceManager().getBoolean("can_referrer", false)) {
+					TubeApp.getPreferenceManager().edit().putBoolean("can_referrer", true).apply();
 				}
 			}
 		});
 
-		FBAdUtils.showAdDialog(this, Utils.CHAPING_COMMON_AD);
+		FBAdUtils.showAdDialog(this, Utils.NATIVE_AD_HIGHT_ID);
 	}
 
 	private FloatingSearchView mSearchView;
@@ -185,9 +185,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 
 		mSearchView.setSearchHint(getString(R.string.app_name));
 
-		if (!PlayTubeApp.isSpecial()) {
+		if (!TubeApp.isSpecial()) {
 			mSearchView.inflateOverflowMenu(R.menu.menu_main2);
-		} else if (PlayTubeApp.getPreferenceManager().getBoolean("isShowRed", true)){
+		} else if (TubeApp.getPreferenceManager().getBoolean("isShowRed", true)){
 			initSearchRedPoint(mSearchView);
 		}
 
@@ -251,14 +251,14 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 						startActivity(i);
 						break;
 					case R.id.menu_downloads:
-						DownloadActivity.launch(getApplicationContext());
+						GetVideoActivity.launch(getApplicationContext());
 						if (mRedMenuBadge != null) {
 							mSearchView.post(new Runnable() {
 								@Override
 								public void run() {
 									mRedMenuBadge.hide(true);
 									mRedMenuBadge = null;
-									PlayTubeApp.getPreferenceManager().edit().putBoolean("isShowRed", false).apply();
+									TubeApp.getPreferenceManager().edit().putBoolean("isShowRed", false).apply();
 								}
 							});
 						}
@@ -507,7 +507,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 
 
 	@Override
-	public void onChannelClick(YouTubeChannel channel) {
+	public void onChannelClick(YTubeChannel channel) {
 		Bundle args = new Bundle();
 		args.putSerializable(ChannelBrowserFragment.CHANNEL_OBJ, channel);
 		switchToChannelBrowserFragment(args);
@@ -536,7 +536,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 	}
 
 	@Override
-	public void onPlaylistClick(YouTubePlaylist playlist) {
+	public void onPlaylistClick(YTubePlaylist playlist) {
 		playlistVideosFragment = new PlaylistVideosFragment();
 		Bundle args = new Bundle();
 		args.putSerializable(PlaylistVideosFragment.PLAYLIST_OBJ, playlist);

@@ -27,7 +27,7 @@ import android.preference.PreferenceFragment;
 import android.widget.Toast;
 
 import com.tube.playtube.R;
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.AsyncTaskParallel;
 import com.tubeplayer.player.business.youtube.ValidateYouTubeAPIKey;
 
@@ -123,7 +123,7 @@ public class OthersPreferenceFragment extends PreferenceFragment implements Shar
 				.setPositiveButton(R.string.restart, new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						PlayTubeApp.restartApp();
+						TubeApp.restartApp();
 					}
 				})
 				.setCancelable(false)

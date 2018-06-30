@@ -22,7 +22,7 @@ import com.google.api.client.util.ArrayMap;
 /**
  * A YouTube comment.
  */
-public class YouTubeComment {
+public class YTubeComment {
 
 	private String author;
 	private String comment;
@@ -31,7 +31,7 @@ public class YouTubeComment {
 	private String thumbnailUrl;
 	private String authorChannelId;
 
-	public YouTubeComment(com.google.api.services.youtube.model.Comment comment) {
+	public YTubeComment(com.google.api.services.youtube.model.Comment comment) {
 		if (comment.getSnippet() != null) {
 			this.author = comment.getSnippet().getAuthorDisplayName();
 			ArrayMap<String, String> channelIdMap = (ArrayMap<String, String>)comment.getSnippet().getAuthorChannelId();

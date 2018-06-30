@@ -42,7 +42,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.AsyncTaskParallel;
 import com.tubeplayer.player.business.FacebookReport;
 import com.tubeplayer.player.business.FileDownloader;
@@ -59,7 +59,7 @@ import com.tubeplayer.player.business.youtube.VideoStream.StreamMetaData;
 /**
  * Represents a YouTube video.
  */
-public class YouTubeVideo implements Serializable {
+public class YTubeVideo implements Serializable {
 
 	/** YouTube video ID. */
 	private String	id;
@@ -96,13 +96,13 @@ public class YouTubeVideo implements Serializable {
 	private boolean isLiveStream;
 
 	/** Default preferred language(s) -- by default, no language shall be filtered out. */
-	private static final Set<String> defaultPrefLanguages = new HashSet<>(PlayTubeApp.getStringArrayAsList(R.array.languages_iso639_codes));
+	private static final Set<String> defaultPrefLanguages = new HashSet<>(TubeApp.getStringArrayAsList(R.array.languages_iso639_codes));
 
-	public YouTubeVideo() {
+	public YTubeVideo() {
 
 	}
 
-	public YouTubeVideo(Video video) {
+	public YTubeVideo(Video video) {
 		this.id = video.getId();
 
 		if (video.getSnippet() != null) {
@@ -138,7 +138,7 @@ public class YouTubeVideo implements Serializable {
 
 			setThumbsUpPercentage(likeCount, dislikeCount);
 
-			this.viewsCount = String.format(PlayTubeApp.getStr(R.string.views),
+			this.viewsCount = String.format(TubeApp.getStr(R.string.views),
 											video.getStatistics().getViewCount());
 
 			if (likeCount != null)
@@ -205,7 +205,7 @@ public class YouTubeVideo implements Serializable {
 		// is live stream?
 		if (duration.equals("0:00")) {
 			isLiveStream = true;
-			duration = PlayTubeApp.getStr(R.string.LIVE);
+			duration = TubeApp.getStr(R.string.LIVE);
 			setPublishDate(new DateTime(new Date()));    // set publishDate to current (as there is a bug in YouTube API in which live videos's date is incorrect)
 		} else {
 			isLiveStream = false;
@@ -364,7 +364,7 @@ public class YouTubeVideo implements Serializable {
 	 * @return Set of user's preferred ISO 639 language codes (regex).
 	 */
 	private Set<String> getPreferredLanguages() {
-		return PlayTubeApp.getPreferenceManager().getStringSet(PlayTubeApp.getStr(R.string.pref_key_preferred_languages), defaultPrefLanguages);
+		return TubeApp.getPreferenceManager().getStringSet(TubeApp.getStr(R.string.pref_key_preferred_languages), defaultPrefLanguages);
 	}
 
 
@@ -448,12 +448,12 @@ public class YouTubeVideo implements Serializable {
 	 * Remove local copy of this video, and delete it from the VideoDownloads DB
 	 */
 	public void removeDownload() {
-		Uri uri = DownloadedVideosDb.getVideoDownloadsDb().getVideoFileUri(YouTubeVideo.this);
+		Uri uri = DownloadedVideosDb.getVideoDownloadsDb().getVideoFileUri(YTubeVideo.this);
 		File file = new File(uri.getPath());
 		if(file.exists()) {
 			file.delete();
 		}
-		DownloadedVideosDb.getVideoDownloadsDb().remove(YouTubeVideo.this);
+		DownloadedVideosDb.getVideoDownloadsDb().remove(YTubeVideo.this);
 	}
 
 	/**
@@ -469,7 +469,7 @@ public class YouTubeVideo implements Serializable {
 	 * @return
 	 */
 	public boolean isDownloaded() {
-		return DownloadedVideosDb.getVideoDownloadsDb().isVideoDownloaded(YouTubeVideo.this);
+		return DownloadedVideosDb.getVideoDownloadsDb().isVideoDownloaded(YTubeVideo.this);
 	}
 
 	public void downloadVideo(Context context, String downloadurl) {
@@ -502,13 +502,13 @@ public class YouTubeVideo implements Serializable {
 					return;
 				}
 
-				FileDownloaderHelper.addDownloadTask(YouTubeVideo.this, desiredStream.getUri().toString());
+				FileDownloaderHelper.addDownloadTask(YTubeVideo.this, desiredStream.getUri().toString());
 			}
 			@Override
 			public void onGetStreamError(String errorMessage) {
-				Logger.e(YouTubeVideo.this, "Stream error: %s", errorMessage);
-				Toast.makeText(PlayTubeApp.getContext(),
-								String.format(PlayTubeApp.getContext().getString(R.string.video_download_stream_error), getTitle()),
+				Logger.e(YTubeVideo.this, "Stream error: %s", errorMessage);
+				Toast.makeText(TubeApp.getContext(),
+								String.format(TubeApp.getContext().getString(R.string.video_download_stream_error), getTitle()),
 								Toast.LENGTH_LONG).show();
 			}
 		});
@@ -569,8 +569,8 @@ public class YouTubeVideo implements Serializable {
 
 		@Override
 		public void onFileDownloadStarted() {
-			Toast.makeText(PlayTubeApp.getContext(),
-					String.format(PlayTubeApp.getContext().getString(R.string.starting_video_download), getTitle()),
+			Toast.makeText(TubeApp.getContext(),
+					String.format(TubeApp.getContext().getString(R.string.starting_video_download), getTitle()),
 					Toast.LENGTH_LONG).show();
 
 		}
@@ -578,11 +578,11 @@ public class YouTubeVideo implements Serializable {
 		@Override
 		public void onFileDownloadCompleted(boolean success, Uri localFileUri) {
 			if (success) {
-				success = DownloadedVideosDb.getVideoDownloadsDb().add(YouTubeVideo.this, localFileUri.toString());
+				success = DownloadedVideosDb.getVideoDownloadsDb().add(YTubeVideo.this, localFileUri.toString());
 			}
 
-			Toast.makeText(PlayTubeApp.getContext(),
-					String.format(PlayTubeApp.getContext().getString(success ? R.string.video_downloaded : R.string.video_download_stream_error), getTitle()),
+			Toast.makeText(TubeApp.getContext(),
+					String.format(TubeApp.getContext().getString(success ? R.string.video_downloaded : R.string.video_download_stream_error), getTitle()),
 					Toast.LENGTH_LONG).show();
 
 			FacebookReport.logSentDownloadEnd(title);
@@ -590,7 +590,7 @@ public class YouTubeVideo implements Serializable {
 
 		@Override
 		public void onExternalStorageNotAvailable() {
-			Toast.makeText(PlayTubeApp.getContext(),
+			Toast.makeText(TubeApp.getContext(),
 					R.string.external_storage_not_available,
 					Toast.LENGTH_LONG).show();
 		}

@@ -20,7 +20,7 @@ package com.tubeplayer.player.business.youtube;
 import java.io.IOException;
 import java.util.List;
 
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 import com.tubeplayer.player.business.db.BookmarksDb;
 
 
@@ -35,7 +35,7 @@ public class GetBookmarksVideos extends GetYouTubeVideos {
 	}
 
 	@Override
-	public List<YouTubeVideo> getNextVideos() {
+	public List<YTubeVideo> getNextVideos() {
 		if (!noMoreVideoPages()) {
 			noMoreVideoPages = true;
 			return BookmarksDb.getBookmarksDb().getBookmarkedVideos();

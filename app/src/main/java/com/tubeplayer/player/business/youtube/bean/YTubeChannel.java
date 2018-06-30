@@ -29,7 +29,7 @@ import java.util.List;
 
 import com.tubeplayer.player.business.Logger;
 import com.tube.playtube.R;
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.db.SubscriptionsDb;
 
 /**
@@ -37,7 +37,7 @@ import com.tubeplayer.player.business.db.SubscriptionsDb;
  *
  * <p>This class has the ability to query channel info by using the given channel ID.</p>
  */
-public class YouTubeChannel implements Serializable {
+public class YTubeChannel implements Serializable {
 
 	private String id;
 	private String title;
@@ -48,7 +48,7 @@ public class YouTubeChannel implements Serializable {
 	private boolean isUserSubscribed;
 	private long	lastVisitTime;
 	private boolean	newVideosSinceLastVisit = false;
-	private List<YouTubeVideo> youTubeVideos = new ArrayList<>();
+	private List<YTubeVideo> youTubeVideos = new ArrayList<>();
 
 
 	/**
@@ -103,11 +103,11 @@ public class YouTubeChannel implements Serializable {
 
 		ChannelBrandingSettings branding = channel.getBrandingSettings();
 		if (branding != null)
-			this.bannerUrl = PlayTubeApp.isTablet() ? branding.getImage().getBannerTabletHdImageUrl() : branding.getImage().getBannerMobileHdImageUrl();
+			this.bannerUrl = TubeApp.isTablet() ? branding.getImage().getBannerTabletHdImageUrl() : branding.getImage().getBannerMobileHdImageUrl();
 
 		ChannelStatistics statistics = channel.getStatistics();
 		if (statistics != null) {
-			this.totalSubscribers = String.format(PlayTubeApp.getStr(R.string.total_subscribers),
+			this.totalSubscribers = String.format(TubeApp.getStr(R.string.total_subscribers),
 					statistics.getSubscriberCount());
 		}
 	}
@@ -190,13 +190,13 @@ public class YouTubeChannel implements Serializable {
 		this.newVideosSinceLastVisit = newVideos;
 	}
 
-	public void addYouTubeVideo(YouTubeVideo video) {
+	public void addYouTubeVideo(YTubeVideo video) {
 		if(!youTubeVideos.contains(video)) {
 			youTubeVideos.add(video);
 		}
 	}
 
-	public List<YouTubeVideo> getYouTubeVideos() {
+	public List<YTubeVideo> getYouTubeVideos() {
 		return youTubeVideos;
 	}
 }

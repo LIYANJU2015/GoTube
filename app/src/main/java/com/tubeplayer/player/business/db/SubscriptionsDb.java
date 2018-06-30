@@ -24,8 +24,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.tubeplayer.player.app.PlayTubeApp;
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannel;
+import com.tubeplayer.player.app.TubeApp;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
@@ -38,7 +38,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.tubeplayer.player.business.youtube.GetChannelsDetails;
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 
 /**
  * A database (DB) that stores user subscriptions (with respect to YouTube channels).
@@ -57,7 +57,7 @@ public class SubscriptionsDb extends SQLiteOpenHelperEx {
 
 	public static synchronized SubscriptionsDb getSubscriptionsDb() {
 		if (subscriptionsDb == null) {
-			subscriptionsDb = new SubscriptionsDb(PlayTubeApp.getContext());
+			subscriptionsDb = new SubscriptionsDb(TubeApp.getContext());
 		}
 
 		return subscriptionsDb;
@@ -91,7 +91,7 @@ public class SubscriptionsDb extends SQLiteOpenHelperEx {
 	 *
 	 * @return True if the operation was successful; false otherwise.
 	 */
-	public boolean subscribe(YouTubeChannel channel) {
+	public boolean subscribe(YTubeChannel channel) {
 		saveChannelVideos(channel);
 
 		return subscribe(channel.getId());
@@ -121,7 +121,7 @@ public class SubscriptionsDb extends SQLiteOpenHelperEx {
 	 *
 	 * @return True if the operation was successful; false otherwise.
 	 */
-	public boolean unsubscribe(YouTubeChannel channel) {
+	public boolean unsubscribe(YTubeChannel channel) {
 		getWritableDatabase().delete(SubscriptionsVideosTable.TABLE_NAME,
 						SubscriptionsVideosTable.COL_CHANNEL_ID + " = ?",
 						new String[]{channel.getId()});
@@ -142,7 +142,7 @@ public class SubscriptionsDb extends SQLiteOpenHelperEx {
 	 *
 	 * @throws IOException
 	 */
-	public List<YouTubeChannel> getSubscribedChannels() throws IOException {
+	public List<YTubeChannel> getSubscribedChannels() throws IOException {
 		return getSubscribedChannels(true);
 	}
 
@@ -156,8 +156,8 @@ public class SubscriptionsDb extends SQLiteOpenHelperEx {
 	 * @return A list of channels that the user subscribed to.
 	 * @throws IOException
 	 */
-	public List<YouTubeChannel> getSubscribedChannels(boolean shouldCheckForNewVideos) throws IOException {
-		List<YouTubeChannel> subsChannels = new ArrayList<>();
+	public List<YTubeChannel> getSubscribedChannels(boolean shouldCheckForNewVideos) throws IOException {
+		List<YTubeChannel> subsChannels = new ArrayList<>();
 		Cursor cursor = getReadableDatabase().query(SubscriptionsTable.TABLE_NAME,
 													new String[]{SubscriptionsTable.COL_CHANNEL_ID},
 													null, null,
@@ -250,7 +250,7 @@ public class SubscriptionsDb extends SQLiteOpenHelperEx {
 	 * @return	last visit time, if the update was successful;  -1 otherwise.
 	 * @throws IOException
 	 */
-	public long getLastVisitTime(YouTubeChannel channel) {
+	public long getLastVisitTime(YTubeChannel channel) {
 		Cursor	cursor = getReadableDatabase().query(
 							SubscriptionsTable.TABLE_NAME,
 							new String[]{SubscriptionsTable.COL_LAST_VISIT_TIME},
@@ -268,7 +268,7 @@ public class SubscriptionsDb extends SQLiteOpenHelperEx {
 	}
 
 
-	private boolean hasVideo(YouTubeVideo video) {
+	private boolean hasVideo(YTubeVideo video) {
 		String query = String.format("SELECT COUNT(*) FROM %s WHERE %s = ?", SubscriptionsVideosTable.TABLE_NAME, SubscriptionsVideosTable.COL_YOUTUBE_VIDEO_ID);
 		Cursor cursor = null;
 		try {
@@ -294,7 +294,7 @@ public class SubscriptionsDb extends SQLiteOpenHelperEx {
 	 * @return True if the user hasn't visited the channel and new videos have been uploaded in the
 	 * meantime; false otherwise.
 	 */
-	public boolean channelHasNewVideos(YouTubeChannel channel) {
+	public boolean channelHasNewVideos(YTubeChannel channel) {
 		DateTimeFormatter fmt = ISODateTimeFormat.dateTime();
 		String query = String.format("SELECT COUNT(*) FROM %s WHERE %s = ? AND %s > ?", SubscriptionsVideosTable.TABLE_NAME, SubscriptionsVideosTable.COL_CHANNEL_ID, SubscriptionsVideosTable.COL_YOUTUBE_VIDEO_DATE);
 		Cursor cursor = SubscriptionsDb.getSubscriptionsDb().getReadableDatabase().rawQuery(
@@ -310,16 +310,16 @@ public class SubscriptionsDb extends SQLiteOpenHelperEx {
 	}
 
 	/**
-	 * Loop through each video saved in the passed {@link YouTubeChannel} and save it into the database, if it's not already been saved
+	 * Loop through each video saved in the passed {@link YTubeChannel} and save it into the database, if it's not already been saved
 	 * @param channel
 	 */
-	public void saveChannelVideos(YouTubeChannel channel) {
+	public void saveChannelVideos(YTubeChannel channel) {
 		Gson gson = new Gson();
 		DateTimeFormatter fmt = ISODateTimeFormat.dateTime();
-		Iterator<YouTubeVideo> iterator = channel.getYouTubeVideos().iterator();
+		Iterator<YTubeVideo> iterator = channel.getYouTubeVideos().iterator();
 
 		while (iterator.hasNext()) {
-			YouTubeVideo video = iterator.next();
+			YTubeVideo video = iterator.next();
 			if(!hasVideo(video)) {
 				ContentValues values = new ContentValues();
 				values.put(SubscriptionsVideosTable.COL_CHANNEL_ID, channel.getId());
@@ -345,20 +345,20 @@ public class SubscriptionsDb extends SQLiteOpenHelperEx {
 	 * Query the database to retrieve all videos for subscribed channels.
 	 * @return
 	 */
-	public List<YouTubeVideo> getSubscriptionVideos() {
+	public List<YTubeVideo> getSubscriptionVideos() {
 		Cursor	cursor = getReadableDatabase().query(
 							SubscriptionsVideosTable.TABLE_NAME,
 							new String[]{SubscriptionsVideosTable.COL_YOUTUBE_VIDEO},
 							null, null, null, null,
 							SubscriptionsVideosTable.COL_YOUTUBE_VIDEO_DATE + " DESC");
-		List<YouTubeVideo> videos = new ArrayList<>();
+		List<YTubeVideo> videos = new ArrayList<>();
 
 		if (cursor.moveToNext()) {
 			do {
 				byte[] blob = cursor.getBlob(cursor.getColumnIndex(SubscriptionsVideosTable.COL_YOUTUBE_VIDEO));
 
 				// convert JSON into YouTubeVideo
-				YouTubeVideo video = new Gson().fromJson(new String(blob), new TypeToken<YouTubeVideo>(){}.getType());
+				YTubeVideo video = new Gson().fromJson(new String(blob), new TypeToken<YTubeVideo>(){}.getType());
 				// regenerate the video's PublishDatePretty (e.g. 5 hours ago)
 				video.forceRefreshPublishDatePretty();
 				// add the video to the list

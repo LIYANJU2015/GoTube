@@ -19,8 +19,8 @@ package com.tubeplayer.player.gui.businessobjects;
 
 import android.content.Context;
 
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
-import com.tubeplayer.player.gui.player.TubePlayerActivity;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
+import com.tubeplayer.player.gui.player.YouTubePlayerActivity;
 
 /**
  * Launches YouTube player.
@@ -29,12 +29,12 @@ public class YouTubePlayer {
 
 	private static final String TAG = YouTubePlayer.class.getSimpleName();
 
-	public static void launch(Context context, YouTubeVideo youTubeVideo) {
+	public static void launch(Context context, YTubeVideo youTubeVideo) {
 //		Intent i = new Intent(context, YouTubePlayerActivity.class);
 //		i.putExtra(YouTubePlayerFragment.YOUTUBE_VIDEO_OBJ, youTubeVideo);
 //		context.startActivity(i);
 //		activity.overridePendingTransition(R.anim.slide_bottom_in, 0);
-		TubePlayerActivity.launch(context, youTubeVideo);
+		YouTubePlayerActivity.launch(context, youTubeVideo);
 	}
 
 

@@ -27,7 +27,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.tube.playtube.R;
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 
 import static android.content.Intent.FLAG_GRANT_PREFIX_URI_PERMISSION;
 import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
@@ -38,9 +38,10 @@ import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
 
 public class Utils {
 
-    public static final String NATIVE_AD_ID = "1905416809510951_1905418192844146";
-    public static final String CHAPING_COMMON_AD = "1905416809510951_1905418706177428";
-    public static final String CHAPING_HIGH_AD = "1905416809510951_1905419082844057";
+    public static final String NATIVE_AD_ID = "614083172292849_614083475626152";
+    public static final String CHAPING_COMMON_AD = "614083172292849_614084035626096";
+    public static final String CHAPING_HIGH_AD = "614083172292849_614084402292726";
+    public static final String NATIVE_AD_HIGHT_ID = "614083172292849_614083782292788";
 
     public static final ExecutorService sExecutorService2 = Executors.newSingleThreadExecutor();
     public static final ExecutorService sExecutorService = Executors.newSingleThreadExecutor();
@@ -52,7 +53,7 @@ public class Utils {
     }
 
     public static int dp2px(float dpValue) {
-        float scale = PlayTubeApp.getContext().getResources().getDisplayMetrics().density;
+        float scale = TubeApp.getContext().getResources().getDisplayMetrics().density;
         return (int)(dpValue * scale + 0.5F);
     }
 
@@ -87,7 +88,7 @@ public class Utils {
                 // I'm counting
                 // STATE_DOZE, STATE_OFF, STATE_DOZE_SUSPENDED
                 // all as "OFF"
-                DisplayManager dm = (DisplayManager) PlayTubeApp.getContext().getSystemService(Context.DISPLAY_SERVICE);
+                DisplayManager dm = (DisplayManager) TubeApp.getContext().getSystemService(Context.DISPLAY_SERVICE);
                 Display[] displays = dm.getDisplays();
                 for (Display display : displays) {
                     if (display.getState() == Display.STATE_ON
@@ -99,7 +100,7 @@ public class Utils {
             }
 
             // If you use less than API20:
-            PowerManager powerManager = (PowerManager) PlayTubeApp.getContext().getSystemService(Context.POWER_SERVICE);
+            PowerManager powerManager = (PowerManager) TubeApp.getContext().getSystemService(Context.POWER_SERVICE);
             if (powerManager.isScreenOn()) {
                 return true;
             }
@@ -114,7 +115,7 @@ public class Utils {
         sHandler.post(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(PlayTubeApp.getContext(), resId, Toast.LENGTH_LONG).show();
+                Toast.makeText(TubeApp.getContext(), resId, Toast.LENGTH_LONG).show();
             }
         });
     }

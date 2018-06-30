@@ -33,7 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tube.playtube.BuildConfig;
 import com.tube.playtube.R;
 
@@ -70,13 +70,13 @@ public class AboutPreferenceFragment extends PreferenceFragment {
 
 		// if the user clicks on the website link, then open it using an external browser
 		Preference websitePref = findPreference(getString(R.string.pref_key_website));
-		websitePref.setSummary(BuildConfig.GoTube_WEBSITE);
+//		websitePref.setSummary(BuildConfig.GoTube_WEBSITE);
 		websitePref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 			@Override
 			public boolean onPreferenceClick(Preference preference) {
 				// view the app's website in a web browser
-				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.GoTube_WEBSITE));
-				startActivity(browserIntent);
+//				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.GoTube_WEBSITE));
+//				startActivity(browserIntent);
 				return true;
 			}
 		});
@@ -127,7 +127,7 @@ public class AboutPreferenceFragment extends PreferenceFragment {
 		String timeStamp = "???";
 
 		try {
-			ApplicationInfo appInfo = PlayTubeApp.getContext().getPackageManager().getApplicationInfo(PlayTubeApp.getContext().getPackageName(), 0);
+			ApplicationInfo appInfo = TubeApp.getContext().getPackageManager().getApplicationInfo(TubeApp.getContext().getPackageName(), 0);
 			String appFile = appInfo.sourceDir;
 			long time = new File(appFile).lastModified();
 
@@ -152,7 +152,7 @@ public class AboutPreferenceFragment extends PreferenceFragment {
 		WebView webView = new WebView(getActivity());
 		webView.setWebViewClient(new WebViewClient());
 		webView.getSettings().setJavaScriptEnabled(false);
-		webView.loadUrl(BuildConfig.GoTube_WEBSITE_CREDITS);
+//		webView.loadUrl(BuildConfig.GoTube_WEBSITE_CREDITS);
 
 		alert.setView(webView);
 		alert.setPositiveButton(R.string.ok, null);

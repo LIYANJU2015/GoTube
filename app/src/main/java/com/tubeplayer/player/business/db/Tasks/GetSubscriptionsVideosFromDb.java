@@ -18,7 +18,7 @@
 package com.tubeplayer.player.business.db.Tasks;
 
 import com.tubeplayer.player.business.youtube.GetYouTubeVideos;
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 import com.tubeplayer.player.business.db.SubscriptionsDb;
 
 import java.io.IOException;
@@ -37,7 +37,7 @@ public class GetSubscriptionsVideosFromDb extends GetYouTubeVideos {
 
 
 	@Override
-	public List<YouTubeVideo> getNextVideos() {
+	public List<YTubeVideo> getNextVideos() {
 		if (!noMoreVideoPages()) {
 			noMoreVideoPages = true;
 			return SubscriptionsDb.getSubscriptionsDb().getSubscriptionVideos();

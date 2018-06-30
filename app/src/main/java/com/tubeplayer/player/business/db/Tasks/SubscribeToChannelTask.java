@@ -20,9 +20,9 @@ package com.tubeplayer.player.business.db.Tasks;
 import android.widget.Toast;
 
 import com.tube.playtube.R;
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.AsyncTaskParallel;
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannel;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
 import com.tubeplayer.player.business.db.SubscriptionsDb;
 import com.tubeplayer.player.gui.businessobjects.adapters.SubsAdapter;
 import com.tubeplayer.player.gui.businessobjects.SubscribeButton;
@@ -37,7 +37,7 @@ public class SubscribeToChannelTask extends AsyncTaskParallel<Void, Void, Boolea
 	 *  unsubscribe. */
 	private boolean			subscribeToChannel;
 	private SubscribeButton subscribeButton;
-	private YouTubeChannel channel;
+	private YTubeChannel channel;
 
 	private static String TAG = SubscribeToChannelTask.class.getSimpleName();
 
@@ -48,7 +48,7 @@ public class SubscribeToChannelTask extends AsyncTaskParallel<Void, Void, Boolea
 	 * @param subscribeButton	The subscribe button that the user has just clicked.
 	 * @param channel			The channel the user wants to subscribe / unsubscribe.
 	 */
-	public SubscribeToChannelTask(SubscribeButton subscribeButton, YouTubeChannel channel) {
+	public SubscribeToChannelTask(SubscribeButton subscribeButton, YTubeChannel channel) {
 		this.subscribeToChannel = !subscribeButton.isUserSubscribed();
 		this.subscribeButton = subscribeButton;
 		this.channel = channel;
@@ -96,7 +96,7 @@ public class SubscribeToChannelTask extends AsyncTaskParallel<Void, Void, Boolea
 				Toast.makeText(subscribeButton.getContext(), R.string.unsubscribed, Toast.LENGTH_LONG).show();
 			}
 		} else {
-			String err = String.format(PlayTubeApp.getStr(R.string.error_unable_to_subscribe), channel.getId());
+			String err = String.format(TubeApp.getStr(R.string.error_unable_to_subscribe), channel.getId());
 			Toast.makeText(subscribeButton.getContext(), err, Toast.LENGTH_LONG).show();
 		}
 	}

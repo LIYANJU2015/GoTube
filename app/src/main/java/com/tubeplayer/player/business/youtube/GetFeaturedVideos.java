@@ -26,9 +26,9 @@ import com.google.api.services.youtube.model.VideoListResponse;
 import java.io.IOException;
 import java.util.List;
 
-import com.tubeplayer.player.business.youtube.bean.YouTubeAPI;
-import com.tubeplayer.player.business.youtube.bean.YouTubeAPIKey;
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
+import com.tubeplayer.player.business.youtube.bean.YTubeAPI;
+import com.tubeplayer.player.business.youtube.bean.YTubeAPIKey;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 
 /**
  * Get today's featured YouTube videos.
@@ -42,11 +42,11 @@ public class GetFeaturedVideos extends GetYouTubeVideos {
 
 	@Override
 	public void init() throws IOException {
-		videosList = YouTubeAPI.create().videos().list("snippet, statistics, contentDetails");
+		videosList = YTubeAPI.create().videos().list("snippet, statistics, contentDetails");
 		videosList.setFields("items(id, snippet/defaultAudioLanguage, snippet/defaultLanguage, snippet/publishedAt, snippet/title, snippet/channelId, snippet/channelTitle," +
 				"snippet/thumbnails, contentDetails/duration, statistics)," +
 				"nextPageToken");
-		videosList.setKey(YouTubeAPIKey.get().getYouTubeAPIKey());
+		videosList.setKey(YTubeAPIKey.get().getYouTubeAPIKey());
 		videosList.setChart("mostPopular");
 		videosList.setRegionCode(getPreferredRegion());
 		videosList.setMaxResults(getMaxResults());
@@ -54,7 +54,7 @@ public class GetFeaturedVideos extends GetYouTubeVideos {
 	}
 
 	@Override
-	public List<YouTubeVideo> getNextVideos() {
+	public List<YTubeVideo> getNextVideos() {
 		List<Video> searchResultList = null;
 
 		if (!noMoreVideoPages()) {

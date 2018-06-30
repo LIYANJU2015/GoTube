@@ -21,7 +21,7 @@ import android.view.Menu;
 
 import com.tubeplayer.player.business.AsyncTaskParallel;
 import com.tube.playtube.R;
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 import com.tubeplayer.player.business.db.BookmarksDb;
 
 /**
@@ -31,9 +31,9 @@ import com.tubeplayer.player.business.db.BookmarksDb;
  */
 public class IsVideoBookmarkedTask extends AsyncTaskParallel<Void, Void, Boolean> {
 	private Menu menu;
-	private YouTubeVideo youTubeVideo;
+	private YTubeVideo youTubeVideo;
 
-	public IsVideoBookmarkedTask(YouTubeVideo youTubeVideo, Menu menu) {
+	public IsVideoBookmarkedTask(YTubeVideo youTubeVideo, Menu menu) {
 		this.youTubeVideo = youTubeVideo;
 		this.menu = menu;
 	}

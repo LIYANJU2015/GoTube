@@ -26,9 +26,9 @@ import com.google.api.services.youtube.model.SearchResult;
 import java.io.IOException;
 import java.util.List;
 
-import com.tubeplayer.player.business.youtube.bean.YouTubeAPI;
-import com.tubeplayer.player.business.youtube.bean.YouTubeAPIKey;
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
+import com.tubeplayer.player.business.youtube.bean.YTubeAPI;
+import com.tubeplayer.player.business.youtube.bean.YTubeAPIKey;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 
 /**
  * Get videos corresponding to the user's query (refer to {@link #setQuery(String)}).
@@ -43,9 +43,9 @@ public class GetYouTubeVideoBySearch extends GetYouTubeVideos {
 
 	@Override
 	public void init() throws IOException {
-		videosList = YouTubeAPI.create().search().list("id");
+		videosList = YTubeAPI.create().search().list("id");
 		videosList.setFields("items(id/videoId), nextPageToken");
-		videosList.setKey(YouTubeAPIKey.get().getYouTubeAPIKey());
+		videosList.setKey(YTubeAPIKey.get().getYouTubeAPIKey());
 		videosList.setType("video");
 		//videosList.setRegionCode(getPreferredRegion());	// there is a bug in V3 API, so this does not work:  https://code.google.com/p/gdata-issues/issues/detail?id=6383 and https://code.google.com/p/gdata-issues/issues/detail?id=6913
 		videosList.setSafeSearch("none");
@@ -67,8 +67,8 @@ public class GetYouTubeVideoBySearch extends GetYouTubeVideos {
 
 
 	@Override
-	public List<YouTubeVideo> getNextVideos() {
-		List<YouTubeVideo> videosList = null;
+	public List<YTubeVideo> getNextVideos() {
+		List<YTubeVideo> videosList = null;
 
 		if (!noMoreVideoPages()) {
 			try {
@@ -107,10 +107,10 @@ public class GetYouTubeVideoBySearch extends GetYouTubeVideos {
 	 * given video list.</p>
 	 *
 	 * @param searchResultList Search results
-	 * @return List of {@link YouTubeVideo}s.
+	 * @return List of {@link YTubeVideo}s.
 	 * @throws IOException
 	 */
-	private List<YouTubeVideo> getVideosList(List<SearchResult> searchResultList) throws IOException {
+	private List<YTubeVideo> getVideosList(List<SearchResult> searchResultList) throws IOException {
 		StringBuilder videoIds = new StringBuilder();
 
 		// append the video IDs into a strings (CSV)

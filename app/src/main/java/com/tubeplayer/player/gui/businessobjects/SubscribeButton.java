@@ -27,7 +27,7 @@ import android.widget.RemoteViews;
 import com.tubeplayer.player.business.db.Tasks.SubscribeToChannelTask;
 import com.tube.playtube.R;
 import com.tubeplayer.player.business.youtube.Tasks.GetChannelVideosTask;
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannel;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
 
 /**
  * The (channel) subscribe button.
@@ -38,7 +38,7 @@ public class SubscribeButton extends AppCompatButton implements View.OnClickList
 	/** Is user subscribed to a channel? */
 	private boolean isUserSubscribed = false;
 
-	private YouTubeChannel channel;
+	private YTubeChannel channel;
 	private boolean fetchChannelVideosOnSubscribe = true;
 	private OnClickListener externalClickListener = null;
 
@@ -70,7 +70,7 @@ public class SubscribeButton extends AppCompatButton implements View.OnClickList
 		super.setOnClickListener(this);
 	}
 
-	public void setChannel(YouTubeChannel channel) {
+	public void setChannel(YTubeChannel channel) {
 		this.channel = channel;
 	}
 

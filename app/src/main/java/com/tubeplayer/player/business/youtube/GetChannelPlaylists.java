@@ -22,16 +22,16 @@ import android.util.Log;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.Playlist;
 import com.google.api.services.youtube.model.PlaylistListResponse;
-import com.tubeplayer.player.business.youtube.bean.YouTubeAPIKey;
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannel;
+import com.tubeplayer.player.business.youtube.bean.YTubeAPIKey;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
 import com.tubeplayer.player.business.youtube.Tasks.GetChannelPlaylistsTask;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tubeplayer.player.business.youtube.bean.YouTubeAPI;
-import com.tubeplayer.player.business.youtube.bean.YouTubePlaylist;
+import com.tubeplayer.player.business.youtube.bean.YTubeAPI;
+import com.tubeplayer.player.business.youtube.bean.YTubePlaylist;
 
 
 /**
@@ -46,26 +46,26 @@ public class GetChannelPlaylists {
 	protected String nextPageToken = null;
 	protected boolean noMorePlaylistPages = false;
 
-	private YouTubeChannel channel;
+	private YTubeChannel channel;
 
 	private static final String	TAG = GetChannelPlaylists.class.getSimpleName();
 
 	public void init() throws IOException {
-		playlistList = YouTubeAPI.create().playlists().list("id, snippet, contentDetails");
-		playlistList.setKey(YouTubeAPIKey.get().getYouTubeAPIKey());
+		playlistList = YTubeAPI.create().playlists().list("id, snippet, contentDetails");
+		playlistList.setKey(YTubeAPIKey.get().getYouTubeAPIKey());
 		playlistList.setFields("items(id, snippet/title, snippet/description, snippet/thumbnails, snippet/publishedAt, contentDetails/itemCount)," +
 						"nextPageToken");
 		playlistList.setMaxResults(MAX_RESULTS);
 		nextPageToken = null;
 	}
 
-	public void setYouTubeChannel(YouTubeChannel channel) {
+	public void setYouTubeChannel(YTubeChannel channel) {
 		this.channel = channel;
 		if (playlistList != null)
 			playlistList.setChannelId(channel.getId());
 	}
 
-	public List<YouTubePlaylist> getNextPlaylists() {
+	public List<YTubePlaylist> getNextPlaylists() {
 		List<Playlist> playlistList = null;
 
 		if (!noMorePlaylistPages()) {
@@ -97,14 +97,14 @@ public class GetChannelPlaylists {
 		return noMorePlaylistPages;
 	}
 
-	private List<YouTubePlaylist> toYouTubePlaylistList(List<Playlist> playlistList) {
-		List<YouTubePlaylist> youTubePlaylists = new ArrayList<>();
+	private List<YTubePlaylist> toYouTubePlaylistList(List<Playlist> playlistList) {
+		List<YTubePlaylist> youTubePlaylists = new ArrayList<>();
 
 		if(playlistList != null) {
-			YouTubePlaylist youTubePlaylist;
+			YTubePlaylist youTubePlaylist;
 
 			for (Playlist playlist : playlistList) {
-				youTubePlaylist = new YouTubePlaylist(playlist, channel);
+				youTubePlaylist = new YTubePlaylist(playlist, channel);
 				youTubePlaylists.add(youTubePlaylist);
 			}
 		}

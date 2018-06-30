@@ -17,7 +17,7 @@
 
 package com.tubeplayer.player.gui.fragments;
 
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tube.playtube.R;
 import com.tubeplayer.player.business.VideoCategory;
 
@@ -33,7 +33,7 @@ public class MostPopularVideosFragment extends VideosGridFragment {
 
 	@Override
 	public String getFragmentName() {
-		return PlayTubeApp.getStr(R.string.most_popular);
+		return TubeApp.getStr(R.string.most_popular);
 	}
 
 }

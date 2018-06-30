@@ -6,9 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannel;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
 import com.tube.playtube.R;
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.VideoCategory;
 import com.tubeplayer.player.gui.businessobjects.adapters.VideoGridAdapter;
 
@@ -17,14 +17,14 @@ import com.tubeplayer.player.gui.businessobjects.adapters.VideoGridAdapter;
  */
 public class ChannelVideosFragment extends VideosGridFragment {
 	/** YouTube Channel */
-	private YouTubeChannel channel;
+	private YTubeChannel channel;
 
 
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		// get the channel
-		channel = (YouTubeChannel)getArguments().getSerializable(ChannelBrowserFragment.CHANNEL_OBJ);
+		channel = (YTubeChannel)getArguments().getSerializable(ChannelBrowserFragment.CHANNEL_OBJ);
 
 		// create and return the view
 		View view =  super.onCreateView(inflater, container, savedInstanceState);
@@ -36,7 +36,7 @@ public class ChannelVideosFragment extends VideosGridFragment {
 	}
 
 
-	public void setYouTubeChannel(YouTubeChannel youTubeChannel) {
+	public void setYouTubeChannel(YTubeChannel youTubeChannel) {
 		channel = youTubeChannel;
 		videoGridAdapter.setYouTubeChannel(youTubeChannel);
 	}
@@ -61,7 +61,7 @@ public class ChannelVideosFragment extends VideosGridFragment {
 
 	@Override
 	public String getFragmentName() {
-		return PlayTubeApp.getStr(R.string.videos);
+		return TubeApp.getStr(R.string.videos);
 	}
 
 

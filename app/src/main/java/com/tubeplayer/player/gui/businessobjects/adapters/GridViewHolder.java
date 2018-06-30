@@ -33,9 +33,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.Utils;
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 import com.tubeplayer.player.business.db.Tasks.IsVideoBookmarkedTask;
 import com.tubeplayer.player.gui.activities.ThumbnailViewerActivity;
 import com.tubeplayer.player.gui.businessobjects.MainActivityListener;
@@ -47,7 +47,7 @@ import com.tube.playtube.R;
  */
 class GridViewHolder extends RecyclerView.ViewHolder {
 	/** YouTube video */
-	private YouTubeVideo youTubeVideo = null;
+	private YTubeVideo youTubeVideo = null;
 	private Context                 context = null;
 	private MainActivityListener mainActivityListener;
 	private boolean                 showChannelInfo;
@@ -117,9 +117,9 @@ class GridViewHolder extends RecyclerView.ViewHolder {
 	 * Updates the contents of this ViewHold such that the data of these views is equal to the
 	 * given youTubeVideo.
 	 *
-	 * @param youTubeVideo		{@link YouTubeVideo} instance.
+	 * @param youTubeVideo		{@link YTubeVideo} instance.
 	 */
-	public void updateInfo(YouTubeVideo youTubeVideo, Context context, MainActivityListener listener) {
+	public void updateInfo(YTubeVideo youTubeVideo, Context context, MainActivityListener listener) {
 		this.youTubeVideo = youTubeVideo;
 		this.context = context;
 		this.mainActivityListener = listener;
@@ -130,9 +130,9 @@ class GridViewHolder extends RecyclerView.ViewHolder {
 	/**
 	 * This method will update the {@link View}s of this object reflecting the supplied video.
 	 *
-	 * @param video		{@link YouTubeVideo} instance.
+	 * @param video		{@link YTubeVideo} instance.
 	 */
-	private void updateViewsData(YouTubeVideo video) {
+	private void updateViewsData(YTubeVideo video) {
 		titleTextView.setText(video.getTitle());
 		channelTextView.setText(showChannelInfo ? video.getChannelName() : "");
 		publishDateTextView.setText(video.getPublishDatePretty());
@@ -172,14 +172,14 @@ class GridViewHolder extends RecyclerView.ViewHolder {
 			popupMenu.getMenu().findItem(R.id.download_video).setVisible(false);
 		} else {
 			popupMenu.getMenu().findItem(R.id.delete_download).setVisible(false);
-			boolean allowDownloadsOnMobile = PlayTubeApp.getPreferenceManager().getBoolean(PlayTubeApp.getStr(R.string.pref_key_allow_mobile_downloads), false);
-			if(PlayTubeApp.isConnectedToWiFi() || (PlayTubeApp.isConnectedToMobile() && allowDownloadsOnMobile))
+			boolean allowDownloadsOnMobile = TubeApp.getPreferenceManager().getBoolean(TubeApp.getStr(R.string.pref_key_allow_mobile_downloads), false);
+			if(TubeApp.isConnectedToWiFi() || (TubeApp.isConnectedToMobile() && allowDownloadsOnMobile))
 				popupMenu.getMenu().findItem(R.id.download_video).setVisible(true);
 			else
 				popupMenu.getMenu().findItem(R.id.download_video).setVisible(false);
 		}
 
-		if (!PlayTubeApp.isSpecial()) {
+		if (!TubeApp.isSpecial()) {
 			popupMenu.getMenu().findItem(R.id.delete_download).setVisible(false);
 			popupMenu.getMenu().findItem(R.id.download_video).setVisible(false);
 		}

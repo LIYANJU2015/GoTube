@@ -43,7 +43,7 @@
 
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
--keep public class com.playtube.player.business.youtube.bean.**{*;}
+-keep public class com.tubeplayer.player.business.youtube.bean.**{*;}
 -keep class com.google.api.client.googleapis.services.**{*;}
 -keep class com.google.api.client.http.**{*;}
 -keep class com.google.api.services.youtube.**{*;}

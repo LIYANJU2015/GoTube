@@ -17,7 +17,7 @@
 
 package com.tubeplayer.player.business.youtube.bean;
 
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.gui.fragments.preferences.OthersPreferenceFragment;
 import com.tube.playtube.BuildConfig;
 import com.tube.playtube.R;
@@ -27,7 +27,7 @@ import java.util.Random;
 /**
  * Represents a YouTube API key.
  */
-public class YouTubeAPIKey {
+public class YTubeAPIKey {
 
 	/** User's YouTube API key which is inputted via the
 	 * {@link OthersPreferenceFragment}.  Will be null if the user did not
@@ -35,24 +35,24 @@ public class YouTubeAPIKey {
 	private String userAPIKey;
 	private Random random = new Random();
 
-	private static YouTubeAPIKey youTubeAPIKey = null;
-	private static final String TAG = YouTubeAPIKey.class.getSimpleName();
+	private static YTubeAPIKey youTubeAPIKey = null;
+	private static final String TAG = YTubeAPIKey.class.getSimpleName();
 
 
 	/**
 	 * Constructor.  Will retrieve user's YouTube API key if set.
 	 */
-	private YouTubeAPIKey() {
+	private YTubeAPIKey() {
 		userAPIKey = getUserApiKey();
 	}
 
 
 	/**
-	 * @return An instance of {@link YouTubeAPIKey}.
+	 * @return An instance of {@link YTubeAPIKey}.
 	 */
-	public static YouTubeAPIKey get() {
+	public static YTubeAPIKey get() {
 		if (youTubeAPIKey == null) {
-			youTubeAPIKey = new YouTubeAPIKey();
+			youTubeAPIKey = new YTubeAPIKey();
 		}
 
 		return youTubeAPIKey;
@@ -93,7 +93,7 @@ public class YouTubeAPIKey {
 	 * @return User's YouTube API key (if set).  If the user did not set a key, then it will return null.
 	 */
 	private String getUserApiKey() {
-		String userApiKey = PlayTubeApp.getPreferenceManager().getString(PlayTubeApp.getStr(R.string.pref_youtube_api_key), null);
+		String userApiKey = TubeApp.getPreferenceManager().getString(TubeApp.getStr(R.string.pref_youtube_api_key), null);
 
 		if (userApiKey != null) {
 			userApiKey = userApiKey.trim();

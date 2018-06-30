@@ -22,7 +22,7 @@ import com.tubeplayer.player.business.db.DownloadedVideosDb;
 import java.io.IOException;
 import java.util.List;
 
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 
 
 /**
@@ -36,7 +36,7 @@ public class GetDownloadedVideos extends GetYouTubeVideos {
 	}
 
 	@Override
-	public List<YouTubeVideo> getNextVideos() {
+	public List<YTubeVideo> getNextVideos() {
 		if (!noMoreVideoPages()) {
 			noMoreVideoPages = true;
 			return DownloadedVideosDb.getVideoDownloadsDb().getDownloadedVideos();

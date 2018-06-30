@@ -14,14 +14,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.tube.playtube.R;
 import com.tubeplayer.player.business.VideoCategory;
-import com.tubeplayer.player.business.youtube.bean.YouTubePlaylist;
+import com.tubeplayer.player.business.youtube.bean.YTubePlaylist;
 
 /**
  * A Fragment that displays the videos of a playlist in a {@link VideosGridFragment}
  */
 public class PlaylistVideosFragment extends VideosGridFragment {
 
-	private YouTubePlaylist youTubePlaylist;
+	private YTubePlaylist youTubePlaylist;
 
 	@BindView(R.id.playlist_banner_image_view)
 	ImageView   playlistBannerImageView;
@@ -36,7 +36,7 @@ public class PlaylistVideosFragment extends VideosGridFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// sets the play list
-		youTubePlaylist = (YouTubePlaylist)getArguments().getSerializable(PLAYLIST_OBJ);
+		youTubePlaylist = (YTubePlaylist)getArguments().getSerializable(PLAYLIST_OBJ);
 
 		// sets the layout resource which is used by onCreateView()
 		setLayoutResource(R.layout.fragment_playlist_videos);

@@ -29,11 +29,11 @@ import com.ms.square.android.expandabletextview.ExpandableTextView;
 
 import java.util.LinkedHashMap;
 
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.FBAdUtils;
 import com.tubeplayer.player.business.FacebookReport;
 import com.tubeplayer.player.business.Utils;
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannel;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
 import com.tubeplayer.player.business.youtube.Tasks.GetYouTubeChannelInfoTask;
 import com.tubeplayer.player.business.youtube.VideoStream.StreamMetaDataList;
 import com.tubeplayer.player.business.interfaces.GetStreamListener;
@@ -41,8 +41,8 @@ import com.tubeplayer.player.gui.businessobjects.SubscribeButton;
 import com.tubeplayer.player.gui.fragments.ChannelBrowserFragment;
 import com.tubeplayer.player.gui.player.widget.DefinitionIjkVideoView;
 import com.tube.playtube.R;
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannelInterface;
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannelInterface;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 import com.tubeplayer.player.business.youtube.Tasks.GetVideoDescriptionTask;
 import com.tubeplayer.player.business.youtube.VideoStream.StreamMetaData;
 import com.tubeplayer.player.business.db.Tasks.CheckIfUserSubbedToChannelTask;
@@ -56,7 +56,7 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
  * Created by liyanju on 2018/6/8.
  */
 
-public class TubePlayerActivity extends AppCompatActivity implements VideoListener{
+public class YouTubePlayerActivity extends AppCompatActivity implements VideoListener{
 
     public static final String TAG = "TubePlayerActivity";
 
@@ -67,13 +67,13 @@ public class TubePlayerActivity extends AppCompatActivity implements VideoListen
     private View commentsProgressBar;
     private View noVideoCommentsView;
 
-    private YouTubeVideo youTubeVideo = null;
-    private YouTubeChannel youTubeChannel = null;
+    private YTubeVideo youTubeVideo = null;
+    private YTubeChannel youTubeChannel = null;
 
     private DefinitionController controller;
 
-    public static void launch(Context context, YouTubeVideo youTubeVideo) {
-        Intent i = new Intent(context, TubePlayerActivity.class);
+    public static void launch(Context context, YTubeVideo youTubeVideo) {
+        Intent i = new Intent(context, YouTubePlayerActivity.class);
         i.putExtra(YOUTUBE_VIDEO_OBJ, youTubeVideo);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(i);
@@ -118,7 +118,7 @@ public class TubePlayerActivity extends AppCompatActivity implements VideoListen
         if (youTubeVideo == null) {
             Bundle bundle = getIntent().getExtras();
             if (bundle != null && bundle.getSerializable(YOUTUBE_VIDEO_OBJ) != null) {
-                youTubeVideo = (YouTubeVideo) bundle.getSerializable(YOUTUBE_VIDEO_OBJ);
+                youTubeVideo = (YTubeVideo) bundle.getSerializable(YOUTUBE_VIDEO_OBJ);
             }
         }
 
@@ -143,10 +143,10 @@ public class TubePlayerActivity extends AppCompatActivity implements VideoListen
                         }
 
                         ijkVideoView.setDefinitionVideos(videos);
-                        ijkVideoView.setVideoListener(TubePlayerActivity.this);
+                        ijkVideoView.setVideoListener(YouTubePlayerActivity.this);
                         ijkVideoView.start();
 
-                        if (PlayTubeApp.isSpecial()) {
+                        if (TubeApp.isSpecial()) {
                             downloadVideoIV.setVisibility(View.VISIBLE);
                         }
                     }
@@ -208,7 +208,7 @@ public class TubePlayerActivity extends AppCompatActivity implements VideoListen
             @Override
             public void onClick(View v) {
                 if (youTubeChannel != null) {
-                    Intent i = new Intent(TubePlayerActivity.this, MainActivity.class);
+                    Intent i = new Intent(YouTubePlayerActivity.this, MainActivity.class);
                     i.setAction(MainActivity.ACTION_VIEW_CHANNEL);
                     i.putExtra(ChannelBrowserFragment.CHANNEL_OBJ, youTubeChannel);
                     startActivity(i);
@@ -219,11 +219,11 @@ public class TubePlayerActivity extends AppCompatActivity implements VideoListen
         downloadVideoIV.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if (!Utils.checkAndRequestPermissions(TubePlayerActivity.this)) {
+                if (!Utils.checkAndRequestPermissions(YouTubePlayerActivity.this)) {
                     return;
                 }
                 if (youTubeVideo != null && !TextUtils.isEmpty(ijkVideoView.getCurrentUrl())) {
-                    youTubeVideo.downloadVideo(PlayTubeApp.getContext(), ijkVideoView.getCurrentUrl());
+                    youTubeVideo.downloadVideo(TubeApp.getContext(), ijkVideoView.getCurrentUrl());
                 }
             }
         });
@@ -269,14 +269,14 @@ public class TubePlayerActivity extends AppCompatActivity implements VideoListen
 
     private void getVideoInfoTasks() {
         // get Channel info (e.g. avatar...etc) task
-        getYouTubeChannelInfoTask = new GetYouTubeChannelInfoTask(new YouTubeChannelInterface() {
+        getYouTubeChannelInfoTask = new GetYouTubeChannelInfoTask(new YTubeChannelInterface() {
             @Override
-            public void onGetYouTubeChannel(YouTubeChannel youTubeChannel) {
-                TubePlayerActivity.this.youTubeChannel = youTubeChannel;
+            public void onGetYouTubeChannel(YTubeChannel youTubeChannel) {
+                YouTubePlayerActivity.this.youTubeChannel = youTubeChannel;
 
-                videoDescSubscribeButton.setChannel(TubePlayerActivity.this.youTubeChannel);
+                videoDescSubscribeButton.setChannel(YouTubePlayerActivity.this.youTubeChannel);
                 if (youTubeChannel != null && !isFinishing()) {
-                    Glide.with(TubePlayerActivity.this)
+                    Glide.with(YouTubePlayerActivity.this)
                                 .load(youTubeChannel.getThumbnailNormalUrl())
                                 .apply(RequestOptions.bitmapTransform(new CircleCrop()).placeholder(R.drawable.buddy))
                                 .into(videoDescChannelThumbnailImageView);
@@ -327,7 +327,7 @@ public class TubePlayerActivity extends AppCompatActivity implements VideoListen
             }
             if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
                 try {
-                    if (ijkVideoView != null && ijkVideoView.isPlaying() && !PlayTubeApp.isSpecial()) {
+                    if (ijkVideoView != null && ijkVideoView.isPlaying() && !TubeApp.isSpecial()) {
                         ijkVideoView.pause();
                     }
                 } catch (Throwable e) {

@@ -20,10 +20,10 @@ package com.tubeplayer.player.business.youtube.Tasks;
 import android.content.SharedPreferences;
 
 import com.google.api.client.util.DateTime;
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.AsyncTaskParallel;
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannel;
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 import com.tubeplayer.player.business.db.SubscriptionsDb;
 import com.tubeplayer.player.gui.businessobjects.adapters.SubsAdapter;
 
@@ -41,7 +41,7 @@ public class GetSubscriptionVideosTask extends AsyncTaskParallel<Void, Void, Voi
 	private int numTasksLeft = 0;
 	private int numTasksFinished = 0;
 	boolean forceRefresh = false;
-	private List<YouTubeChannel> overriddenChannels;
+	private List<YTubeChannel> overriddenChannels;
 
 	public GetSubscriptionVideosTask(GetSubscriptionVideosTaskListener listener) {
 		this.listener = listener;
@@ -52,7 +52,7 @@ public class GetSubscriptionVideosTask extends AsyncTaskParallel<Void, Void, Voi
 		return this;
 	}
 
-	public GetSubscriptionVideosTask setChannelsToRefresh(List<YouTubeChannel> channels) {
+	public GetSubscriptionVideosTask setChannelsToRefresh(List<YTubeChannel> channels) {
 		overriddenChannels = channels;
 		return this;
 	}
@@ -63,7 +63,7 @@ public class GetSubscriptionVideosTask extends AsyncTaskParallel<Void, Void, Voi
 	 * last refresh time is set to -1.
 	 */
 	private DateTime getFeedsLastUpdateTime() {
-		long l = PlayTubeApp.getPreferenceManager().getLong(PlayTubeApp.KEY_SUBSCRIPTIONS_LAST_UPDATED, -1);
+		long l = TubeApp.getPreferenceManager().getLong(TubeApp.KEY_SUBSCRIPTIONS_LAST_UPDATED, -1);
 		return (l != -1)  ?  new DateTime(l)  :  null;
 	}
 
@@ -83,15 +83,15 @@ public class GetSubscriptionVideosTask extends AsyncTaskParallel<Void, Void, Voi
 	 *                  to indicate that the app needs to force refresh the feeds...
 	 */
 	public static void updateFeedsLastUpdateTime(DateTime dateTime) {
-		SharedPreferences.Editor editor = PlayTubeApp.getPreferenceManager().edit();
-		editor.putLong(PlayTubeApp.KEY_SUBSCRIPTIONS_LAST_UPDATED, dateTime != null  ?  dateTime.getValue()  :  -1);
+		SharedPreferences.Editor editor = TubeApp.getPreferenceManager().edit();
+		editor.putLong(TubeApp.KEY_SUBSCRIPTIONS_LAST_UPDATED, dateTime != null  ?  dateTime.getValue()  :  -1);
 		editor.commit();
 	}
 
 
 	@Override
 	protected Void doInBackground(Void... voids) {
-		List<YouTubeChannel> channels = overriddenChannels != null ? overriddenChannels : SubsAdapter.get(null).getSubsLists();
+		List<YTubeChannel> channels = overriddenChannels != null ? overriddenChannels : SubsAdapter.get(null).getSubsLists();
 
 		/*
 		 * Get the last time all subscriptions were updated, and only fetch videos that were published after this.
@@ -105,12 +105,12 @@ public class GetSubscriptionVideosTask extends AsyncTaskParallel<Void, Void, Voi
 		// time we updated the feeds.
 		DateTime publishedAfter = forceRefresh ? null : getFeedsLastUpdateTime();
 
-		for(final YouTubeChannel channel : channels) {
+		for(final YTubeChannel channel : channels) {
 			tasks.add(new GetChannelVideosTask(channel)
 				.setPublishedAfter(publishedAfter)
  				.setGetChannelVideosTaskInterface(new GetChannelVideosTaskInterface() {
 					@Override
-					public void onGetVideos(List<YouTubeVideo> videos) {
+					public void onGetVideos(List<YTubeVideo> videos) {
 						numTasksFinished++;
 						boolean videosDeleted = false;
 						if(numTasksFinished < numTasksLeft) {
@@ -120,7 +120,7 @@ public class GetSubscriptionVideosTask extends AsyncTaskParallel<Void, Void, Voi
 								tasks.remove(0);
 							}
 							if(listener != null)
-								listener.onChannelVideosFetched(channel, videos != null ? videos : new ArrayList<YouTubeVideo>(), videosDeleted);
+								listener.onChannelVideosFetched(channel, videos != null ? videos : new ArrayList<YTubeVideo>(), videosDeleted);
 						} else {
 							videosDeleted = SubscriptionsDb.getSubscriptionsDb().trimSubscriptionVideos();
 
@@ -128,7 +128,7 @@ public class GetSubscriptionVideosTask extends AsyncTaskParallel<Void, Void, Voi
 							updateFeedsLastUpdateTime();
 
 							if (listener != null) {
-								listener.onChannelVideosFetched(channel, videos != null ? videos : new ArrayList<YouTubeVideo>(), videosDeleted);
+								listener.onChannelVideosFetched(channel, videos != null ? videos : new ArrayList<YTubeVideo>(), videosDeleted);
 								listener.onAllChannelVideosFetched();
 							}
 						}

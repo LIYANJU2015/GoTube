@@ -8,7 +8,7 @@ import com.rating.RatingActivity;
 
 import butterknife.BindView;
 
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.AsyncTaskParallel;
 import com.tubeplayer.player.business.VideoCategory;
 import com.tubeplayer.player.business.db.DownloadedVideosDb;
@@ -61,8 +61,8 @@ public class DownloadedVideosFragment extends OrderableVideosGridFragment implem
 	 */
 	private void displayDownloadsDisabledWarning() {
 		if (downloadsDisabledWarning != null) {
-			boolean allowDownloadsOnMobile = PlayTubeApp.getPreferenceManager().getBoolean(PlayTubeApp.getStr(R.string.pref_key_allow_mobile_downloads), false);
-			downloadsDisabledWarning.setVisibility(PlayTubeApp.isConnectedToMobile() && !allowDownloadsOnMobile ? View.VISIBLE : View.GONE);
+			boolean allowDownloadsOnMobile = TubeApp.getPreferenceManager().getBoolean(TubeApp.getStr(R.string.pref_key_allow_mobile_downloads), false);
+			downloadsDisabledWarning.setVisibility(TubeApp.isConnectedToMobile() && !allowDownloadsOnMobile ? View.VISIBLE : View.GONE);
 		}
 	}
 
@@ -73,7 +73,7 @@ public class DownloadedVideosFragment extends OrderableVideosGridFragment implem
 
 	@Override
 	public String getFragmentName() {
-		return PlayTubeApp.getStr(R.string.downloads);
+		return TubeApp.getStr(R.string.downloads);
 	}
 
 	@Override
@@ -123,7 +123,7 @@ public class DownloadedVideosFragment extends OrderableVideosGridFragment implem
 		super.onDestroyView();
 		if (videoGridAdapter.getItemCount() > 0 && sIsPlayDownload) {
 			sIsPlayDownload = false;
-			RatingActivity.launch(PlayTubeApp.getContext(), "", getString(R.string.rating_text));
+			RatingActivity.launch(TubeApp.getContext(), "", getString(R.string.rating_text));
 		}
 	}
 }

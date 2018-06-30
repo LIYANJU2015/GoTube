@@ -25,8 +25,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.tube.playtube.R;
-import com.tubeplayer.player.app.PlayTubeApp;
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannel;
+import com.tubeplayer.player.app.TubeApp;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
 import com.tubeplayer.player.gui.businessobjects.fragments.TabFragment;
 
 /**
@@ -40,7 +40,7 @@ public class ChannelAboutFragment extends TabFragment {
 		View view = inflater.inflate(R.layout.fragment_channel_about, container, false);
 
 		// set the about text
-		YouTubeChannel channel = (YouTubeChannel)getArguments().getSerializable(ChannelBrowserFragment.CHANNEL_OBJ);
+		YTubeChannel channel = (YTubeChannel)getArguments().getSerializable(ChannelBrowserFragment.CHANNEL_OBJ);
 		TextView aboutTextView = view.findViewById(R.id.about_text_view);
 		aboutTextView.setText(channel.getDescription());
 
@@ -50,7 +50,7 @@ public class ChannelAboutFragment extends TabFragment {
 
 	@Override
 	public String getFragmentName() {
-		return PlayTubeApp.getStr(R.string.about);
+		return TubeApp.getStr(R.string.about);
 	}
 
 }

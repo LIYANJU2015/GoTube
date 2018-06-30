@@ -42,11 +42,11 @@ import butterknife.OnClick;
 import com.tubeplayer.player.business.AsyncTaskParallel;
 import com.tubeplayer.player.gui.businessobjects.adapters.SubsAdapter;
 import com.tube.playtube.R;
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.FeedUpdaterService;
 import com.tubeplayer.player.business.VideoCategory;
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannel;
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 import com.tubeplayer.player.business.youtube.Tasks.GetSubscriptionVideosTask;
 import com.tubeplayer.player.business.youtube.Tasks.GetSubscriptionVideosTaskListener;
 import com.tubeplayer.player.business.db.SubscriptionsDb;
@@ -91,7 +91,7 @@ public class SubscriptionsFeedFragment extends VideosGridFragment implements Get
 		super.onCreate(savedInstanceState);
 
 		// Only do an automatic refresh of subscriptions if it's been more than three hours since the last one was done.
-		long l = PlayTubeApp.getPreferenceManager().getLong(PlayTubeApp.KEY_SUBSCRIPTIONS_LAST_UPDATED, -1);
+		long l = TubeApp.getPreferenceManager().getLong(TubeApp.KEY_SUBSCRIPTIONS_LAST_UPDATED, -1);
 		DateTime subscriptionsLastUpdated = new DateTime(l);
 		DateTime threeHoursAgo = new DateTime().minusHours(REFRESH_TIME);
 		if(subscriptionsLastUpdated.isBefore(threeHoursAgo)) {
@@ -158,21 +158,21 @@ public class SubscriptionsFeedFragment extends VideosGridFragment implements Get
 
 
 	private static void setFlag(String flag) {
-		SharedPreferences.Editor editor = PlayTubeApp.getPreferenceManager().edit();
+		SharedPreferences.Editor editor = TubeApp.getPreferenceManager().edit();
 		editor.putBoolean(flag, true);
 		editor.commit();
 	}
 
 
 	private void unsetFlag(String flag) {
-		SharedPreferences.Editor editor = PlayTubeApp.getPreferenceManager().edit();
+		SharedPreferences.Editor editor = TubeApp.getPreferenceManager().edit();
 		editor.putBoolean(flag, false);
 		editor.commit();
 	}
 
 
 	private boolean isFlagSet(String flag) {
-		return PlayTubeApp.getPreferenceManager().getBoolean(flag, false);
+		return TubeApp.getPreferenceManager().getBoolean(flag, false);
 	}
 
 
@@ -197,7 +197,7 @@ public class SubscriptionsFeedFragment extends VideosGridFragment implements Get
 
 
 	@Override
-	public void onChannelVideosFetched(YouTubeChannel channel, List<YouTubeVideo> videosFetched, final boolean videosDeleted) {
+	public void onChannelVideosFetched(YTubeChannel channel, List<YTubeVideo> videosFetched, final boolean videosDeleted) {
 		Log.d("SUB FRAGMENT", "onChannelVideosFetched");
 
 		// If any new videos have been fetched for a channel, update the Subscription list in the left navbar for that channel
@@ -207,7 +207,7 @@ public class SubscriptionsFeedFragment extends VideosGridFragment implements Get
 		numVideosFetched += videosFetched.size();
 		numChannelsFetched++;
 		if(progressDialog != null)
-			progressDialog.setContent(String.format(PlayTubeApp.getStr(R.string.fetched_videos_from_channels), numVideosFetched, numChannelsFetched, numChannelsSubscribed));
+			progressDialog.setContent(String.format(TubeApp.getStr(R.string.fetched_videos_from_channels), numVideosFetched, numChannelsFetched, numChannelsSubscribed));
 		if(numChannelsFetched == numChannelsSubscribed) {
 			new Handler().postDelayed(new Runnable() {
 				@Override
@@ -255,7 +255,7 @@ public class SubscriptionsFeedFragment extends VideosGridFragment implements Get
 
 	@Override
 	public String getFragmentName() {
-		return PlayTubeApp.getStr(R.string.feed);
+		return TubeApp.getStr(R.string.feed);
 	}
 
 
@@ -373,15 +373,15 @@ public class SubscriptionsFeedFragment extends VideosGridFragment implements Get
 	 * A task that refreshes the subscriptions feed by getting published videos currently cached in
 	 * the local database.
 	 */
-	private class RefreshFeedFromCacheTask extends AsyncTaskParallel<Void, Void, List<YouTubeVideo>> {
+	private class RefreshFeedFromCacheTask extends AsyncTaskParallel<Void, Void, List<YTubeVideo>> {
 
 		@Override
-		protected List<YouTubeVideo> doInBackground(Void... params) {
+		protected List<YTubeVideo> doInBackground(Void... params) {
 			return SubscriptionsDb.getSubscriptionsDb().getSubscriptionVideos();
 		}
 
 		@Override
-		protected void onPostExecute(List<YouTubeVideo> youTubeVideos) {
+		protected void onPostExecute(List<YTubeVideo> youTubeVideos) {
 			videoGridAdapter.setList(youTubeVideos);
 			setupUiAccordingToNumOfSubbedChannels(youTubeVideos.size());
 		}

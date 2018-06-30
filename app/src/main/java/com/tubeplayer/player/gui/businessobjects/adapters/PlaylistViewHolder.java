@@ -29,7 +29,7 @@ import com.bumptech.glide.request.RequestOptions;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.tube.playtube.R;
-import com.tubeplayer.player.business.youtube.bean.YouTubePlaylist;
+import com.tubeplayer.player.business.youtube.bean.YTubePlaylist;
 import com.tubeplayer.player.gui.businessobjects.PlaylistClickListener;
 
 /**
@@ -70,7 +70,7 @@ class PlaylistViewHolder extends RecyclerView.ViewHolder {
 		this.playlistClickListener = playlistClickListener;
 	}
 
-	void setPlaylist(final YouTubePlaylist playlist, Context context) {
+	void setPlaylist(final YTubePlaylist playlist, Context context) {
 		Glide.with(context)
 						.load(playlist.getThumbnailUrl())
 						.apply(new RequestOptions().placeholder(R.drawable.default_thumbnail))

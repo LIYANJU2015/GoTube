@@ -26,7 +26,7 @@ import butterknife.BindView;
 import com.tubeplayer.player.business.AsyncTaskParallel;
 import com.tubeplayer.player.gui.businessobjects.adapters.OrderableVideoGridAdapter;
 import com.tube.playtube.R;
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.VideoCategory;
 import com.tubeplayer.player.business.db.BookmarksDb;
 import com.tubeplayer.player.gui.businessobjects.fragments.OrderableVideosGridFragment;
@@ -84,7 +84,7 @@ public class BookmarksFragment extends OrderableVideosGridFragment implements Bo
 
 	@Override
 	public String getFragmentName() {
-		return PlayTubeApp.getStr(R.string.bookmarks);
+		return TubeApp.getStr(R.string.bookmarks);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////

@@ -24,9 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tube.playtube.R;
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.youtube.Tasks.GetYouTubeVideosTask;
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 
 /**
  * Returns a list of YouTube videos.
@@ -55,9 +55,9 @@ public abstract class GetYouTubeVideos {
 	/**
 	 * Gets the next page of videos.
 	 *
-	 * @return List of {@link YouTubeVideo}s.
+	 * @return List of {@link YTubeVideo}s.
 	 */
-	public abstract List<YouTubeVideo> getNextVideos();
+	public abstract List<YTubeVideo> getNextVideos();
 
 
 	/**
@@ -67,19 +67,19 @@ public abstract class GetYouTubeVideos {
 
 
 	/**
-	 * Converts {@link List} of {@link Video} to {@link List} of {@link YouTubeVideo}.
+	 * Converts {@link List} of {@link Video} to {@link List} of {@link YTubeVideo}.
 	 *
 	 * @param videoList {@link List} of {@link Video}.
-	 * @return {@link List} of {@link YouTubeVideo}.
+	 * @return {@link List} of {@link YTubeVideo}.
 	 */
-	protected List<YouTubeVideo> toYouTubeVideoList(List<Video> videoList) {
-		List<YouTubeVideo> youTubeVideoList = new ArrayList<>();
+	protected List<YTubeVideo> toYouTubeVideoList(List<Video> videoList) {
+		List<YTubeVideo> youTubeVideoList = new ArrayList<>();
 
 		if (videoList != null) {
-			YouTubeVideo youTubeVideo;
+			YTubeVideo youTubeVideo;
 
 			for (Video video : videoList) {
-				youTubeVideo = new YouTubeVideo(video);
+				youTubeVideo = new YTubeVideo(video);
 				if (!youTubeVideo.filterVideoByLanguage())
 					youTubeVideoList.add(youTubeVideo);
 			}
@@ -90,8 +90,8 @@ public abstract class GetYouTubeVideos {
 
 
 	protected String getPreferredRegion() {
-		String region = PlayTubeApp.getPreferenceManager()
-				.getString(PlayTubeApp.getStr(R.string.pref_key_preferred_region), "").trim();
+		String region = TubeApp.getPreferenceManager()
+				.getString(TubeApp.getStr(R.string.pref_key_preferred_region), "").trim();
 		return (region.isEmpty() ? null : region);
 	}
 

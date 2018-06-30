@@ -23,7 +23,7 @@ import com.facebook.ads.NativeAd;
 import com.facebook.ads.NativeAdsManager;
 
 import com.tube.playtube.R;
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 
 /**
  * Created by liyanju on 2018/6/13.
@@ -190,19 +190,17 @@ public class FBAdUtils {
     }
 
     public static void showAdDialog(final Activity activity, final String adId, final Runnable errorCallBack) {
-        NativeAd nativeAd = nextNativieAd();
-        if (nativeAd != null && nativeAd.isAdLoaded()) {
-            View view = getBigAdView(nativeAd, R.layout.big_ad_fb_layout);
-            showDialog(view, activity);
-            loadAd(adId, null);
-            return;
-        }
-
         loadAd(adId, new AdListener() {
             @Override
             public void onError(Ad ad, AdError adError) {
                 if (errorCallBack != null) {
                     errorCallBack.run();
+                } else{
+                    NativeAd nativeAd = nextNativieAd();
+                    if (nativeAd != null && nativeAd.isAdLoaded()) {
+                        View view = getBigAdView(nativeAd, R.layout.big_ad_fb_layout);
+                        showDialog(view, activity);
+                    }
                 }
             }
 
@@ -275,7 +273,7 @@ public class FBAdUtils {
 
             // Downloading and setting the ad icon.
             NativeAd.Image adIcon = nativeAd.getAdIcon();
-            Glide.with(PlayTubeApp.getContext()).load(adIcon.getUrl()).into(nativeAdIcon);
+            Glide.with(TubeApp.getContext()).load(adIcon.getUrl()).into(nativeAdIcon);
 
             // Add adChoices icon
             AdChoicesView adChoicesView = new AdChoicesView(sContext, nativeAd, true);
@@ -299,7 +297,7 @@ public class FBAdUtils {
 
         ImageView nativeAdIcon = adView.findViewById(R.id.image2_ad);
         imageAdFrame.setVisibility(View.VISIBLE);
-        imageAdFrame.setBackground(ContextCompat.getDrawable(context, R.drawable.fb_ad_bg1));
+        imageAdFrame.setBackground(ContextCompat.getDrawable(context, R.drawable.fb_ad_item_bg));
 
         FrameLayout adChoicesFrame = adView.findViewById(R.id.fb_adChoices2);
         TextView nativeAdTitle = adView.findViewById(R.id.title);

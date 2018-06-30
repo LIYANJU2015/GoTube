@@ -23,25 +23,25 @@ import com.tubeplayer.player.business.Logger;
 import java.io.IOException;
 
 import com.tubeplayer.player.business.youtube.GetChannelsDetails;
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannel;
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannelInterface;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannelInterface;
 
 /**
- * A task that given a channel ID it will try to initialize and return {@link YouTubeChannel}.
+ * A task that given a channel ID it will try to initialize and return {@link YTubeChannel}.
  */
-public class GetYouTubeChannelInfoTask extends AsyncTaskParallel<String, Void, YouTubeChannel> {
+public class GetYouTubeChannelInfoTask extends AsyncTaskParallel<String, Void, YTubeChannel> {
 
-	private YouTubeChannelInterface youTubeChannelInterface;
+	private YTubeChannelInterface youTubeChannelInterface;
 
 
-	public GetYouTubeChannelInfoTask(YouTubeChannelInterface youTubeChannelInterface) {
+	public GetYouTubeChannelInfoTask(YTubeChannelInterface youTubeChannelInterface) {
 		this.youTubeChannelInterface = youTubeChannelInterface;
 	}
 
 
 	@Override
-	protected YouTubeChannel doInBackground(String... channelId) {
-		YouTubeChannel channel;
+	protected YTubeChannel doInBackground(String... channelId) {
+		YTubeChannel channel;
 
 		try {
 			channel = new GetChannelsDetails().getYouTubeChannel(channelId[0]);
@@ -55,7 +55,7 @@ public class GetYouTubeChannelInfoTask extends AsyncTaskParallel<String, Void, Y
 
 
 	@Override
-	protected void onPostExecute(YouTubeChannel youTubeChannel) {
+	protected void onPostExecute(YTubeChannel youTubeChannel) {
 		if(youTubeChannelInterface != null) {
 			youTubeChannelInterface.onGetYouTubeChannel(youTubeChannel);
 		}

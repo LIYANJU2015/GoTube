@@ -17,8 +17,8 @@
 
 package com.tubeplayer.player.gui.businessobjects;
 
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannel;
-import com.tubeplayer.player.business.youtube.bean.YouTubePlaylist;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
+import com.tubeplayer.player.business.youtube.bean.YTubePlaylist;
 
 /**
  * This methods will be called when the user clicks on the view whose aim is to open the ChannelBrowser.
@@ -37,10 +37,10 @@ public interface MainActivityListener {
 	 *
 	 * @param channel Channel
 	 */
-	void onChannelClick(YouTubeChannel channel);
+	void onChannelClick(YTubeChannel channel);
 
 	/**
 	 * Called when a playlist is clicked on
 	 */
-	void onPlaylistClick(YouTubePlaylist playlist);
+	void onPlaylistClick(YTubePlaylist playlist);
 }

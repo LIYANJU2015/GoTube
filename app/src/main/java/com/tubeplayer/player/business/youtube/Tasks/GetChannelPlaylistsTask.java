@@ -22,13 +22,13 @@ import com.tubeplayer.player.business.AsyncTaskParallel;
 import java.util.List;
 
 import com.tubeplayer.player.business.youtube.GetChannelPlaylists;
-import com.tubeplayer.player.business.youtube.bean.YouTubePlaylist;
+import com.tubeplayer.player.business.youtube.bean.YTubePlaylist;
 import com.tubeplayer.player.gui.businessobjects.adapters.PlaylistsGridAdapter;
 
 /**
  * An asynchronous task that will retrieve YouTube playlists for a specific channel and displays them in the supplied Adapter.
  */
-public class GetChannelPlaylistsTask extends AsyncTaskParallel<Void, Void, List<YouTubePlaylist>> {
+public class GetChannelPlaylistsTask extends AsyncTaskParallel<Void, Void, List<YTubePlaylist>> {
 	// Used to retrieve the playlists
 	private GetChannelPlaylists getChannelPlaylists = new GetChannelPlaylists();
 
@@ -52,8 +52,8 @@ public class GetChannelPlaylistsTask extends AsyncTaskParallel<Void, Void, List<
 	}
 
 	@Override
-	protected List<YouTubePlaylist> doInBackground(Void... voids) {
-		List<YouTubePlaylist> playlists = null;
+	protected List<YTubePlaylist> doInBackground(Void... voids) {
+		List<YTubePlaylist> playlists = null;
 
 		if (!isCancelled()) {
 			playlists = getChannelPlaylists.getNextPlaylists();
@@ -63,7 +63,7 @@ public class GetChannelPlaylistsTask extends AsyncTaskParallel<Void, Void, List<
 	}
 
 	@Override
-	protected void onPostExecute(List<YouTubePlaylist> youTubePlaylists) {
+	protected void onPostExecute(List<YTubePlaylist> youTubePlaylists) {
 		playlistsGridAdapter.appendList(youTubePlaylists);
 		if(onFinished != null)
 			onFinished.run();

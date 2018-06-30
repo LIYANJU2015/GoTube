@@ -27,8 +27,8 @@ import android.widget.Toast;
 import java.io.IOException;
 
 import com.tubeplayer.player.business.youtube.GetChannelPlaylists;
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannel;
-import com.tubeplayer.player.business.youtube.bean.YouTubePlaylist;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
+import com.tubeplayer.player.business.youtube.bean.YTubePlaylist;
 import com.tubeplayer.player.business.youtube.Tasks.GetChannelPlaylistsTask;
 import com.tubeplayer.player.gui.businessobjects.PlaylistClickListener;
 import com.tube.playtube.R;
@@ -36,7 +36,7 @@ import com.tube.playtube.R;
 /**
  * An adapter that will display playlists in a {@link android.widget.GridView}.
  */
-public class PlaylistsGridAdapter extends RecyclerViewAdapterEx<YouTubePlaylist, PlaylistViewHolder> {
+public class PlaylistsGridAdapter extends RecyclerViewAdapterEx<YTubePlaylist, PlaylistViewHolder> {
 	private GetChannelPlaylists getChannelPlaylists;
 	private static final String TAG = PlaylistsGridAdapter.class.getSimpleName();
 	private PlaylistClickListener playlistClickListener;
@@ -67,7 +67,7 @@ public class PlaylistsGridAdapter extends RecyclerViewAdapterEx<YouTubePlaylist,
 		}
 	}
 
-	public void setYouTubeChannel(YouTubeChannel youTubeChannel) {
+	public void setYouTubeChannel(YTubeChannel youTubeChannel) {
 		try {
 			clearList();
 			getChannelPlaylists = new GetChannelPlaylists();

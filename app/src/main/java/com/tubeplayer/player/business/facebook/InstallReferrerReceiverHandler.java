@@ -8,7 +8,7 @@ import com.tubeplayer.player.business.FacebookReport;
 import com.tubeplayer.player.business.SuperVersions;
 import com.tube.playtube.BuildConfig;
 
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 
 /**
  * Created by liyanju on 2018/6/13.
@@ -22,14 +22,14 @@ public class InstallReferrerReceiverHandler {
             return;
         }
 
-        boolean result = PlayTubeApp.getPreferenceManager().getBoolean("referrer_get", false);
+        boolean result = TubeApp.getPreferenceManager().getBoolean("referrer_get", false);
         if (result) {
             return;
         }
-        PlayTubeApp.getPreferenceManager().edit().putBoolean("referrer_get", true).apply();
+        TubeApp.getPreferenceManager().edit().putBoolean("referrer_get", true).apply();
 
         if (!BuildConfig.DEBUG) {
-            if (PlayTubeApp.getPreferenceManager().getBoolean("can_referrer", false)) {
+            if (TubeApp.getPreferenceManager().getBoolean("can_referrer", false)) {
                 return;
             }
         }

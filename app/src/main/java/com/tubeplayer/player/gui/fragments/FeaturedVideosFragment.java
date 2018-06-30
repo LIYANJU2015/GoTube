@@ -18,7 +18,7 @@
 package com.tubeplayer.player.gui.fragments;
 
 import com.tube.playtube.R;
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.VideoCategory;
 
 /**
@@ -34,7 +34,7 @@ public class FeaturedVideosFragment extends VideosGridFragment {
 
 	@Override
 	public String getFragmentName() {
-		return PlayTubeApp.getStr(R.string.featured);
+		return TubeApp.getStr(R.string.featured);
 	}
 
 }

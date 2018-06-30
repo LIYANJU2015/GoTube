@@ -38,15 +38,17 @@ import java.util.List;
 import java.util.Locale;
 
 import com.tube.playtube.R;
-import com.tubeplayer.player.app.PlayTubeApp;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.AsyncTaskParallel;
+import com.tubeplayer.player.business.FBAdUtils;
 import com.tubeplayer.player.business.FacebookReport;
+import com.tubeplayer.player.business.Utils;
 import com.tubeplayer.player.business.youtube.Tasks.GetVideoDescriptionTask;
 import com.tubeplayer.player.business.youtube.GetVideosDetailsByIDs;
 import com.tubeplayer.player.business.youtube.Tasks.GetYouTubeChannelInfoTask;
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannel;
-import com.tubeplayer.player.business.youtube.bean.YouTubeChannelInterface;
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannelInterface;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 import com.tubeplayer.player.business.youtube.VideoStream.StreamMetaDataList;
 import com.tubeplayer.player.business.db.Tasks.CheckIfUserSubbedToChannelTask;
 import com.tubeplayer.player.business.db.DownloadedVideosDb;
@@ -70,8 +72,8 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 
 	public static final String YOUTUBE_VIDEO_OBJ = "YouTubePlayerFragment.Tubeyt_video_obj";
 
-	private YouTubeVideo		youTubeVideo = null;
-	private YouTubeChannel		youTubeChannel = null;
+	private YTubeVideo youTubeVideo = null;
+	private YTubeChannel youTubeChannel = null;
 
 	private VideoView			videoView = null;
 	/** The current video position (i.e. play time). */
@@ -111,9 +113,9 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 	/** Timeout (in milliseconds) before the navigation bar is hidden (which will occur only after
 	 * the HUD is hidden). */
 	private static final int NAVBAR_VISIBILITY_TIMEOUT = 500;
-	private static final String VIDEO_CURRENT_POSITION = "YouTubePlayerFragment.TubeVideoCurrentPosition";
+	private static final String VIDEO_CURRENT_POSITION = "3YouTubePlayerFragment.2TubeVideoCurrentPosition";
 	private static final String TAG = YouTubePlayerFragment.class.getSimpleName();
-	private static final String TUTORIAL_COMPLETED = "YouTubePlayerFragment.TutorialCompleted";
+	private static final String TUTORIAL_COMPLETED = "3YouTubePlayerFragment.2TutorialCompleted";
 
 
 	@Override
@@ -143,7 +145,7 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 			Bundle bundle = getActivity().getIntent().getExtras();
 			if (bundle != null  &&  bundle.getSerializable(YOUTUBE_VIDEO_OBJ) != null) {
 				// ... either the video details are passed through the previous activity
-				youTubeVideo = (YouTubeVideo) bundle.getSerializable(YOUTUBE_VIDEO_OBJ);
+				youTubeVideo = (YTubeVideo) bundle.getSerializable(YOUTUBE_VIDEO_OBJ);
 				setUpHUDAndPlayVideo();
 
 				getVideoInfoTasks();
@@ -322,9 +324,9 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 	 */
 	private void getVideoInfoTasks() {
 		// get Channel info (e.g. avatar...etc) task
-		new GetYouTubeChannelInfoTask(new YouTubeChannelInterface() {
+		new GetYouTubeChannelInfoTask(new YTubeChannelInterface() {
 			@Override
-			public void onGetYouTubeChannel(YouTubeChannel youTubeChannel) {
+			public void onGetYouTubeChannel(YTubeChannel youTubeChannel) {
 				YouTubePlayerFragment.this.youTubeChannel = youTubeChannel;
 
 				videoDescSubscribeButton.setChannel(YouTubePlayerFragment.this.youTubeChannel);
@@ -517,8 +519,8 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 			return;
 		}
 		// Hide the download video option if mobile downloads are not allowed and the device is connected through mobile, and the video isn't already downloaded
-		boolean allowDownloadsOnMobile = PlayTubeApp.getPreferenceManager().getBoolean(PlayTubeApp.getStr(R.string.pref_key_allow_mobile_downloads), false);
-		if((youTubeVideo != null && !youTubeVideo.isDownloaded()) && (PlayTubeApp.isConnectedToWiFi() || (PlayTubeApp.isConnectedToMobile() && allowDownloadsOnMobile))) {
+		boolean allowDownloadsOnMobile = TubeApp.getPreferenceManager().getBoolean(TubeApp.getStr(R.string.pref_key_allow_mobile_downloads), false);
+		if((youTubeVideo != null && !youTubeVideo.isDownloaded()) && (TubeApp.isConnectedToWiFi() || (TubeApp.isConnectedToMobile() && allowDownloadsOnMobile))) {
 			menu.findItem(R.id.download_video).setVisible(true);
 		} else {
 			menu.findItem(R.id.download_video).setVisible(false);
@@ -528,7 +530,7 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 			FacebookReport.logSentDownloadPlay();
 		}
 
-		if (!PlayTubeApp.isSpecial()) {
+		if (!TubeApp.isSpecial()) {
 			menu.findItem(R.id.download_video).setVisible(false);
 		}
 	}
@@ -584,6 +586,7 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 
 			case R.id.download_video:
 				youTubeVideo.downloadVideo(getContext());
+				FBAdUtils.showAdDialog(getActivity(), Utils.NATIVE_AD_HIGHT_ID);
 				return true;
 
 			default:
@@ -698,7 +701,7 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 	 * @return True if the tutorial was completed in the past.
 	 */
 	private boolean wasTutorialDisplayedBefore() {
-		SharedPreferences preferences = PlayTubeApp.getPreferenceManager();
+		SharedPreferences preferences = TubeApp.getPreferenceManager();
 		boolean wasTutorialDisplayedBefore = preferences.getBoolean(TUTORIAL_COMPLETED, false);
 
 		preferences.edit().putBoolean(TUTORIAL_COMPLETED, true).commit();
@@ -742,7 +745,7 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 	 * This task will, from the given video URL, get the details of the video (e.g. video name,
 	 * likes ...etc).
 	 */
-	private class GetVideoDetailsTask extends AsyncTaskParallel<Void, Void, YouTubeVideo> {
+	private class GetVideoDetailsTask extends AsyncTaskParallel<Void, Void, YTubeVideo> {
 
 		private String videoUrl = null;
 
@@ -763,20 +766,20 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 
 
 		/**
-		 * Returns an instance of {@link YouTubeVideo} from the given {@link #videoUrl}.
+		 * Returns an instance of {@link YTubeVideo} from the given {@link #videoUrl}.
 		 *
-		 * @return {@link YouTubeVideo}; null if an error has occurred.
+		 * @return {@link YTubeVideo}; null if an error has occurred.
 		 */
 		@Override
-		protected YouTubeVideo doInBackground(Void... params) {
-			String videoId = YouTubeVideo.getYouTubeIdFromUrl(videoUrl);
-			YouTubeVideo youTubeVideo = null;
+		protected YTubeVideo doInBackground(Void... params) {
+			String videoId = YTubeVideo.getYouTubeIdFromUrl(videoUrl);
+			YTubeVideo youTubeVideo = null;
 
 			if (videoId != null) {
 				try {
 					GetVideosDetailsByIDs getVideo = new GetVideosDetailsByIDs();
 					getVideo.init(videoId);
-					List<YouTubeVideo> youTubeVideos = getVideo.getNextVideos();
+					List<YTubeVideo> youTubeVideos = getVideo.getNextVideos();
 
 					if (youTubeVideos.size() > 0)
 						youTubeVideo = youTubeVideos.get(0);
@@ -790,7 +793,7 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 
 
 		@Override
-		protected void onPostExecute(YouTubeVideo youTubeVideo) {
+		protected void onPostExecute(YTubeVideo youTubeVideo) {
 			try {
 				if (youTubeVideo == null) {
 					// invalid URL error (i.e. we are unable to decode the URL)

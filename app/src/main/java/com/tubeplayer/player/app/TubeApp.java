@@ -56,10 +56,10 @@ import com.tubeplayer.player.business.FeedUpdaterReceiver;
 /**
  * GoTube application.
  */
-public class PlayTubeApp extends MultiDexApplication {
+public class TubeApp extends MultiDexApplication {
 
 	/** GoTube Application databaseInstance. */
-	private static PlayTubeApp GoTubeApp = null;
+	private static TubeApp GoTubeApp = null;
 
 	public static final String KEY_SUBSCRIPTIONS_LAST_UPDATED = "PlayTube.KEY_SUBSCRIPTIONS_LAST_UPDATED";
 	public static final String NEW_VIDEOS_NOTIFICATION_CHANNEL = "com.play.tube.NEW_VIDEOS_NOTIFICATION_CHANNEL";

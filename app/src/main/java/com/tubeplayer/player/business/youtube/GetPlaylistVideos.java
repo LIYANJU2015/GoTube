@@ -21,9 +21,9 @@ import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.PlaylistItem;
 import com.google.api.services.youtube.model.PlaylistItemListResponse;
 import com.tubeplayer.player.business.Logger;
-import com.tubeplayer.player.business.youtube.bean.YouTubeAPI;
-import com.tubeplayer.player.business.youtube.bean.YouTubeAPIKey;
-import com.tubeplayer.player.business.youtube.bean.YouTubeVideo;
+import com.tubeplayer.player.business.youtube.bean.YTubeAPI;
+import com.tubeplayer.player.business.youtube.bean.YTubeAPIKey;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,16 +41,16 @@ public class GetPlaylistVideos extends GetYouTubeVideos {
 
 	@Override
 	public void init() throws IOException {
-		playlistItemsList = YouTubeAPI.create().playlistItems().list("contentDetails");
+		playlistItemsList = YTubeAPI.create().playlistItems().list("contentDetails");
 		playlistItemsList.setFields("items(contentDetails/videoId), nextPageToken");
-		playlistItemsList.setKey(YouTubeAPIKey.get().getYouTubeAPIKey());
+		playlistItemsList.setKey(YTubeAPIKey.get().getYouTubeAPIKey());
 		playlistItemsList.setMaxResults(MAX_RESULTS);
 		nextPageToken = null;
 	}
 
 	@Override
-	public List<YouTubeVideo> getNextVideos() {
-		List<YouTubeVideo> videoList = new ArrayList<>();
+	public List<YTubeVideo> getNextVideos() {
+		List<YTubeVideo> videoList = new ArrayList<>();
 
 		if (!noMoreVideoPages()) {
 			try {
