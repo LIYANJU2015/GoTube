@@ -1,5 +1,6 @@
 package com.tubeplayer.player.gui.businessobjects.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -16,7 +17,9 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.io.File;
 
+import com.tubeplayer.player.business.FBAdUtils;
 import com.tubeplayer.player.business.db.DownloadedVideosDb;
+import com.tubeplayer.player.gui.activities.GetVideoActivity;
 import com.tubeplayer.player.gui.businessobjects.YouTubePlayer;
 import com.tube.playtube.R;
 import com.tubeplayer.player.business.Utils;
@@ -72,6 +75,13 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
                                 Utils.showLongToastSafe(R.string.playing_video_file_missing);
                             } else {
                                 Utils.playDownloadVideo(context, uri);
+//                                try {
+//                                    if (GetVideoActivity.sActivity != null) {
+//                                        FBAdUtils.showAdDialog(GetVideoActivity.sActivity, Utils.NATIVE_AD_HIGHT_ID);
+//                                    }
+//                                } catch (Throwable e) {
+//                                    e.printStackTrace();
+//                                }
                                 DownloadedVideosFragment.sIsPlayDownload = true;
                             }
                         } else {

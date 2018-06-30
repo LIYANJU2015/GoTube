@@ -169,7 +169,7 @@ public class FileDownloaderHelper {
 
         private NotificationItem(int id, String title, String desc) {
             super(id, title, desc);
-            Intent intent = new Intent(TubeApp.getContext(), MainActivity.class);
+            Intent intent = new Intent(TubeApp.getContext(), GetVideoActivity.class);
 
             this.pendingIntent = PendingIntent.getActivity(TubeApp.getContext(), 0, intent,
                     PendingIntent.FLAG_UPDATE_CURRENT);

@@ -221,11 +221,17 @@ public class DownloadedVideosDb extends SQLiteOpenHelperEx implements OrderableD
 
 			if(cursor.moveToNext()) {
 				do {
-					String videoId = cursor.getString(cursor.getColumnIndex(DownloadedVideosTable.COL_YOUTUBE_VIDEO_ID));
-					Uri uri = Uri.parse(cursor.getString(cursor.getColumnIndex(DownloadedVideosTable.COL_FILE_URI)));
-					File file = new File(uri.getPath());
-					if(!file.exists()) {
-						getVideoDownloadsDb().remove(videoId);
+					try {
+						String videoId = cursor.getString(cursor.getColumnIndex(DownloadedVideosTable.COL_YOUTUBE_VIDEO_ID));
+						Uri uri = Uri.parse(cursor.getString(cursor.getColumnIndex(DownloadedVideosTable.COL_FILE_URI)));
+						if (uri != null) {
+							File file = new File(uri.getPath());
+							if (!file.exists()) {
+								getVideoDownloadsDb().remove(videoId);
+							}
+						}
+					} catch (Throwable e) {
+						e.printStackTrace();
 					}
 				} while(cursor.moveToNext());
 			}
