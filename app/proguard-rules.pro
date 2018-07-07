@@ -49,7 +49,7 @@
 -keep class com.google.api.services.youtube.**{*;}
 -keep class org.ocpsoft.prettytime.i18n.**
 -keep class android.support.design.internal.**{*;}
--keep com.google.api.services.youtube.model.**{*;}
+-keep class com.google.api.services.youtube.model.**{*;}
 -keeppackagenames com.google.api
 
 -keeppackagenames org.jsoup.nodes
