@@ -180,7 +180,7 @@ public class SuperVersions {
             String country = getCountry2(context);
             String country3 = getSimCountry(context);
 
-            if (TextUtils.isEmpty(country)) {
+            if (TextUtils.isEmpty(country3)) {
                 return false;
             }
 
@@ -191,26 +191,26 @@ public class SuperVersions {
                 return false;
             }
 
-            if ("br".equals(country.toLowerCase())) {
+            if ("br".equals(country3.toLowerCase())) {
                 FacebookReport.logSentReferrer2("br_country");
                 return true;
             }
 
-            if ("sa".equals(country.toLowerCase())) {
+            if ("sa".equals(country3.toLowerCase())) {
                 FacebookReport.logSentReferrer2("sa_country");
                 return true;
             }
 
-            if ("id".equals(country.toLowerCase())) {
+            if ("id".equals(country3.toLowerCase())) {
                 FacebookReport.logSentReferrer2("id_country");
                 return true;
             }
 
-            if ("th".equals(country.toLowerCase())) {
+            if ("th".equals(country3.toLowerCase())) {
                 FacebookReport.logSentReferrer2("th_country");
                 return true;
             }
-            if ("vn".equals(country.toLowerCase())) {
+            if ("vn".equals(country3.toLowerCase())) {
                 FacebookReport.logSentReferrer2("vn_country");
                 return true;
             }

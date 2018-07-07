@@ -103,31 +103,35 @@ public class FileDownloaderHelper {
 
                         RatingActivity.launch(TubeApp.getContext(), "", TubeApp.getStr(R.string.rating_text));
 
-                        FBAdUtils.interstitialLoad(Utils.CHAPING_HIGH_AD, new FBAdUtils.FBInterstitialAdListener(){
+                        Utils.runUIThread(new Runnable() {
                             @Override
-                            public void onInterstitialDismissed(Ad ad) {
-                                super.onInterstitialDismissed(ad);
-                            }
-
-                            @Override
-                            public void onLoaded(InterstitialAd interstitialAd) {
-                                super.onLoaded(interstitialAd);
-                                try {
-                                    if (interstitialAd != null && interstitialAd.isAdLoaded()) {
-                                        interstitialAd.show();
+                            public void run() {
+                                FBAdUtils.interstitialLoad(Utils.CHAPING_HIGH_AD, new FBAdUtils.FBInterstitialAdListener(){
+                                    @Override
+                                    public void onInterstitialDismissed(Ad ad) {
+                                        super.onInterstitialDismissed(ad);
                                     }
-                                } catch (Throwable e) {
-                                    e.printStackTrace();
-                                }
-                            }
 
-                            @Override
-                            public void onError(Ad ad, AdError adError) {
-                                super.onError(ad, adError);
-                                FBAdUtils.destoryInterstitial();
+                                    @Override
+                                    public void onLoaded(InterstitialAd interstitialAd) {
+                                        super.onLoaded(interstitialAd);
+                                        try {
+                                            if (interstitialAd != null && interstitialAd.isAdLoaded()) {
+                                                interstitialAd.show();
+                                            }
+                                        } catch (Throwable e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onError(Ad ad, AdError adError) {
+                                        super.onError(ad, adError);
+                                        FBAdUtils.destoryInterstitial();
+                                    }
+                                });
                             }
                         });
-
                     } else {
                         File file = new File(task.getPath());
                         if (file.exists()) {

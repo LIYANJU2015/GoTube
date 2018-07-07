@@ -55,6 +55,8 @@ public class GetChannelVideosTask extends AsyncTaskParallel<Void, Void, List<YTu
 			Toast.makeText(TubeApp.getContext(),
 							String.format(TubeApp.getContext().getString(R.string.could_not_get_videos), channel.getTitle()),
 							Toast.LENGTH_LONG).show();
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -76,15 +78,19 @@ public class GetChannelVideosTask extends AsyncTaskParallel<Void, Void, List<YTu
 	protected List<YTubeVideo> doInBackground(Void... voids) {
 		List<YTubeVideo> videos = null;
 
-		if (!isCancelled()) {
-			videos = getChannelVideos.getNextVideos();
-		}
+		try {
+			if (!isCancelled()) {
+				videos = getChannelVideos.getNextVideos();
+			}
 
-		if(videos != null) {
-			for (YTubeVideo video : videos)
-				channel.addYouTubeVideo(video);
-			if(channel.isUserSubscribed())
-				SubscriptionsDb.getSubscriptionsDb().saveChannelVideos(channel);
+			if (videos != null) {
+				for (YTubeVideo video : videos)
+					channel.addYouTubeVideo(video);
+				if (channel.isUserSubscribed())
+					SubscriptionsDb.getSubscriptionsDb().saveChannelVideos(channel);
+			}
+		} catch (Throwable e) {
+			e.printStackTrace();
 		}
 		return videos;
 	}

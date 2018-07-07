@@ -48,6 +48,10 @@ public class Utils {
 
     private static Handler sHandler = new Handler(Looper.getMainLooper());
 
+    public static void runUIThread(Runnable runnable) {
+        sHandler.post(runnable);
+    }
+
     public static void runSingleThread(Runnable runnable) {
         sExecutorService2.execute(runnable);
     }
