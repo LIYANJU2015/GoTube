@@ -8,15 +8,9 @@ android {
         applicationId "com.weyoutube.playtube.tubeplayer"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 2
-        versionName '1.0.1'
+        versionCode 4
+        versionName '1.0.3'
         // Third party devs:  pls be ethical and change the below keys
-        buildConfigField 'String[]', 'YOUTUBE_API_KEYS',
-                '{' +
-                        '"AIzaSyArKpVSYj7TSp0PAk76qo6AbJ-QBONDf1I",' +
-                        '"AIzaSyBLvL_R0Kxd_te876hdRtRDLg6z0aQYe_M",' +
-                        '"AIzaSyAMM7NHUwZGQa3RfqbJXWifxksOvWgzRr0"'  +
-                '}'
         vectorDrawables.useSupportLibrary true
         multiDexEnabled true    // this is as we have over 65536 lines of code...
     }

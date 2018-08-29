@@ -17,6 +17,8 @@
 
 package com.tubeplayer.player.business.youtube.bean;
 
+import android.util.Log;
+
 import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.gui.fragments.preferences.OthersPreferenceFragment;
 import com.tube.playtube.BuildConfig;
@@ -58,6 +60,19 @@ public class YTubeAPIKey {
 		return youTubeAPIKey;
 	}
 
+	public static final String[] YOUTUBE_API_KEYS = {
+			"AIzaSyCLPqZsaLpfXJV7ZbDJTj-DDRD2pfzx8f0",
+			"AIzaSyAtsBI7zz7U55Wk-01E-hFDLwl9Z6C8Kvs",
+			"AIzaSyBn7hE7kjS3FDIMufjNiLWNlIhROBV2H18",
+			"AIzaSyC2fa-e1AK0UXWG11DKAgYP0UEzUyx6cvY",
+			"AIzaSyBNfmkNwhCRokZk1QNnQzvHEAcn5ug1jnA",
+			"AIzaSyDQ5Nn51uNJO82JtBwkue-Q-lNZpHqt72U",
+			"AIzaSyCZkpS6ll40jcuTvuH9ECz60e3_ZudOFpM",
+			"AIzaSyB4ujp9i4-cHgowocYvuQ7_uLgDyIPFxl8",
+			"AIzaSyAC4quGEFZE56y5UH1YWzqDyMOE61oIHmw",
+			"AIzaSyAjKGdTWQxnylXaLr1UqABT8B047qg4zHc"
+	};
+
 
 
 	/**
@@ -66,16 +81,16 @@ public class YTubeAPIKey {
 	public String getYouTubeAPIKey() {
 		String key;
 
-		if (isUserApiKeySet()) {
-			// if the user has not set his own API key, then use the default GoTube key
-			key = userAPIKey;
-		} else {
+//		if (isUserApiKeySet()) {
+//			// if the user has not set his own API key, then use the default GoTube key
+//			key = userAPIKey;
+//		} else {
 			// else we are going to choose one of the defaults keys at random
-			int i = random.nextInt( BuildConfig.YOUTUBE_API_KEYS.length );
-			key = BuildConfig.YOUTUBE_API_KEYS[i];
-		}
+			int i = random.nextInt(YOUTUBE_API_KEYS.length);
+			key = YOUTUBE_API_KEYS[i];
+//		}
 
-//		Log.d(TAG, "Key = " + key);
+		Log.d(TAG, "Key = " + key);
 		return key;
 	}
 

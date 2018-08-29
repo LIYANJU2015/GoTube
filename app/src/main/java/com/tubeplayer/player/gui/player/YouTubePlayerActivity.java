@@ -32,6 +32,7 @@ import java.util.LinkedHashMap;
 import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.FBAdUtils;
 import com.tubeplayer.player.business.FacebookReport;
+import com.tubeplayer.player.business.SuperVersions;
 import com.tubeplayer.player.business.Utils;
 import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
 import com.tubeplayer.player.business.youtube.Tasks.GetYouTubeChannelInfoTask;
@@ -169,13 +170,15 @@ public class YouTubePlayerActivity extends AppCompatActivity implements VideoLis
             FacebookReport.logSentVideoPlay();
         }
 
-        FBAdUtils.interstitialLoad(Utils.CHAPING_COMMON_AD, new FBAdUtils.FBInterstitialAdListener(){
-            @Override
-            public void onInterstitialDismissed(Ad ad) {
-                super.onInterstitialDismissed(ad);
-                FBAdUtils.destoryInterstitial();
-            }
-        });
+        if (SuperVersions.isSpecial()) {
+            FBAdUtils.interstitialLoad(Utils.CHAPING_COMMON_AD, new FBAdUtils.FBInterstitialAdListener() {
+                @Override
+                public void onInterstitialDismissed(Ad ad) {
+                    super.onInterstitialDismissed(ad);
+                    FBAdUtils.destoryInterstitial();
+                }
+            });
+        }
     }
 
     private TextView videoDescTitleTextView;
@@ -232,14 +235,16 @@ public class YouTubePlayerActivity extends AppCompatActivity implements VideoLis
 
         setVideoDetail();
 
-        FrameLayout adFrameLayout = headerView.findViewById(R.id.ad_frame);
-        NativeAd nativeAd = FBAdUtils.nextNativieAd();
-        if (nativeAd != null && nativeAd.isAdLoaded()) {
-            adFrameLayout.setVisibility(View.VISIBLE);
-            adFrameLayout.removeAllViews();
-            adFrameLayout.addView(FBAdUtils.setUpItemNativeAdView(this, nativeAd));
-        } else {
-            adFrameLayout.setVisibility(View.GONE);
+        if (SuperVersions.isSpecial()) {
+            FrameLayout adFrameLayout = headerView.findViewById(R.id.ad_frame);
+            NativeAd nativeAd = FBAdUtils.nextNativieAd();
+            if (nativeAd != null && nativeAd.isAdLoaded()) {
+                adFrameLayout.setVisibility(View.VISIBLE);
+                adFrameLayout.removeAllViews();
+                adFrameLayout.addView(FBAdUtils.setUpItemNativeAdView(this, nativeAd));
+            } else {
+                adFrameLayout.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -393,10 +398,12 @@ public class YouTubePlayerActivity extends AppCompatActivity implements VideoLis
             checkIfUserSubbedToChannelTask.cancel(true);
         }
 
-        if (FBAdUtils.isInterstitialLoaded()) {
-            FBAdUtils.showInterstitial();
+        if (SuperVersions.isSpecial()) {
+            if (FBAdUtils.isInterstitialLoaded()) {
+                FBAdUtils.showInterstitial();
+            }
+            FBAdUtils.destoryInterstitial();
         }
-        FBAdUtils.destoryInterstitial();
     }
 
 

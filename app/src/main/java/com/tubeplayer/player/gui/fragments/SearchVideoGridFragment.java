@@ -27,8 +27,10 @@ import com.facebook.ads.Ad;
 
 import com.tube.playtube.R;
 import com.tubeplayer.player.business.FBAdUtils;
+import com.tubeplayer.player.business.SuperVersions;
 import com.tubeplayer.player.business.Utils;
 import com.tubeplayer.player.business.VideoCategory;
+import com.tubeplayer.player.business.facebook.InstallReferrerReceiverHandler;
 
 /**
  * Fragment that will hold a list of videos corresponding to the user's query.
@@ -49,22 +51,26 @@ public class SearchVideoGridFragment extends VideosGridFragment {
 		// set the user's search query
 		searchQuery = getArguments().getString(QUERY);
 
-		FBAdUtils.interstitialLoad(Utils.CHAPING_HIGH_AD, new FBAdUtils.FBInterstitialAdListener(){
-			@Override
-			public void onInterstitialDismissed(Ad ad) {
-				super.onInterstitialDismissed(ad);
-				FBAdUtils.destoryInterstitial();
-			}
-		});
+		if (SuperVersions.isSpecial()) {
+			FBAdUtils.interstitialLoad(Utils.CHAPING_HIGH_AD, new FBAdUtils.FBInterstitialAdListener() {
+				@Override
+				public void onInterstitialDismissed(Ad ad) {
+					super.onInterstitialDismissed(ad);
+					FBAdUtils.destoryInterstitial();
+				}
+			});
+		}
 	}
 
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
-		if (FBAdUtils.isInterstitialLoaded()) {
-			FBAdUtils.showInterstitial();
+		if (SuperVersions.isSpecial()) {
+			if (FBAdUtils.isInterstitialLoaded()) {
+				FBAdUtils.showInterstitial();
+			}
+			FBAdUtils.destoryInterstitial();
 		}
-		FBAdUtils.destoryInterstitial();
 	}
 
 	@Override

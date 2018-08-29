@@ -10,8 +10,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.facebook.ads.Ad;
 import com.facebook.ads.NativeAd;
 import com.tubeplayer.player.business.FBAdUtils;
+import com.tubeplayer.player.business.SuperVersions;
 import com.tubeplayer.player.business.Utils;
 import com.tubeplayer.player.business.db.DownloadedVideosDb;
 import com.tube.playtube.R;
@@ -48,12 +50,24 @@ public class GetVideoActivity extends AppCompatActivity {
                 .replace(R.id.download_frame, downloadedVideosFragment)
                 .commitAllowingStateLoss();
 
-        FBAdUtils.showAdDialog(this, Utils.NATIVE_AD_HIGHT_ID);
+        FBAdUtils.interstitialLoad(Utils.CHAPING_HIGH_AD, new FBAdUtils.FBInterstitialAdListener() {
+            @Override
+            public void onInterstitialDismissed(Ad ad) {
+                super.onInterstitialDismissed(ad);
+                FBAdUtils.destoryInterstitial();
+            }
+        });
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         DownloadedVideosDb.getVideoDownloadsDb().setListener(null);
+
+        if (FBAdUtils.isInterstitialLoaded()) {
+            FBAdUtils.showInterstitial();
+        }
+        FBAdUtils.destoryInterstitial();
+
     }
 }
