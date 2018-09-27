@@ -5,6 +5,8 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -13,8 +15,9 @@ import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.tubeplayer.player.business.FacebookReport;
 import com.tube.playtube.R;
+import com.tubeplayer.player.app.TubeApp;
+import com.tubeplayer.player.business.FacebookReport;
 
 /**
  * Created by liyanju on 2018/3/22.
@@ -24,17 +27,50 @@ public class SplashActivity extends AppCompatActivity{
 
     private View container;
 
+    private static final String PRIVACY_POLICY_URL = "http://songtome1919.blogspot.com/2018/09/privacy-policy.html";
+
     @Override
     public void finish() {
         super.finish();
         overridePendingTransition(0, R.anim.activity_fade_out);
     }
 
+    private void initSplash() {
+        TextView privacyTV = findViewById(R.id.privacy_policy_link);
+        privacyTV.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+        privacyTV.getPaint().setAntiAlias(true);
+        privacyTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse(PRIVACY_POLICY_URL);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.btn_start).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startMain();
+            }
+        });
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash_activity);
-        initViews();
+        if (isFirstStart()) {
+            setContentView(R.layout.splash_first_activity);
+            initSplash();
+            TubeApp.getPreferenceManager().edit().putBoolean("isFirstStart", false).apply();
+        } else {
+            setContentView(R.layout.splash_activity);
+            initViews();
+        }
+    }
+
+    private boolean isFirstStart() {
+        return TubeApp.getPreferenceManager().getBoolean("isFirstStart", true) && !TubeApp.isSpecial();
     }
 
     private void initViews() {

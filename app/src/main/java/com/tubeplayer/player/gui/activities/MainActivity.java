@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 			}
 		});
 
-		FBAdUtils.showAdDialog(this, Utils.NATIVE_AD_HIGHT_ID);
+		FBAdUtils.showAdDialog(this, Utils.NATIVE_AD_ID);
 	}
 
 	private FloatingSearchView mSearchView;

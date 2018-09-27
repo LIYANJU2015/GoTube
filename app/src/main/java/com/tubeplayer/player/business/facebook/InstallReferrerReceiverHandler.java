@@ -9,6 +9,7 @@ import com.tubeplayer.player.business.SuperVersions;
 import com.tube.playtube.BuildConfig;
 
 import com.tubeplayer.player.app.TubeApp;
+import com.tubeplayer.player.business.Utils;
 
 /**
  * Created by liyanju on 2018/6/13.
@@ -32,6 +33,10 @@ public class InstallReferrerReceiverHandler {
             if (TubeApp.getPreferenceManager().getBoolean("can_referrer", false)) {
                 return;
             }
+        }
+
+        if (Utils.isNotCommongUser()) {
+            return;
         }
 
         Log.e("facebookReferrer:::::", referrer);

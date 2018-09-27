@@ -8,8 +8,8 @@ android {
         applicationId "com.weyoutube.playtube.tubeplayer"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 4
-        versionName '1.0.3'
+        versionCode 7
+        versionName '1.0.6'
         // Third party devs:  pls be ethical and change the below keys
         vectorDrawables.useSupportLibrary true
         multiDexEnabled true    // this is as we have over 65536 lines of code...
@@ -86,7 +86,7 @@ dependencies {
     compile 'com.google.http-client:google-http-client-android:1.23.0'
     compile 'com.google.apis:google-api-services-youtube:v3-rev187-1.23.0'
 
-    compile 'com.github.TeamNewPipe:NewPipeExtractor:v0.11.5'
+    implementation 'com.github.TeamNewPipe:NewPipeExtractor:66c3c3f45241d4b0c909'
     compile 'com.github.moraisigor:slidingdrawer:1.6.7'
     compile 'com.github.bumptech.glide:glide:4.3.1'
     compile 'com.jakewharton:butterknife:8.8.1'

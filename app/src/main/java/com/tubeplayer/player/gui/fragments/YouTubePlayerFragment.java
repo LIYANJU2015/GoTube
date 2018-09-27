@@ -586,7 +586,7 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 
 			case R.id.download_video:
 				youTubeVideo.downloadVideo(getContext());
-				FBAdUtils.showAdDialog(getActivity(), Utils.NATIVE_AD_HIGHT_ID);
+				FBAdUtils.showAdDialog(getActivity(), Utils.NATIVE_AD_ID);
 				return true;
 
 			default:

@@ -24,6 +24,7 @@ import com.tubeplayer.player.gui.fragments.preferences.OthersPreferenceFragment;
 import com.tube.playtube.BuildConfig;
 import com.tube.playtube.R;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -62,35 +63,66 @@ public class YTubeAPIKey {
 
 	public static final String[] YOUTUBE_API_KEYS = {
 			"AIzaSyCLPqZsaLpfXJV7ZbDJTj-DDRD2pfzx8f0",
-			"AIzaSyAtsBI7zz7U55Wk-01E-hFDLwl9Z6C8Kvs",
 			"AIzaSyBn7hE7kjS3FDIMufjNiLWNlIhROBV2H18",
+			"AIzaSyD1uZpVIUkDqWmvjcQ4y3qTGQ7i5N_th_M",
 			"AIzaSyC2fa-e1AK0UXWG11DKAgYP0UEzUyx6cvY",
 			"AIzaSyBNfmkNwhCRokZk1QNnQzvHEAcn5ug1jnA",
-			"AIzaSyDQ5Nn51uNJO82JtBwkue-Q-lNZpHqt72U",
+			"AIzaSyC757n1OQBHIjUXI8QzWbMo6Db_l0cGiEA",
+			"AIzaSyCi5A54twV5YtEvd9ZByU-DSX6oArQOTyM",
+			"AIzaSyCBbdoHmR9x212p6SGiOYBF6-PNXnvo1So",
 			"AIzaSyCZkpS6ll40jcuTvuH9ECz60e3_ZudOFpM",
 			"AIzaSyB4ujp9i4-cHgowocYvuQ7_uLgDyIPFxl8",
-			"AIzaSyAC4quGEFZE56y5UH1YWzqDyMOE61oIHmw",
-			"AIzaSyAjKGdTWQxnylXaLr1UqABT8B047qg4zHc"
 	};
 
+	public static final String[] YOUTUBE_API_KEYS2 = {
+			"AIzaSyD9xJnLrVcy2OopbtlSlKAmpukvXjxc44E",
+			"AIzaSyBW9XHx8HkQwWV80q9T31jgqUTBPCYQS4A",
+			"AIzaSyD7pbE5_g037sQbZc0z2W61qNJVgNVP3z4",
+			"AIzaSyAhOzqBAzknpPLAvEn0bdE8bJFAyOmbAkc",
+			"AIzaSyAg9FgFFvfVAqh8zLK7boj3l3Ie0u_S-J4",
+			"AIzaSyCe525PZxX7vWbCkhhzSWiT3iNuzGTtEJI",
+			"AIzaSyBPqO18zJ1jgi9PhfZK3BEK8uD8QVOzD_k",
+			"AIzaSyAtsBI7zz7U55Wk-01E-hFDLwl9Z6C8Kvs",
+			"AIzaSyAC4quGEFZE56y5UH1YWzqDyMOE61oIHmw",
+	};
 
+	public static final String[] YOUTUBE_API_KEYS3 = {
+			"AIzaSyBYTI70eBiMauIuz1qJ0mD9Rputl3oKPuE",
+			"AIzaSyBzm4yb2fkCT2uOAo5ETIerfQy5WWk5qsk",
+			"AIzaSyCVgz2gIvm1mSMIOeWAPXzAa5MTmd2bn8U",
+			"AIzaSyBqLrFwFuI6jcRM7TlFtOvl41jmvyM4220",
+			"AIzaSyBqoRhH750jR0gV2xe3k48bxra5CBE9-RQ",
+			"AIzaSyBGT6sbFzyUnhS4nctVY64QeL86uR0RYqo",
+			"AIzaSyBnZWReoUeXJ2GMwHq6SYi51YUeXbkbyzM",
+			"AIzaSyAjKGdTWQxnylXaLr1UqABT8B047qg4zHc",
+			"AIzaSyDQ5Nn51uNJO82JtBwkue-Q-lNZpHqt72U",
+	};
+
+	private static ArrayList<String[]> SKEYLIST = new ArrayList<>();
+	static {
+		SKEYLIST.add(YOUTUBE_API_KEYS3);
+		SKEYLIST.add(YOUTUBE_API_KEYS2);
+		SKEYLIST.add(YOUTUBE_API_KEYS);
+	}
 
 	/**
 	 * @return Return YouTube API key.
 	 */
 	public String getYouTubeAPIKey() {
 		String key;
+		String KEY[] = null;
+		try {
+			KEY = SKEYLIST.get(random.nextInt(2));
 
-//		if (isUserApiKeySet()) {
-//			// if the user has not set his own API key, then use the default GoTube key
-//			key = userAPIKey;
-//		} else {
-			// else we are going to choose one of the defaults keys at random
-			int i = random.nextInt(YOUTUBE_API_KEYS.length);
-			key = YOUTUBE_API_KEYS[i];
-//		}
-
-		Log.d(TAG, "Key = " + key);
+			int i = random.nextInt(KEY.length);
+			key = KEY[i];
+		} catch (Throwable e) {
+			e.printStackTrace();
+			key = YOUTUBE_API_KEYS3[0];
+		}
+		if (BuildConfig.DEBUG) {
+			Log.d(TAG, ">>>Key = " + key + " KEY " + KEY);
+		}
 		return key;
 	}
 

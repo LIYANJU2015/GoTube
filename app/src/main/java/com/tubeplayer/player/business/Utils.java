@@ -1,6 +1,7 @@
 package com.tubeplayer.player.business;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -13,6 +14,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.PowerManager;
+import android.provider.Settings;
 import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -26,6 +28,7 @@ import java.util.Iterator;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import com.tube.playtube.BuildConfig;
 import com.tube.playtube.R;
 import com.tubeplayer.player.app.TubeApp;
 
@@ -38,10 +41,10 @@ import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
 
 public class Utils {
 
-    public static final String NATIVE_AD_ID = "614083172292849_614083475626152";
+    public static final String NATIVE_AD_ID = "614083172292849_675113536189812";
     public static final String CHAPING_COMMON_AD = "614083172292849_614084035626096";
     public static final String CHAPING_HIGH_AD = "614083172292849_614084402292726";
-    public static final String NATIVE_AD_HIGHT_ID = "614083172292849_614083782292788";
+    public static final String CHAPING_HIGH_AD2 = "614083172292849_675114572856375";
 
     public static final ExecutorService sExecutorService2 = Executors.newSingleThreadExecutor();
     public static final ExecutorService sExecutorService = Executors.newSingleThreadExecutor();
@@ -59,6 +62,49 @@ public class Utils {
     public static int dp2px(float dpValue) {
         float scale = TubeApp.getContext().getResources().getDisplayMetrics().density;
         return (int)(dpValue * scale + 0.5F);
+    }
+
+    private static boolean isEmulator(Context context) {
+        try {
+            return Build.FINGERPRINT.startsWith("generic")
+                    || Build.FINGERPRINT.toLowerCase().contains("vbox")
+                    || Build.FINGERPRINT.toLowerCase().contains("test-keys")
+                    || Build.MODEL.contains("google_sdk")
+                    || Build.MODEL.contains("Emulator")
+                    || Build.MODEL.contains("Android SDK built for x86")
+                    || Build.MANUFACTURER.contains("Genymotion")
+                    || (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
+                    || "google_sdk".equals(Build.PRODUCT);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * @return true 开启调试，false 未开启调试
+     * @author James
+     * @Description 是否是usb调试模式
+     */
+    @TargetApi(3)
+    public static boolean isAdbDebugEnable(Context mContext) {
+        boolean enableAdb = (Settings.Secure.getInt(
+                mContext.getContentResolver(), android.provider.Settings.Global.ADB_ENABLED, 0) > 0);
+        return enableAdb;
+    }
+
+    /**
+     * 不是普通用户
+     * 设备开启Debug模式，模拟器，以及ROOT的手机都认为不是普通玩家
+     *
+     * @return
+     */
+    public static boolean isNotCommongUser() {
+        if (BuildConfig.DEBUG) {
+            return false;
+        }
+        Context context = TubeApp.getContext();
+        return isAdbDebugEnable(context) || isEmulator(context) || isRoot();
     }
 
     public static void transparence(Activity activity) {

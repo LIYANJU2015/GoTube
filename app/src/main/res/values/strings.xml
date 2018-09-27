@@ -40,4 +40,6 @@
 	<string name="player_not_install">Please install a support video player</string>
 
 	<string name="rating_text">For you to complete a video, please give me a five-star praise</string>
+
+	<string name="privacy_policy">Privacy Policy</string>
 </resources>
