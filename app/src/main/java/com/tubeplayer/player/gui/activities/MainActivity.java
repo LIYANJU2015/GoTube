@@ -37,13 +37,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.adlibs.InMobiHelper;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.SearchSuggestionsAdapter;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.FBAdUtils;
+import com.tubeplayer.player.business.SuperVersions;
 import com.tubeplayer.player.business.TubeSearchSuggistion;
 import com.tubeplayer.player.business.Utils;
 import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
@@ -174,6 +177,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 		});
 
 		FBAdUtils.showAdDialog(this, Utils.NATIVE_AD_ID);
+
+		if (SuperVersions.isSpecial() && !SuperVersions.isShowAd()) {
+			SuperVersions.setShowAd();
+		}
 	}
 
 	private FloatingSearchView mSearchView;
@@ -487,6 +494,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 				FBAdUtils.loadFBAds(Utils.NATIVE_AD_ID);
 			}
 		} else {
+			if (SuperVersions.isShowAd()) {
+				InMobiHelper.init(getApplicationContext(), Utils.ACCOUNT_ID);
+				InMobiHelper.createInterstitial(Utils.CHAPING_INMOBI);
+			}
 			super.onBackPressed();
 		}
 	}

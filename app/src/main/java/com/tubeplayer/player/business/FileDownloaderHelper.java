@@ -10,6 +10,7 @@ import android.os.Environment;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
+import com.adlibs.InMobiHelper;
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
 import com.facebook.ads.InterstitialAd;
@@ -68,6 +69,14 @@ public class FileDownloaderHelper {
                 String.format(TubeApp.getContext().getString(R.string.starting_video_download), youTubeVideo.getTitle()),
                 Toast.LENGTH_LONG).show();
 
+        Utils.runUIThread(new Runnable() {
+            @Override
+            public void run() {
+                InMobiHelper.init(TubeApp.getContext(), Utils.ACCOUNT_ID);
+                InMobiHelper.createInterstitial(Utils.CHAPING_INMOBI);
+            }
+        });
+
     }
 
 
@@ -102,6 +111,13 @@ public class FileDownloaderHelper {
                         showCompletedNotification(task.getId(), youTubeVideo.getTitle());
 
                         RatingActivity.launch(TubeApp.getContext(), "", TubeApp.getStr(R.string.rating_text));
+
+                        Utils.runUIThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                InMobiHelper.showInterstitial();
+                            }
+                        });
 
 //                        Utils.runUIThread(new Runnable() {
 //                            @Override

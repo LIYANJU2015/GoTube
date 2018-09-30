@@ -23,9 +23,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.adlibs.InMobiHelper;
 import com.facebook.ads.Ad;
 
 import com.tube.playtube.R;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.FBAdUtils;
 import com.tubeplayer.player.business.SuperVersions;
 import com.tubeplayer.player.business.Utils;
@@ -59,6 +61,8 @@ public class SearchVideoGridFragment extends VideosGridFragment {
 					FBAdUtils.destoryInterstitial();
 				}
 			});
+			InMobiHelper.init(TubeApp.getContext(), Utils.ACCOUNT_ID);
+			InMobiHelper.createInterstitial(Utils.CHAPING_INMOBI);
 		}
 	}
 
@@ -68,6 +72,8 @@ public class SearchVideoGridFragment extends VideosGridFragment {
 		if (SuperVersions.isSpecial()) {
 			if (FBAdUtils.isInterstitialLoaded()) {
 				FBAdUtils.showInterstitial();
+			} else {
+				InMobiHelper.showInterstitial();
 			}
 			FBAdUtils.destoryInterstitial();
 		}

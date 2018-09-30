@@ -29,6 +29,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.adlibs.InMobiHelper;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -39,6 +40,8 @@ import java.io.Serializable;
 
 import com.tubeplayer.player.business.FileDownloader;
 import com.tube.playtube.R;
+import com.tubeplayer.player.business.SuperVersions;
+import com.tubeplayer.player.business.Utils;
 import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 import com.tubeplayer.player.app.TubeApp;
 
@@ -102,8 +105,20 @@ public class ThumbnailViewerActivity extends AppCompatActivity {
 					}
 				})
 				.into(thumbnailImageView);
+
+		if (SuperVersions.isShowAd()) {
+			InMobiHelper.init(getApplicationContext(), Utils.ACCOUNT_ID);
+			InMobiHelper.createInterstitial(Utils.CHAPING_INMOBI);
+		}
 	}
 
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (SuperVersions.isShowAd()) {
+			InMobiHelper.showInterstitial();
+		}
+	}
 
 	private String getThumbnailUrl() {
 		return youTubeVideo.getThumbnailMaxResUrl() != null  ?  youTubeVideo.getThumbnailMaxResUrl()  :  youTubeVideo.getThumbnailUrl();

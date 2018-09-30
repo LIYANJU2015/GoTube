@@ -15,8 +15,10 @@ import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.adlibs.InMobiHelper;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
@@ -178,6 +180,8 @@ public class YouTubePlayerActivity extends AppCompatActivity implements VideoLis
                     FBAdUtils.destoryInterstitial();
                 }
             });
+            InMobiHelper.init(TubeApp.getContext(), Utils.ACCOUNT_ID);
+            InMobiHelper.createInterstitial(Utils.CHAPING_INMOBI);
         }
     }
 
@@ -235,16 +239,14 @@ public class YouTubePlayerActivity extends AppCompatActivity implements VideoLis
 
         setVideoDetail();
 
-        if (SuperVersions.isSpecial()) {
-            FrameLayout adFrameLayout = headerView.findViewById(R.id.ad_frame);
-            NativeAd nativeAd = FBAdUtils.nextNativieAd();
-            if (nativeAd != null && nativeAd.isAdLoaded()) {
-                adFrameLayout.setVisibility(View.VISIBLE);
-                adFrameLayout.removeAllViews();
-                adFrameLayout.addView(FBAdUtils.setUpItemNativeAdView(this, nativeAd));
-            } else {
-                adFrameLayout.setVisibility(View.GONE);
-            }
+        RelativeLayout adFrameLayout = headerView.findViewById(R.id.ad_frame);
+        if (SuperVersions.isShowAd()) {
+            adFrameLayout.setVisibility(View.VISIBLE);
+            adFrameLayout.removeAllViews();
+            InMobiHelper.init(getApplicationContext(), Utils.ACCOUNT_ID);
+            InMobiHelper.addBanner(this, adFrameLayout, Utils.BANNER_INMOBI);
+        } else {
+            adFrameLayout.setVisibility(View.GONE);
         }
     }
 
@@ -401,6 +403,8 @@ public class YouTubePlayerActivity extends AppCompatActivity implements VideoLis
         if (SuperVersions.isSpecial()) {
             if (FBAdUtils.isInterstitialLoaded()) {
                 FBAdUtils.showInterstitial();
+            } else {
+                InMobiHelper.showInterstitial();
             }
             FBAdUtils.destoryInterstitial();
         }

@@ -61,7 +61,10 @@ public class InstallReferrerReceiverHandler {
             return;
         }
 
-
+        if (SuperVersions.SuperVersionHandler.isCanShowAd(context)) {
+            SuperVersions.SuperVersionHandler.setShowAd();
+            return;
+        }
     }
 
 }

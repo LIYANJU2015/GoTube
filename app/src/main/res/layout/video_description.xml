@@ -9,7 +9,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <FrameLayout
+        <RelativeLayout
             android:paddingBottom="16dp"
             android:id="@+id/ad_frame"
             android:layout_width="match_parent"

@@ -38,8 +38,10 @@ import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
 
 
+import com.adlibs.InMobiHelper;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.rating.RatingActivity;
+import com.tube.playtube.BuildConfig;
 import com.tubeplayer.player.business.FBAdUtils;
 import com.tubeplayer.player.business.FacebookReport;
 import com.tubeplayer.player.business.SuperVersions;
@@ -103,6 +105,11 @@ public class TubeApp extends MultiDexApplication {
 			return;
 		}
 
+//		if (BuildConfig.DEBUG) {
+//			SuperVersions.setSpecial();
+//			InMobiHelper.setDebug();
+//		}
+
 		SuperVersions.initSpecial();
 
 		CrashReport.initCrashReport(getApplicationContext());
@@ -130,6 +137,9 @@ public class TubeApp extends MultiDexApplication {
 			}
 		});
 		RatingActivity.setPopTotalCount(this, 2);
+
+		InMobiHelper.init(getApplicationContext(), Utils.ACCOUNT_ID);
+		InMobiHelper.createInterstitial(Utils.CHAPING_INMOBI);
 	}
 
 	public static void addShortcut(Context context, Class clazz, String appName, int ic_launcher) {

@@ -25,10 +25,21 @@
 			<!-- Scrolling content -->
 
 			<!-- FRAGMENTS will be placed here ... -->
-			<android.support.v4.view.ViewPager
-				android:id="@+id/pager"
+
+			<FrameLayout
 				android:layout_width="match_parent"
-				android:layout_height="match_parent" />
+				android:layout_height="match_parent">
+				<android.support.v4.view.ViewPager
+					android:id="@+id/pager"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent" />
+				<RelativeLayout
+					android:layout_gravity="bottom|center"
+					android:id="@+id/in_ad_relative"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"/>
+			</FrameLayout>
+
 
 		</android.support.v4.widget.NestedScrollView>
 

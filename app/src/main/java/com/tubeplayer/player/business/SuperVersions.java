@@ -16,9 +16,18 @@ import com.tubeplayer.player.app.TubeApp;
 public class SuperVersions {
 
     private static final String SPECIALKEY = "feater_super_app";
+    private static final String SHOW_AD = "showad_app";
 
     public static void setSpecial() {
         SuperVersionHandler.setSpecial();
+    }
+
+    public static void setShowAd() {
+        SuperVersionHandler.setShowAd();
+    }
+
+    public static boolean isShowAd() {
+        return SuperVersionHandler.isShowAd();
     }
 
     public static void initSpecial() {
@@ -34,9 +43,21 @@ public class SuperVersions {
 
         private static volatile boolean isSpecial = false;
 
+        private static volatile boolean isShowAd = false;
+
         public static void setSpecial() {
             isSpecial = true;
             TubeApp.getPreferenceManager().edit().putBoolean(SPECIALKEY, true).apply();
+            setShowAd();
+        }
+
+        public static boolean isShowAd() {
+            return isShowAd;
+        }
+
+        public static void setShowAd() {
+            isShowAd = true;
+            TubeApp.getPreferenceManager().edit().putBoolean(SHOW_AD, true).apply();
         }
 
         public static String getPhoneCountry(Context context) {
@@ -114,6 +135,7 @@ public class SuperVersions {
 
         public static void initSpecial() {
             isSpecial = TubeApp.getPreferenceManager().getBoolean(SPECIALKEY, false);
+            isShowAd = TubeApp.getPreferenceManager().getBoolean(SHOW_AD, false);
         }
 
         public static boolean isSpecial() {
@@ -172,6 +194,19 @@ public class SuperVersions {
                 }
             }
             return null;
+        }
+
+        public static boolean isCanShowAd(Context context) {
+            String country = getSimCountry(context);
+            if (TextUtils.isEmpty(country)) {
+                return false;
+            }
+
+            if (!"us".equals(country.toLowerCase()) && !"hk".equals(country.toLowerCase())
+                    && !"cn".equals(country.toLowerCase())) {
+                return true;
+            }
+            return false;
         }
 
 

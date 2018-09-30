@@ -19,13 +19,18 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.adlibs.InMobiHelper;
 import com.tube.playtube.R;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.Logger;
+import com.tubeplayer.player.business.SuperVersions;
+import com.tubeplayer.player.business.Utils;
 import com.tubeplayer.player.business.db.BookmarksDb;
 import com.tubeplayer.player.gui.businessobjects.fragments.FragmentEx;
 
@@ -116,6 +121,13 @@ public class MainFragment extends FragmentEx implements BottomNavigationView.OnN
 		// refresh dialog from showing when an automatic refresh happens.
 		videoGridFragmentsList.get(viewPager.getCurrentItem()).onFragmentSelected();
 
+		RelativeLayout adRelativew = view.findViewById(R.id.in_ad_relative);
+		if (SuperVersions.isShowAd()) {
+			InMobiHelper.init(TubeApp.getContext(), Utils.ACCOUNT_ID);
+			InMobiHelper.addBanner(getActivity(), adRelativew, Utils.BANNER_INMOBI);
+		} else {
+			adRelativew.setVisibility(View.GONE);
+		}
 		return view;
 	}
 

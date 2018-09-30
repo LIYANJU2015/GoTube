@@ -9,9 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
+import com.adlibs.InMobiHelper;
 import com.facebook.ads.Ad;
 import com.facebook.ads.NativeAd;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.FBAdUtils;
 import com.tubeplayer.player.business.SuperVersions;
 import com.tubeplayer.player.business.Utils;
@@ -57,6 +60,17 @@ public class GetVideoActivity extends AppCompatActivity {
                 FBAdUtils.destoryInterstitial();
             }
         });
+        InMobiHelper.init(TubeApp.getContext(), Utils.ACCOUNT_ID);
+        InMobiHelper.createInterstitial(Utils.CHAPING_INMOBI);
+
+        RelativeLayout adRelative = findViewById(R.id.in_ad_relative);
+        if (SuperVersions.isShowAd()) {
+            adRelative.setVisibility(View.VISIBLE);
+            adRelative.removeAllViews();
+            InMobiHelper.addBanner(this, adRelative, Utils.BANNER_INMOBI2);
+        } else {
+            adRelative.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -66,6 +80,8 @@ public class GetVideoActivity extends AppCompatActivity {
 
         if (FBAdUtils.isInterstitialLoaded()) {
             FBAdUtils.showInterstitial();
+        } else {
+            InMobiHelper.showInterstitial();
         }
         FBAdUtils.destoryInterstitial();
 
