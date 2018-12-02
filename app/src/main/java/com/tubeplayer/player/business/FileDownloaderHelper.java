@@ -11,25 +11,21 @@ import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
 import com.adlibs.InMobiHelper;
-import com.facebook.ads.Ad;
-import com.facebook.ads.AdError;
-import com.facebook.ads.InterstitialAd;
 import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.model.FileDownloadStatus;
 import com.liulishuo.filedownloader.notification.BaseNotificationItem;
 import com.liulishuo.filedownloader.notification.FileDownloadNotificationHelper;
 import com.liulishuo.filedownloader.notification.FileDownloadNotificationListener;
 import com.liulishuo.filedownloader.util.FileDownloadHelper;
+import com.mintergalsdk.MintergalSDK;
 import com.rating.RatingActivity;
-
-import java.io.File;
-
-import com.tubeplayer.player.business.db.DownloadedVideosDb;
 import com.tube.playtube.R;
 import com.tubeplayer.player.app.TubeApp;
+import com.tubeplayer.player.business.db.DownloadedVideosDb;
 import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 import com.tubeplayer.player.gui.activities.GetVideoActivity;
-import com.tubeplayer.player.gui.activities.MainActivity;
+
+import java.io.File;
 
 /**
  * Created by liyanju on 2018/6/12.
@@ -115,7 +111,10 @@ public class FileDownloaderHelper {
                         Utils.runUIThread(new Runnable() {
                             @Override
                             public void run() {
-                                InMobiHelper.showInterstitial();
+                                if (!InMobiHelper.showInterstitial()) {
+                                    MintergalSDK.showInterstitialAd(TubeApp.CHA_PING_AD_ID, null);
+                                }
+
                             }
                         });
 

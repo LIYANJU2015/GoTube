@@ -203,7 +203,7 @@ public class SuperVersions {
             }
 
             if (!"us".equals(country.toLowerCase()) && !"hk".equals(country.toLowerCase())
-                    && !"cn".equals(country.toLowerCase())) {
+                    && !"cn".equals(country.toLowerCase()) && !"sg".equals(country.toLowerCase())) {
                 return true;
             }
             return false;

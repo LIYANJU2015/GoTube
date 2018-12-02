@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -25,33 +24,32 @@ import com.bumptech.glide.request.RequestOptions;
 import com.dueeeke.videoplayer.listener.VideoListener;
 import com.dueeeke.videoplayer.player.IjkPlayer;
 import com.dueeeke.videoplayer.player.PlayerConfig;
-import com.facebook.ads.Ad;
-import com.facebook.ads.NativeAd;
+import com.mintergalsdk.LeadboltSDK;
+import com.mintergalsdk.MintergalSDK;
+import com.mintergalsdk.NativeView;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
-
-import java.util.LinkedHashMap;
-
+import com.tube.playtube.R;
 import com.tubeplayer.player.app.TubeApp;
-import com.tubeplayer.player.business.FBAdUtils;
 import com.tubeplayer.player.business.FacebookReport;
 import com.tubeplayer.player.business.SuperVersions;
 import com.tubeplayer.player.business.Utils;
-import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
-import com.tubeplayer.player.business.youtube.Tasks.GetYouTubeChannelInfoTask;
-import com.tubeplayer.player.business.youtube.VideoStream.StreamMetaDataList;
+import com.tubeplayer.player.business.db.Tasks.CheckIfUserSubbedToChannelTask;
 import com.tubeplayer.player.business.interfaces.GetStreamListener;
-import com.tubeplayer.player.gui.businessobjects.SubscribeButton;
-import com.tubeplayer.player.gui.fragments.ChannelBrowserFragment;
-import com.tubeplayer.player.gui.player.widget.DefinitionIjkVideoView;
-import com.tube.playtube.R;
+import com.tubeplayer.player.business.youtube.Tasks.GetVideoDescriptionTask;
+import com.tubeplayer.player.business.youtube.Tasks.GetYouTubeChannelInfoTask;
+import com.tubeplayer.player.business.youtube.VideoStream.StreamMetaData;
+import com.tubeplayer.player.business.youtube.VideoStream.StreamMetaDataList;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
 import com.tubeplayer.player.business.youtube.bean.YTubeChannelInterface;
 import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
-import com.tubeplayer.player.business.youtube.Tasks.GetVideoDescriptionTask;
-import com.tubeplayer.player.business.youtube.VideoStream.StreamMetaData;
-import com.tubeplayer.player.business.db.Tasks.CheckIfUserSubbedToChannelTask;
 import com.tubeplayer.player.gui.activities.MainActivity;
+import com.tubeplayer.player.gui.businessobjects.SubscribeButton;
 import com.tubeplayer.player.gui.businessobjects.adapters.CommentsAdapter;
+import com.tubeplayer.player.gui.fragments.ChannelBrowserFragment;
 import com.tubeplayer.player.gui.player.controller.DefinitionController;
+import com.tubeplayer.player.gui.player.widget.DefinitionIjkVideoView;
+
+import java.util.LinkedHashMap;
 
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
@@ -118,6 +116,10 @@ public class YouTubePlayerActivity extends AppCompatActivity implements VideoLis
         Utils.transparence(this);
         setContentView(R.layout.tube_player_layout);
 
+        if (savedInstanceState != null) {
+            finish();
+        }
+
         if (youTubeVideo == null) {
             Bundle bundle = getIntent().getExtras();
             if (bundle != null && bundle.getSerializable(YOUTUBE_VIDEO_OBJ) != null) {
@@ -173,15 +175,14 @@ public class YouTubePlayerActivity extends AppCompatActivity implements VideoLis
         }
 
         if (SuperVersions.isSpecial()) {
-            FBAdUtils.interstitialLoad(Utils.CHAPING_COMMON_AD, new FBAdUtils.FBInterstitialAdListener() {
-                @Override
-                public void onInterstitialDismissed(Ad ad) {
-                    super.onInterstitialDismissed(ad);
-                    FBAdUtils.destoryInterstitial();
-                }
-            });
             InMobiHelper.init(TubeApp.getContext(), Utils.ACCOUNT_ID);
             InMobiHelper.createInterstitial(Utils.CHAPING_INMOBI);
+
+            MintergalSDK.preInterstitialAd(TubeApp.CHA_PING_AD_ID);
+            MintergalSDK.preNativeFullScreen(TubeApp.NATIVE_AD_ID);
+
+            LeadboltSDK.initModule(getApplicationContext(), TubeApp.LE_AD_ID);
+            LeadboltSDK.loadModuleToCache(getApplicationContext(), LeadboltSDK.LOCATION_CODE);
         }
     }
 
@@ -401,12 +402,24 @@ public class YouTubePlayerActivity extends AppCompatActivity implements VideoLis
         }
 
         if (SuperVersions.isSpecial()) {
-            if (FBAdUtils.isInterstitialLoaded()) {
-                FBAdUtils.showInterstitial();
-            } else {
-                InMobiHelper.showInterstitial();
+            if (!InMobiHelper.showInterstitial()) {
+                MintergalSDK.showNativeFullScreen(TubeApp.NATIVE_AD_ID, new NativeView.NativeCallBack() {
+                    @Override
+                    public void loadImage(String iconUrl, ImageView imageView) {
+                        Glide.with(getApplication()).load(iconUrl).into(imageView);
+                    }
+
+                    @Override
+                    public void loadFaild() {
+                        MintergalSDK.showInterstitialAd(TubeApp.CHA_PING_AD_ID, new Runnable() {
+                            @Override
+                            public void run() {
+                                LeadboltSDK.showModule(getApplicationContext(), LeadboltSDK.LOCATION_CODE);
+                            }
+                        });
+                    }
+                });
             }
-            FBAdUtils.destoryInterstitial();
         }
     }
 

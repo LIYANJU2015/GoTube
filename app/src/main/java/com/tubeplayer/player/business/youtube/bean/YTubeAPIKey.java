@@ -122,6 +122,7 @@ public class YTubeAPIKey {
 		}
 		if (BuildConfig.DEBUG) {
 			Log.d(TAG, ">>>Key = " + key + " KEY " + KEY);
+//			key = "AIzaSyDKAnaBI_iverUHj4ibiqinD4dbsQDkfvM";
 		}
 		return key;
 	}

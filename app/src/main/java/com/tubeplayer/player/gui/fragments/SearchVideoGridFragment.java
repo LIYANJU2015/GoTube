@@ -24,15 +24,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.adlibs.InMobiHelper;
-import com.facebook.ads.Ad;
-
+import com.mintergalsdk.MintergalSDK;
 import com.tube.playtube.R;
 import com.tubeplayer.player.app.TubeApp;
-import com.tubeplayer.player.business.FBAdUtils;
 import com.tubeplayer.player.business.SuperVersions;
 import com.tubeplayer.player.business.Utils;
 import com.tubeplayer.player.business.VideoCategory;
-import com.tubeplayer.player.business.facebook.InstallReferrerReceiverHandler;
 
 /**
  * Fragment that will hold a list of videos corresponding to the user's query.
@@ -54,13 +51,6 @@ public class SearchVideoGridFragment extends VideosGridFragment {
 		searchQuery = getArguments().getString(QUERY);
 
 		if (SuperVersions.isSpecial()) {
-			FBAdUtils.interstitialLoad(Utils.CHAPING_HIGH_AD, new FBAdUtils.FBInterstitialAdListener() {
-				@Override
-				public void onInterstitialDismissed(Ad ad) {
-					super.onInterstitialDismissed(ad);
-					FBAdUtils.destoryInterstitial();
-				}
-			});
 			InMobiHelper.init(TubeApp.getContext(), Utils.ACCOUNT_ID);
 			InMobiHelper.createInterstitial(Utils.CHAPING_INMOBI);
 		}
@@ -70,12 +60,9 @@ public class SearchVideoGridFragment extends VideosGridFragment {
 	public void onDestroyView() {
 		super.onDestroyView();
 		if (SuperVersions.isSpecial()) {
-			if (FBAdUtils.isInterstitialLoaded()) {
-				FBAdUtils.showInterstitial();
-			} else {
-				InMobiHelper.showInterstitial();
+			if (!InMobiHelper.showInterstitial()) {
+				MintergalSDK.showNativeFullScreen(TubeApp.NATIVE_AD_ID, TubeApp.callBack);
 			}
-			FBAdUtils.destoryInterstitial();
 		}
 	}
 

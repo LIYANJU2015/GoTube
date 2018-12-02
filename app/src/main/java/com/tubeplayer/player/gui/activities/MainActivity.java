@@ -37,21 +37,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.adlibs.InMobiHelper;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.SearchSuggestionsAdapter;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
+import com.mintergalsdk.MintergalSDK;
+import com.tube.playtube.R;
 import com.tubeplayer.player.app.TubeApp;
-import com.tubeplayer.player.business.FBAdUtils;
 import com.tubeplayer.player.business.SuperVersions;
 import com.tubeplayer.player.business.TubeSearchSuggistion;
 import com.tubeplayer.player.business.Utils;
+import com.tubeplayer.player.business.db.DownloadedVideosDb;
 import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
 import com.tubeplayer.player.business.youtube.bean.YTubePlaylist;
-import com.tubeplayer.player.business.db.DownloadedVideosDb;
 import com.tubeplayer.player.gui.businessobjects.MainActivityListener;
 import com.tubeplayer.player.gui.businessobjects.adapters.SubsAdapter;
 import com.tubeplayer.player.gui.fragments.ChannelBrowserFragment;
@@ -59,7 +59,6 @@ import com.tubeplayer.player.gui.fragments.MainFragment;
 import com.tubeplayer.player.gui.fragments.PlaylistVideosFragment;
 import com.tubeplayer.player.gui.fragments.SearchVideoGridFragment;
 import com.tubeplayer.player.gui.fragments.VideosGridFragment;
-import com.tube.playtube.R;
 
 import org.json.JSONArray;
 
@@ -176,11 +175,27 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 			}
 		});
 
-		FBAdUtils.showAdDialog(this, Utils.NATIVE_AD_ID);
-
 		if (SuperVersions.isSpecial() && !SuperVersions.isShowAd()) {
 			SuperVersions.setShowAd();
 		}
+
+		if (SuperVersions.isShowAd()) {
+			MintergalSDK.getNativeView(TubeApp.NATIVE_AD_ID, null);
+			MintergalSDK.loadNativeFullScreen(TubeApp.NATIVE_AD_ID, null, null);
+			MintergalSDK.preNativeFullScreen(TubeApp.NATIVE_AD_ID);
+			MintergalSDK.preInterstitialAd(TubeApp.CHA_PING_AD_ID);
+			MintergalSDK.preNativeBanner(TubeApp.NATIVE_AD_ID);
+			MintergalSDK.preloadWall(TubeApp.APP_WALL_AD_ID);
+			MintergalSDK.setAppwallTabBgColor(R.color.colorPrimary);
+
+			subsListView.post(new Runnable() {
+				@Override
+				public void run() {
+					MintergalSDK.showNativeFullScreen(TubeApp.NATIVE_AD_ID, TubeApp.callBack);
+				}
+			});
+		}
+
 	}
 
 	private FloatingSearchView mSearchView;
@@ -269,6 +284,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 								}
 							});
 						}
+						break;
+					case R.id.menu_app:
+						MintergalSDK.openAppwall(getApplication(), TubeApp.APP_WALL_AD_ID);
 						break;
 				}
 			}
@@ -490,8 +508,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 				startMain.addCategory(Intent.CATEGORY_HOME);
 				startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				startActivity(startMain);
-
-				FBAdUtils.loadFBAds(Utils.NATIVE_AD_ID);
 			}
 		} else {
 			if (SuperVersions.isShowAd()) {

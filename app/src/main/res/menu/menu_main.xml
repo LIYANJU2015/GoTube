@@ -13,4 +13,8 @@
         android:title="@string/preferences"
         app:showAsAction="never"/>
 
+    <item android:id="@+id/menu_app"
+        android:title="Featured Products"
+        app:showAsAction="never"/>
+
 </menu>

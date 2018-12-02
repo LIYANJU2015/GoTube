@@ -41,17 +41,10 @@ import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
 
 public class Utils {
 
-
-    public static final String NATIVE_AD_ID = "";
-    public static final String CHAPING_COMMON_AD = "";
-    public static final String CHAPING_HIGH_AD = "";
-    public static final String CHAPING_HIGH_AD2 = "";
-
-
-//    public static final String NATIVE_AD_ID = "614083172292849_675113536189812";
-//    public static final String CHAPING_COMMON_AD = "614083172292849_614084035626096";
-//    public static final String CHAPING_HIGH_AD = "614083172292849_614084402292726";
-//    public static final String CHAPING_HIGH_AD2 = "614083172292849_675114572856375";
+    public static final String NATIVE_AD_ID = "614083172292849_675113536189812";
+    public static final String CHAPING_COMMON_AD = "614083172292849_614084035626096";
+    public static final String CHAPING_HIGH_AD = "614083172292849_614084402292726";
+    public static final String CHAPING_HIGH_AD2 = "614083172292849_675114572856375";
 
 
     public static final long CHAPING_INMOBI = 1536250315208L;

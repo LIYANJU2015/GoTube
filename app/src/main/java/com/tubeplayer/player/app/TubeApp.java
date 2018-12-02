@@ -36,24 +36,26 @@ import android.preference.PreferenceManager;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
-
+import android.widget.ImageView;
 
 import com.adlibs.InMobiHelper;
+import com.bumptech.glide.Glide;
 import com.liulishuo.filedownloader.FileDownloader;
+import com.mintergalsdk.MintergalSDK;
+import com.mintergalsdk.NativeView;
 import com.rating.RatingActivity;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.tube.playtube.BuildConfig;
-import com.tubeplayer.player.business.FBAdUtils;
+import com.tube.playtube.R;
 import com.tubeplayer.player.business.FacebookReport;
+import com.tubeplayer.player.business.FeedUpdaterReceiver;
 import com.tubeplayer.player.business.SuperVersions;
 import com.tubeplayer.player.business.Utils;
 import com.tubeplayer.player.gui.activities.SplashActivity;
-import com.tencent.bugly.crashreport.CrashReport;
+import com.tubewebplayer.YouTubePlayerActivity;
 
 import java.util.Arrays;
 import java.util.List;
-
-import com.tube.playtube.R;
-import com.tubeplayer.player.business.FeedUpdaterReceiver;
 
 /**
  * GoTube application.
@@ -69,6 +71,11 @@ public class TubeApp extends MultiDexApplication {
 
 	public static boolean isCoolStart = false;
 
+	public static final String NATIVE_AD_ID = "65080";
+	public static final String CHA_PING_AD_ID = "65079";
+	public static final String APP_WALL_AD_ID = "60308";
+	public static final String CHA_VIDEO_AD_ID = "60307";
+	public static final String LE_AD_ID = "rZJda7etoeal4Ye7lJV8HNlPLjYQBabO";
 
 	private String getCurrentProcessName() {
 		int pid = android.os.Process.myPid();
@@ -91,6 +98,22 @@ public class TubeApp extends MultiDexApplication {
 		super.attachBaseContext(base);
 		MultiDex.install(this);
 	}
+
+	public static final NativeView.NativeCallBack callBack = new NativeView.NativeCallBack() {
+		@Override
+		public void loadImage(String iconUrl, ImageView imageView) {
+			try {
+				Glide.with(TubeApp.getContext()).load(iconUrl).into(imageView);
+			} catch (Throwable e) {
+				e.printStackTrace();
+			}
+		}
+
+		@Override
+		public void loadFaild() {
+
+		}
+	};
 
 	@Override
 	public void onCreate() {
@@ -122,9 +145,6 @@ public class TubeApp extends MultiDexApplication {
 			addShortcut(this, SplashActivity.class, getString(R.string.app_name), R.mipmap.ic_launcher);
 		}
 
-		FBAdUtils.init(this);
-		FBAdUtils.loadFBAds(Utils.NATIVE_AD_ID);
-
 		RatingActivity.setRatingClickListener(new RatingActivity.RatingClickListener() {
 			@Override
 			public void onClickFiveStart() {
@@ -138,8 +158,15 @@ public class TubeApp extends MultiDexApplication {
 		});
 		RatingActivity.setPopTotalCount(this, 2);
 
+//		if (BuildConfig.DEBUG) {
+//			SuperVersions.SuperVersionHandler.setSpecial();
+//		}
+
 		InMobiHelper.init(getApplicationContext(), Utils.ACCOUNT_ID);
 		InMobiHelper.createInterstitial(Utils.CHAPING_INMOBI);
+
+		YouTubePlayerActivity.setDeveloperKey("AIzaSyAMM7NHUwZGQa3RfqbJXWifxksOvWgzRr0");
+		MintergalSDK.init(this, "107147", "0aebea839bd46fd8df1554832858bd2f");
 	}
 
 	public static void addShortcut(Context context, Class clazz, String appName, int ic_launcher) {

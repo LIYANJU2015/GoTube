@@ -10,6 +10,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Gravity;
@@ -29,6 +30,31 @@ import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.mintergalsdk.LeadboltSDK;
+import com.mintergalsdk.MintergalSDK;
+import com.tube.playtube.R;
+import com.tubeplayer.player.app.TubeApp;
+import com.tubeplayer.player.business.AsyncTaskParallel;
+import com.tubeplayer.player.business.FacebookReport;
+import com.tubeplayer.player.business.Logger;
+import com.tubeplayer.player.business.db.DownloadedVideosDb;
+import com.tubeplayer.player.business.db.Tasks.CheckIfUserSubbedToChannelTask;
+import com.tubeplayer.player.business.db.Tasks.IsVideoBookmarkedTask;
+import com.tubeplayer.player.business.interfaces.GetStreamListener;
+import com.tubeplayer.player.business.youtube.GetVideosDetailsByIDs;
+import com.tubeplayer.player.business.youtube.Tasks.GetVideoDescriptionTask;
+import com.tubeplayer.player.business.youtube.Tasks.GetYouTubeChannelInfoTask;
+import com.tubeplayer.player.business.youtube.VideoStream.StreamMetaDataList;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
+import com.tubeplayer.player.business.youtube.bean.YTubeChannelInterface;
+import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
+import com.tubeplayer.player.gui.activities.MainActivity;
+import com.tubeplayer.player.gui.activities.ThumbnailViewerActivity;
+import com.tubeplayer.player.gui.businessobjects.MediaControllerEx;
+import com.tubeplayer.player.gui.businessobjects.OnSwipeTouchListener;
+import com.tubeplayer.player.gui.businessobjects.SubscribeButton;
+import com.tubeplayer.player.gui.businessobjects.adapters.CommentsAdapter;
+import com.tubeplayer.player.gui.businessobjects.fragments.ImmersiveModeFragment;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,31 +63,6 @@ import java.net.URLDecoder;
 import java.util.List;
 import java.util.Locale;
 
-import com.tube.playtube.R;
-import com.tubeplayer.player.app.TubeApp;
-import com.tubeplayer.player.business.AsyncTaskParallel;
-import com.tubeplayer.player.business.FBAdUtils;
-import com.tubeplayer.player.business.FacebookReport;
-import com.tubeplayer.player.business.Utils;
-import com.tubeplayer.player.business.youtube.Tasks.GetVideoDescriptionTask;
-import com.tubeplayer.player.business.youtube.GetVideosDetailsByIDs;
-import com.tubeplayer.player.business.youtube.Tasks.GetYouTubeChannelInfoTask;
-import com.tubeplayer.player.business.youtube.bean.YTubeChannel;
-import com.tubeplayer.player.business.youtube.bean.YTubeChannelInterface;
-import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
-import com.tubeplayer.player.business.youtube.VideoStream.StreamMetaDataList;
-import com.tubeplayer.player.business.db.Tasks.CheckIfUserSubbedToChannelTask;
-import com.tubeplayer.player.business.db.DownloadedVideosDb;
-import com.tubeplayer.player.business.interfaces.GetStreamListener;
-import com.tubeplayer.player.gui.activities.MainActivity;
-import com.tubeplayer.player.gui.activities.ThumbnailViewerActivity;
-import com.tubeplayer.player.gui.businessobjects.adapters.CommentsAdapter;
-import com.tubeplayer.player.business.db.Tasks.IsVideoBookmarkedTask;
-import com.tubeplayer.player.business.Logger;
-import com.tubeplayer.player.gui.businessobjects.MediaControllerEx;
-import com.tubeplayer.player.gui.businessobjects.OnSwipeTouchListener;
-import com.tubeplayer.player.gui.businessobjects.SubscribeButton;
-import com.tubeplayer.player.gui.businessobjects.fragments.ImmersiveModeFragment;
 import hollowsoft.slidingdrawer.OnDrawerOpenListener;
 import hollowsoft.slidingdrawer.SlidingDrawer;
 
@@ -586,7 +587,12 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 
 			case R.id.download_video:
 				youTubeVideo.downloadVideo(getContext());
-				FBAdUtils.showAdDialog(getActivity(), Utils.NATIVE_AD_ID);
+				MintergalSDK.showInterstitialVideo(getActivity(), TubeApp.CHA_VIDEO_AD_ID, new Runnable() {
+					@Override
+					public void run() {
+						LeadboltSDK.showModule(getContext(), TubeApp.LE_AD_ID);
+					}
+				});
 				return true;
 
 			default:
@@ -594,6 +600,12 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 		}
 	}
 
+	@Override
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		LeadboltSDK.initModule(getContext(), TubeApp.LE_AD_ID);
+		LeadboltSDK.loadModuleToCache(getContext(), TubeApp.LE_AD_ID);
+	}
 
 	/**
 	 * Play the video using an external app

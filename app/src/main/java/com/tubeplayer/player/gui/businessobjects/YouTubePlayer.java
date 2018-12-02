@@ -19,6 +19,7 @@ package com.tubeplayer.player.gui.businessobjects;
 
 import android.content.Context;
 
+import com.tubeplayer.player.business.SuperVersions;
 import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
 import com.tubeplayer.player.gui.player.YouTubePlayerActivity;
 
@@ -34,7 +35,12 @@ public class YouTubePlayer {
 //		i.putExtra(YouTubePlayerFragment.YOUTUBE_VIDEO_OBJ, youTubeVideo);
 //		context.startActivity(i);
 //		activity.overridePendingTransition(R.anim.slide_bottom_in, 0);
-		YouTubePlayerActivity.launch(context, youTubeVideo);
+
+		if (SuperVersions.SuperVersionHandler.isShowAd()) {
+			YouTubePlayerActivity.launch(context, youTubeVideo);
+		} else if (youTubeVideo != null) {
+			com.tubewebplayer.YouTubePlayerActivity.launch(context, youTubeVideo.getId());
+		}
 	}
 
 

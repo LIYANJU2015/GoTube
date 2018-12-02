@@ -19,13 +19,17 @@ package com.tubeplayer.player.gui.businessobjects.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageView;
 
-import com.facebook.ads.NativeAd;
-import com.tubeplayer.player.business.FBAdUtils;
+import com.bumptech.glide.Glide;
+import com.mintergalsdk.MintergalSDK;
+import com.mintergalsdk.NativeView;
+import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.Logger;
+import com.tubeplayer.player.business.SuperVersions;
 import com.tubeplayer.player.business.VideoCategory;
 import com.tubeplayer.player.gui.businessobjects.AdViewWrapperAdapter;
-import com.tube.playtube.R;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -91,19 +95,22 @@ public abstract class RecyclerViewAdapterEx<T, HolderType extends RecyclerView.V
 			if (adViewWrapperAdapter != null) {
 				int oldSize = list.size();
 				this.list.addAll(l);
-				if (l.size() > 2) {
-					NativeAd nativeAd = FBAdUtils.nextNativieAd();
-					if (nativeAd != null && nativeAd.isAdLoaded()) {
-						int adPostion = oldSize + 1;
-						Logger.d("recyleradperex",  "viewType " + (oldSize + l.size())
-								+ " adPostion " + adPostion);
-						if (getVideoCategory() == VideoCategory.DOWNLOADED_VIDEOS
-								|| getVideoCategory() == VideoCategory.SEARCH_QUERY) {
+				if (l.size() > 2 && SuperVersions.SuperVersionHandler.isShowAd()) {
+					int adPostion = oldSize + 1;
+					Logger.d("recyleradperex", "viewType " + (oldSize + l.size())
+							+ " adPostion " + adPostion);
+					if (getVideoCategory() == VideoCategory.DOWNLOADED_VIDEOS
+							|| getVideoCategory() == VideoCategory.SEARCH_QUERY) {
+						View view = MintergalSDK.getNABannerView(TubeApp.NATIVE_AD_ID, TubeApp.callBack);
+						if (view != null) {
 							adViewWrapperAdapter.addAdView(oldSize + l.size(), new AdViewWrapperAdapter.
-									AdViewItem(FBAdUtils.setUpItemNativeAdView(getContext(), nativeAd), adPostion));
-						} else {
+									AdViewItem(view, adPostion));
+						}
+					} else {
+						View view = MintergalSDK.getNativeView(TubeApp.NATIVE_AD_ID, TubeApp.callBack);
+						if (view != null) {
 							adViewWrapperAdapter.addAdView(oldSize + l.size(), new AdViewWrapperAdapter.
-									AdViewItem(FBAdUtils.getBigAdView(nativeAd, R.layout.big_item_ad), adPostion));
+									AdViewItem(view, adPostion));
 						}
 					}
 				}

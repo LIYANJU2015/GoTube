@@ -1,6 +1,5 @@
 package com.tubeplayer.player.gui.businessobjects.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -14,18 +13,15 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-
-import java.io.File;
-
-import com.tubeplayer.player.business.FBAdUtils;
-import com.tubeplayer.player.business.db.DownloadedVideosDb;
-import com.tubeplayer.player.gui.activities.GetVideoActivity;
-import com.tubeplayer.player.gui.businessobjects.YouTubePlayer;
 import com.tube.playtube.R;
 import com.tubeplayer.player.business.Utils;
 import com.tubeplayer.player.business.VideoCategory;
+import com.tubeplayer.player.business.db.DownloadedVideosDb;
 import com.tubeplayer.player.business.youtube.bean.YTubeVideo;
+import com.tubeplayer.player.gui.businessobjects.YouTubePlayer;
 import com.tubeplayer.player.gui.fragments.DownloadedVideosFragment;
+
+import java.io.File;
 
 /**
  * Created by liyanju on 2018/6/12.
