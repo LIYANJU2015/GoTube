@@ -98,12 +98,32 @@ public class YTubeAPIKey {
 			"AIzaSyDQ5Nn51uNJO82JtBwkue-Q-lNZpHqt72U",
 	};
 
+	public static final String[] YOUTUBE_API_KEYS4 = {
+			"AIzaSyB5IsxA_-IjXbnBoZ7zx6fSAAPgpCydIxk",
+			"AIzaSyCP4LYHGAIfCuKki2P53-8_RWyRJWJE6O0",
+			"AIzaSyBGMS9KNd0F4qlrA7czJEnTbF6077VeU0E",
+			"AIzaSyByPNGqgQb1WuAVNAma9T-_xwR-3kFkqzg",
+			"AIzaSyBRLbG43XBP9UYuqRNQKLpTakOIb9pIsMQ",
+			"AIzaSyCb-84HDKi4hFgjs7G7M0skOOgND7okNb8",
+			"AIzaSyBXVRuj0UBcAkWWwZUYiJpDEcLCmB8iDeM",
+			"AIzaSyBxeCTQ9eNe5gtkhrVPg_YNZxuOS9kkNN0",
+			"AIzaSyD2aLOfH18P889oz5OUi3Eckb3qGzJ9lvU",
+	};
+
 	private static ArrayList<String[]> SKEYLIST = new ArrayList<>();
+	private static ArrayList<String[]> ALL_SKEYLIST = new ArrayList<>();
+
 	static {
 		SKEYLIST.add(YOUTUBE_API_KEYS3);
 		SKEYLIST.add(YOUTUBE_API_KEYS2);
 		SKEYLIST.add(YOUTUBE_API_KEYS);
+
+		ALL_SKEYLIST.add(SKEYLIST.toArray(new String[SKEYLIST.size()]));
+		ALL_SKEYLIST.add(YOUTUBE_API_KEYS4);
 	}
+
+
+
 
 	/**
 	 * @return Return YouTube API key.
@@ -112,18 +132,17 @@ public class YTubeAPIKey {
 		String key;
 		String KEY[] = null;
 		try {
-			KEY = SKEYLIST.get(random.nextInt(2));
-
+			KEY = ALL_SKEYLIST.get(random.nextInt(2));
 			int i = random.nextInt(KEY.length);
 			key = KEY[i];
 		} catch (Throwable e) {
 			e.printStackTrace();
-			key = YOUTUBE_API_KEYS3[0];
+			key = YOUTUBE_API_KEYS4[0];
 		}
-		if (BuildConfig.DEBUG) {
-			Log.d(TAG, ">>>Key = " + key + " KEY " + KEY);
-//			key = "AIzaSyDKAnaBI_iverUHj4ibiqinD4dbsQDkfvM";
-		}
+//		if (BuildConfig.DEBUG) {
+//			Log.d(TAG, ">>>Key = " + key + " KEY " + KEY);
+//			key = "AIzaSyBXVRuj0UBcAkWWwZUYiJpDEcLCmB8iDeM";
+//		}
 		return key;
 	}
 

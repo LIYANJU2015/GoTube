@@ -487,11 +487,18 @@ public class SubscriptionsBackupsManager {
 			String message =  (backupPath != null)
 							? String.format(activity.getString(R.string.databases_backup_success), backupPath)
 							: activity.getString(R.string.databases_backup_fail);
+			try {
+				if (activity.isFinishing()) {
+					return;
+				}
 
-			new AlertDialog.Builder(activity)
-							.setMessage(message)
-							.setNeutralButton(R.string.ok, null)
-							.show();
+				new AlertDialog.Builder(activity)
+						.setMessage(message)
+						.setNeutralButton(R.string.ok, null)
+						.show();
+			} catch (Throwable e) {
+				e.printStackTrace();
+			}
 		}
 
 	}

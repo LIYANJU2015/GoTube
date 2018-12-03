@@ -44,9 +44,13 @@ public class SplashActivity extends AppCompatActivity{
         privacyTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri uri = Uri.parse(PRIVACY_POLICY_URL);
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
+                try {
+                    Uri uri = Uri.parse(PRIVACY_POLICY_URL);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -108,9 +112,13 @@ public class SplashActivity extends AppCompatActivity{
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        startMain();
-                        if (SuperVersions.isShowAd()) {
-                            InMobiHelper.showInterstitial();
+                        try {
+                            startMain();
+                            if (SuperVersions.isShowAd()) {
+                                InMobiHelper.showInterstitial();
+                            }
+                        } catch (Throwable e) {
+                            e.printStackTrace();
                         }
                     }
                 });

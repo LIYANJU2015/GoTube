@@ -74,7 +74,7 @@ public class GetFeaturedVideos extends GetYouTubeVideos {
 				// if nextPageToken is null, it means that there are no more videos
 				if (nextPageToken == null)
 					noMoreVideoPages = true;
-			} catch (IOException e) {
+			} catch (Throwable e) {
 				Log.e(TAG, "Error has occurred while getting Featured Videos.", e);
 			}
 		}

@@ -155,7 +155,13 @@ public class GetYouTubeVideosTask extends AsyncTaskParallel<Void, Void, List<YTu
 
 	@Override
 	protected void onCancelled() {
-		LoadingProgressBar.get().hide();
+		try {
+			if (LoadingProgressBar.get() != null) {
+				LoadingProgressBar.get().hide();
+			}
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 	}
 
 }

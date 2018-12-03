@@ -217,8 +217,12 @@ public class YTubeVideo implements Serializable {
 	 * Sets the publishDate and publishDatePretty.
 	 */
 	private void setPublishDate(DateTime publishDate) {
-		this.publishDate = publishDate;
-		this.publishDatePretty = (publishDate != null)  ?  new PrettyTimeEx().format(publishDate)  :  "???";
+		try {
+			this.publishDate = publishDate;
+			this.publishDatePretty = (publishDate != null) ? new PrettyTimeEx().format(publishDate) : "???";
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 	}
 
 

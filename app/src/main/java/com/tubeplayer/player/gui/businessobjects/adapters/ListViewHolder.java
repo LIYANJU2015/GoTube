@@ -62,15 +62,16 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
                 Utils.runSingleThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (video.isDownloaded()) {
-                            Uri uri = video.getFileUri();
-                            File file = new File(uri.getPath());
+                        try {
+                            if (video.isDownloaded()) {
+                                Uri uri = video.getFileUri();
+                                File file = new File(uri.getPath());
 
-                            if (!file.exists()) {
-                                DownloadedVideosDb.getVideoDownloadsDb().remove(video);
-                                Utils.showLongToastSafe(R.string.playing_video_file_missing);
-                            } else {
-                                Utils.playDownloadVideo(context, uri);
+                                if (!file.exists()) {
+                                    DownloadedVideosDb.getVideoDownloadsDb().remove(video);
+                                    Utils.showLongToastSafe(R.string.playing_video_file_missing);
+                                } else {
+                                    Utils.playDownloadVideo(context, uri);
 //                                try {
 //                                    if (GetVideoActivity.sActivity != null) {
 //                                        FBAdUtils.showAdDialog(GetVideoActivity.sActivity, Utils.NATIVE_AD_HIGHT_ID);
@@ -78,10 +79,13 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
 //                                } catch (Throwable e) {
 //                                    e.printStackTrace();
 //                                }
-                                DownloadedVideosFragment.sIsPlayDownload = true;
+                                    DownloadedVideosFragment.sIsPlayDownload = true;
+                                }
+                            } else {
+                                YouTubePlayer.launch(context, video);
                             }
-                        } else {
-                            YouTubePlayer.launch(context, video);
+                        } catch (Throwable e) {
+                            e.printStackTrace();
                         }
                     }
                 });

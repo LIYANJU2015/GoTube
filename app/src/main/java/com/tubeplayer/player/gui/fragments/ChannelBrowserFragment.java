@@ -186,10 +186,16 @@ public class ChannelBrowserFragment extends FragmentEx {
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		if(channelVideosFragment != null)
-			getChildFragmentManager().putFragment(outState, FRAGMENT_CHANNEL_VIDEOS, channelVideosFragment);
-		if(channelPlaylistsFragment != null)
-			getChildFragmentManager().putFragment(outState, FRAGMENT_CHANNEL_PLAYLISTS, channelPlaylistsFragment);
+		try {
+			if (channelVideosFragment != null) {
+				getChildFragmentManager().putFragment(outState, FRAGMENT_CHANNEL_VIDEOS, channelVideosFragment);
+			}
+			if (channelPlaylistsFragment != null) {
+				getChildFragmentManager().putFragment(outState, FRAGMENT_CHANNEL_PLAYLISTS, channelPlaylistsFragment);
+			}
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

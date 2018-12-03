@@ -91,7 +91,7 @@ public class GetYouTubeVideoBySearch extends GetYouTubeVideos {
 				if (nextPageToken == null)
 					noMoreVideoPages = true;
 			} catch (IOException ex) {
-				Log.e(TAG, ex.getLocalizedMessage());
+				ex.printStackTrace();
 			}
 		}
 
