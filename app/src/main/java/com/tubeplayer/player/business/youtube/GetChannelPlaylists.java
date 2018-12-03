@@ -72,6 +72,7 @@ public class GetChannelPlaylists {
 			try {
 				// set the page token/id to retrieve
 				this.playlistList.setPageToken(nextPageToken);
+				this.playlistList.setKey(YTubeAPIKey.get().getYouTubeAPIKey());
 
 				// communicate with YouTube
 				PlaylistListResponse listResponse = this.playlistList.execute();

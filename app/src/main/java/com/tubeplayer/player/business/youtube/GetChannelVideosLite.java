@@ -70,6 +70,7 @@ public class GetChannelVideosLite extends GetYouTubeVideos implements GetChannel
 		if (!noMoreVideoPages) {
 			try {
 				activitiesList.setPageToken(nextPageToken);
+				activitiesList.setKey(YTubeAPIKey.get().getYouTubeAPIKey());
 
 				ActivityListResponse response = activitiesList.execute();
 				List<Activity> activityList = response.getItems();

@@ -74,6 +74,7 @@ public class GetYouTubeVideoBySearch extends GetYouTubeVideos {
 			try {
 				// set the page token/id to retrieve
 				this.videosList.setPageToken(nextPageToken);
+				this.videosList.setKey(YTubeAPIKey.get().getYouTubeAPIKey());
 
 				// communicate with YouTube
 				SearchListResponse searchResponse = this.videosList.execute();

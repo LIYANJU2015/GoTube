@@ -73,6 +73,7 @@ public class GetCommentThreads {
 			try {
 				// set the page token/id to retrieve
 				commentsList.setPageToken(nextPageToken);
+				commentsList.setKey(YTubeAPIKey.get().getYouTubeAPIKey());
 
 				// communicate with YouTube and get the comments
 				CommentThreadListResponse response = commentsList.execute();

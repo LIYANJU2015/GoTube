@@ -61,6 +61,7 @@ public class GetFeaturedVideos extends GetYouTubeVideos {
 			try {
 				// set the page token/id to retrieve
 				videosList.setPageToken(nextPageToken);
+				videosList.setKey(YTubeAPIKey.get().getYouTubeAPIKey());
 
 				// communicate with YouTube
 				VideoListResponse response = videosList.execute();

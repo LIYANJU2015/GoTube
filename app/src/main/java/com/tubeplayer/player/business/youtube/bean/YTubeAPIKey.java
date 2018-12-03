@@ -61,7 +61,25 @@ public class YTubeAPIKey {
 		return youTubeAPIKey;
 	}
 
-	public static final String[] YOUTUBE_API_KEYS = {
+	public static final String[] YOUTUBE_API_KEYS2 = {
+			"AIzaSyD9xJnLrVcy2OopbtlSlKAmpukvXjxc44E",
+			"AIzaSyBW9XHx8HkQwWV80q9T31jgqUTBPCYQS4A",
+			"AIzaSyD7pbE5_g037sQbZc0z2W61qNJVgNVP3z4",
+			"AIzaSyAhOzqBAzknpPLAvEn0bdE8bJFAyOmbAkc",
+			"AIzaSyAg9FgFFvfVAqh8zLK7boj3l3Ie0u_S-J4",
+			"AIzaSyCe525PZxX7vWbCkhhzSWiT3iNuzGTtEJI",
+			"AIzaSyBPqO18zJ1jgi9PhfZK3BEK8uD8QVOzD_k",
+			"AIzaSyAtsBI7zz7U55Wk-01E-hFDLwl9Z6C8Kvs",
+			"AIzaSyAC4quGEFZE56y5UH1YWzqDyMOE61oIHmw",
+			"AIzaSyBYTI70eBiMauIuz1qJ0mD9Rputl3oKPuE",
+			"AIzaSyBzm4yb2fkCT2uOAo5ETIerfQy5WWk5qsk",
+			"AIzaSyCVgz2gIvm1mSMIOeWAPXzAa5MTmd2bn8U",
+			"AIzaSyBqLrFwFuI6jcRM7TlFtOvl41jmvyM4220",
+			"AIzaSyBqoRhH750jR0gV2xe3k48bxra5CBE9-RQ",
+			"AIzaSyBGT6sbFzyUnhS4nctVY64QeL86uR0RYqo",
+			"AIzaSyBnZWReoUeXJ2GMwHq6SYi51YUeXbkbyzM",
+			"AIzaSyAjKGdTWQxnylXaLr1UqABT8B047qg4zHc",
+			"AIzaSyDQ5Nn51uNJO82JtBwkue-Q-lNZpHqt72U",
 			"AIzaSyCLPqZsaLpfXJV7ZbDJTj-DDRD2pfzx8f0",
 			"AIzaSyBn7hE7kjS3FDIMufjNiLWNlIhROBV2H18",
 			"AIzaSyD1uZpVIUkDqWmvjcQ4y3qTGQ7i5N_th_M",
@@ -74,29 +92,7 @@ public class YTubeAPIKey {
 			"AIzaSyB4ujp9i4-cHgowocYvuQ7_uLgDyIPFxl8",
 	};
 
-	public static final String[] YOUTUBE_API_KEYS2 = {
-			"AIzaSyD9xJnLrVcy2OopbtlSlKAmpukvXjxc44E",
-			"AIzaSyBW9XHx8HkQwWV80q9T31jgqUTBPCYQS4A",
-			"AIzaSyD7pbE5_g037sQbZc0z2W61qNJVgNVP3z4",
-			"AIzaSyAhOzqBAzknpPLAvEn0bdE8bJFAyOmbAkc",
-			"AIzaSyAg9FgFFvfVAqh8zLK7boj3l3Ie0u_S-J4",
-			"AIzaSyCe525PZxX7vWbCkhhzSWiT3iNuzGTtEJI",
-			"AIzaSyBPqO18zJ1jgi9PhfZK3BEK8uD8QVOzD_k",
-			"AIzaSyAtsBI7zz7U55Wk-01E-hFDLwl9Z6C8Kvs",
-			"AIzaSyAC4quGEFZE56y5UH1YWzqDyMOE61oIHmw",
-	};
 
-	public static final String[] YOUTUBE_API_KEYS3 = {
-			"AIzaSyBYTI70eBiMauIuz1qJ0mD9Rputl3oKPuE",
-			"AIzaSyBzm4yb2fkCT2uOAo5ETIerfQy5WWk5qsk",
-			"AIzaSyCVgz2gIvm1mSMIOeWAPXzAa5MTmd2bn8U",
-			"AIzaSyBqLrFwFuI6jcRM7TlFtOvl41jmvyM4220",
-			"AIzaSyBqoRhH750jR0gV2xe3k48bxra5CBE9-RQ",
-			"AIzaSyBGT6sbFzyUnhS4nctVY64QeL86uR0RYqo",
-			"AIzaSyBnZWReoUeXJ2GMwHq6SYi51YUeXbkbyzM",
-			"AIzaSyAjKGdTWQxnylXaLr1UqABT8B047qg4zHc",
-			"AIzaSyDQ5Nn51uNJO82JtBwkue-Q-lNZpHqt72U",
-	};
 
 	public static final String[] YOUTUBE_API_KEYS4 = {
 			"AIzaSyB5IsxA_-IjXbnBoZ7zx6fSAAPgpCydIxk",
@@ -114,12 +110,8 @@ public class YTubeAPIKey {
 	private static ArrayList<String[]> ALL_SKEYLIST = new ArrayList<>();
 
 	static {
-		SKEYLIST.add(YOUTUBE_API_KEYS3);
-		SKEYLIST.add(YOUTUBE_API_KEYS2);
-		SKEYLIST.add(YOUTUBE_API_KEYS);
-
-		ALL_SKEYLIST.add(SKEYLIST.toArray(new String[SKEYLIST.size()]));
 		ALL_SKEYLIST.add(YOUTUBE_API_KEYS4);
+		ALL_SKEYLIST.add(YOUTUBE_API_KEYS2);
 	}
 
 
@@ -132,7 +124,9 @@ public class YTubeAPIKey {
 		String key;
 		String KEY[] = null;
 		try {
-			KEY = ALL_SKEYLIST.get(random.nextInt(2));
+			int index = random.nextInt(2);
+			Log.e(TAG, "getYouTubeAPIKey index " + index);
+			KEY = ALL_SKEYLIST.get(index);
 			int i = random.nextInt(KEY.length);
 			key = KEY[i];
 		} catch (Throwable e) {
