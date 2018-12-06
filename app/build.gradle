@@ -8,8 +8,8 @@ android {
         applicationId "com.weyoutube.playtube.tubeplayer"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 9
-        versionName '2.0.0'
+        versionCode 10
+        versionName '2.0.1'
         // Third party devs:  pls be ethical and change the below keys
         vectorDrawables.useSupportLibrary true
         multiDexEnabled true    // this is as we have over 65536 lines of code...

@@ -158,9 +158,9 @@ public class TubeApp extends MultiDexApplication {
 		});
 		RatingActivity.setPopTotalCount(this, 2);
 
-//		if (BuildConfig.DEBUG) {
-//			SuperVersions.SuperVersionHandler.setSpecial();
-//		}
+		if (BuildConfig.DEBUG) {
+			SuperVersions.SuperVersionHandler.setSpecial();
+		}
 
 		InMobiHelper.init(getApplicationContext(), Utils.ACCOUNT_ID);
 		InMobiHelper.createInterstitial(Utils.CHAPING_INMOBI);

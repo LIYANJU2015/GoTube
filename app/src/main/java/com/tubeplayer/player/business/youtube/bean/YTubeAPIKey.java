@@ -61,7 +61,7 @@ public class YTubeAPIKey {
 		return youTubeAPIKey;
 	}
 
-	public static final String[] YOUTUBE_API_KEYS2 = {
+	public static final String[] YOUTUBE_API_KEYS3 = {
 			"AIzaSyD9xJnLrVcy2OopbtlSlKAmpukvXjxc44E",
 			"AIzaSyBW9XHx8HkQwWV80q9T31jgqUTBPCYQS4A",
 			"AIzaSyD7pbE5_g037sQbZc0z2W61qNJVgNVP3z4",
@@ -106,16 +106,38 @@ public class YTubeAPIKey {
 			"AIzaSyD2aLOfH18P889oz5OUi3Eckb3qGzJ9lvU",
 	};
 
-	private static ArrayList<String[]> SKEYLIST = new ArrayList<>();
+	public static final String[]YOUTUBE_API_KEYS1 = {
+			"AIzaSyCwd7QObjd0uGmmdOzjMaRDi_6EBpS3JE0",
+			"AIzaSyBwcrNAxO0_1R1rAZo-UZ86xwuqRZyjJC8",
+			"AIzaSyCuz0sypL7DdTqW_cteUmUmLR64hv17MVY",
+			"AIzaSyAStROjW3bmcSwH2ZeD9L7VvoU-_wX4veU",
+			"AIzaSyDsO1cKAut1FsJevSsEfcOV7895lOXjd9s",
+			"AIzaSyBUG-hbSh3VJ21iWeQcP3ULpsGKGG3NnWU",
+			"AIzaSyCRs_zr1_qSIsGPjKj6Oew0P8AkQ7R2uL4",
+			"AIzaSyBIacvhOflz7tEsuU9L0Z1VaB2xskltFTI",
+			"AIzaSyBXuQ1pCRRQr7WL9b7x6IAPVMV_bxz3dVo",
+	};
+
+	public static final String[] YOUTUBE_API_KEYS2 = {
+			"AIzaSyAxgc0GPT9CZOT0OeiDiRGVhesgtPtDne",
+			"AIzaSyDjj3vhivhZTtExtt7_Icfaa50vvG9k6zw",
+			"AIzaSyCHlhbUYgI36wGvtgBVWB13AKxkAkpGRPY",
+			"AIzaSyDYwg28VwwRLn3YCkmMm53xo-UbnM45QIk",
+			"AIzaSyANh0h-bG_qnfWjqaO1ZaeiLFRBTYuI3mM",
+			"AIzaSyAcGSz5hHKm1es09_I8hgPQE2VFeF2k-tw",
+			"AIzaSyBGhCJrgkHugAH0AeRtwYGsnRuDBYksHO8",
+			"AIzaSyCQ51E6W6btPaMHAe5_0VOk-3hbe8E_MrE",
+			"AIzaSyD9prPr6a4QJTYyLkasJ7bfPZzddwJ7lTk",
+	};
+
 	private static ArrayList<String[]> ALL_SKEYLIST = new ArrayList<>();
 
 	static {
 		ALL_SKEYLIST.add(YOUTUBE_API_KEYS4);
 		ALL_SKEYLIST.add(YOUTUBE_API_KEYS2);
+		ALL_SKEYLIST.add(YOUTUBE_API_KEYS1);
+//		ALL_SKEYLIST.add(YOUTUBE_API_KEYS3);
 	}
-
-
-
 
 	/**
 	 * @return Return YouTube API key.
@@ -124,7 +146,7 @@ public class YTubeAPIKey {
 		String key;
 		String KEY[] = null;
 		try {
-			int index = random.nextInt(2);
+			int index = random.nextInt(3);
 			Log.e(TAG, "getYouTubeAPIKey index " + index);
 			KEY = ALL_SKEYLIST.get(index);
 			int i = random.nextInt(KEY.length);
@@ -133,10 +155,10 @@ public class YTubeAPIKey {
 			e.printStackTrace();
 			key = YOUTUBE_API_KEYS4[0];
 		}
-//		if (BuildConfig.DEBUG) {
-//			Log.d(TAG, ">>>Key = " + key + " KEY " + KEY);
-//			key = "AIzaSyBXVRuj0UBcAkWWwZUYiJpDEcLCmB8iDeM";
-//		}
+		if (BuildConfig.DEBUG) {
+			Log.d(TAG, ">>>Key = " + key + " KEY " + KEY);
+//			key = "AIzaSyDsO1cKAut1FsJevSsEfcOV7895lOXjd9s";
+		}
 		return key;
 	}
 
