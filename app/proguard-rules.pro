@@ -122,3 +122,11 @@
 	public static <fields>;
 }
 -keep class **.R$*
+
+-dontwarn org.mozilla.javascript.tools.**
+-keep class org.mozilla.javascript.** { *; }
+-keep class org.mozilla.classfile.ClassFileWriter
+-keeppackagenames org.jsoup.nodes
+
+-keep class com.appnext.** { *; }
+-dontwarn com.appnext.**

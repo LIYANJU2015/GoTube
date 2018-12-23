@@ -29,7 +29,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.adlibs.InMobiHelper;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -38,6 +37,7 @@ import com.bumptech.glide.request.target.Target;
 
 import java.io.Serializable;
 
+import com.mintergalsdk.MintergalSDK;
 import com.tubeplayer.player.business.FileDownloader;
 import com.tube.playtube.R;
 import com.tubeplayer.player.business.SuperVersions;
@@ -105,18 +105,13 @@ public class ThumbnailViewerActivity extends AppCompatActivity {
 					}
 				})
 				.into(thumbnailImageView);
-
-		if (SuperVersions.isShowAd()) {
-			InMobiHelper.init(getApplicationContext(), Utils.ACCOUNT_ID);
-			InMobiHelper.createInterstitial(Utils.CHAPING_INMOBI);
-		}
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		if (SuperVersions.isShowAd()) {
-			InMobiHelper.showInterstitial();
+			MintergalSDK.showOnlyNativeFullScreen(TubeApp.NATIVE_AD_ID, TubeApp.callBack);
 		}
 	}
 

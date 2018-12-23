@@ -9,8 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.adlibs.InMobiHelper;
-import com.mintergalsdk.LeadboltSDK;
+import com.mintergalsdk.AppNextSDK;
 import com.mintergalsdk.MintergalSDK;
 import com.tube.playtube.R;
 import com.tubeplayer.player.app.TubeApp;
@@ -50,20 +49,24 @@ public class GetVideoActivity extends AppCompatActivity {
                 .replace(R.id.download_frame, downloadedVideosFragment)
                 .commitAllowingStateLoss();
 
-        InMobiHelper.init(TubeApp.getContext(), Utils.ACCOUNT_ID);
-        InMobiHelper.createInterstitial(Utils.CHAPING_INMOBI);
 
         RelativeLayout adRelative = findViewById(R.id.in_ad_relative);
         if (SuperVersions.isShowAd()) {
             adRelative.setVisibility(View.VISIBLE);
             adRelative.removeAllViews();
-            InMobiHelper.addBanner(this, adRelative, Utils.BANNER_INMOBI2);
+            View adView = MintergalSDK.getNABannerView(TubeApp.NATIVE_AD_ID, TubeApp.callBack);
+            if (adView != null) {
+                adRelative.addView(adView);
+            } else {
+                adView = AppNextSDK.createBannerView();
+                if (adView != null) {
+                    adRelative.addView(adView);
+                }
+            }
+
         } else {
             adRelative.setVisibility(View.GONE);
         }
-
-        LeadboltSDK.initModule(getApplication(), TubeApp.LE_AD_ID);
-        LeadboltSDK.loadModuleToCache(getApplication(), TubeApp.LE_AD_ID);
     }
 
     @Override
@@ -71,13 +74,11 @@ public class GetVideoActivity extends AppCompatActivity {
         super.onDestroy();
         DownloadedVideosDb.getVideoDownloadsDb().setListener(null);
 
-        if (!InMobiHelper.showInterstitial()) {
-            MintergalSDK.showInterstitialAd(TubeApp.CHA_PING_AD_ID, new Runnable() {
-                @Override
-                public void run() {
-                    LeadboltSDK.showModule(getApplication(), TubeApp.LE_AD_ID);
-                }
-            });
-        }
+        MintergalSDK.showInterstitialAd(TubeApp.CHA_PING_AD_ID, new Runnable() {
+            @Override
+            public void run() {
+                AppNextSDK.showInterstitial();
+            }
+        });
     }
 }

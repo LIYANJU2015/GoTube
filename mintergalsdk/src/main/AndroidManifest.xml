@@ -1,0 +1,62 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mintergalsdk" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application>
+
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+
+
+        <activity
+            android:theme="@style/TranslucentTheme"
+            android:launchMode="singleTask"
+            android:name=".FullScreenActivity"
+            android:screenOrientation="user" />
+
+        <activity
+            android:name="com.mintegral.msdk.activity.MTGCommonActivity"
+            android:configChanges="keyboard|orientation"
+            android:screenOrientation="user"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+
+        <activity
+            android:name="com.mintegral.msdk.interstitial.view.MTGInterstitialActivity"
+            android:screenOrientation="user"
+            android:configChanges="orientation|screenSize"/>
+
+        <receiver android:name="com.mintegral.msdk.click.AppReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+        <service android:name="com.mintegral.msdk.shell.MTGService" >
+            <intent-filter>
+                <action android:name="com.mintegral.msdk.download.action" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name="com.mintegral.msdk.shell.MTGActivity"
+            android:configChanges="keyboard|orientation"
+            android:screenOrientation="user"
+            android:theme="@style/MintegralAppTheme" >
+        </activity>
+
+        <activity
+            android:name=".NativeInterstitialActivity"
+            android:screenOrientation="user"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <activity
+            android:name="com.mintegral.msdk.reward.player.MTGRewardVideoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="user"
+            android:theme="@style/mintegral_transparent_theme" />
+
+    </application>
+</manifest>

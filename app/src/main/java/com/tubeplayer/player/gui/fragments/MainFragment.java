@@ -25,7 +25,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.adlibs.InMobiHelper;
+import com.mintergalsdk.AppNextSDK;
 import com.tube.playtube.R;
 import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.Logger;
@@ -123,8 +123,11 @@ public class MainFragment extends FragmentEx implements BottomNavigationView.OnN
 
 		RelativeLayout adRelativew = view.findViewById(R.id.in_ad_relative);
 		if (SuperVersions.isShowAd()) {
-			InMobiHelper.init(TubeApp.getContext(), Utils.ACCOUNT_ID);
-			InMobiHelper.addBanner(getActivity(), adRelativew, Utils.BANNER_INMOBI);
+			View adView = AppNextSDK.createBannerView();
+			if (adView != null) {
+				adRelativew.removeAllViews();
+				adRelativew.addView(adView);
+			}
 		} else {
 			adRelativew.setVisibility(View.GONE);
 		}

@@ -39,10 +39,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.adlibs.InMobiHelper;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.SearchSuggestionsAdapter;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
+import com.mintergalsdk.AppNextSDK;
 import com.mintergalsdk.MintergalSDK;
 import com.tube.playtube.R;
 import com.tubeplayer.player.app.TubeApp;
@@ -191,7 +191,12 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 			subsListView.post(new Runnable() {
 				@Override
 				public void run() {
-					MintergalSDK.showNativeFullScreen(TubeApp.NATIVE_AD_ID, TubeApp.callBack);
+					MintergalSDK.showNativeFullScreen(TubeApp.NATIVE_AD_ID, TubeApp.callBack, new Runnable() {
+						@Override
+						public void run() {
+							AppNextSDK.showInterstitial();
+						}
+					});
 				}
 			});
 		}
@@ -510,10 +515,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
 				startActivity(startMain);
 			}
 		} else {
-			if (SuperVersions.isShowAd()) {
-				InMobiHelper.init(getApplicationContext(), Utils.ACCOUNT_ID);
-				InMobiHelper.createInterstitial(Utils.CHAPING_INMOBI);
-			}
 			super.onBackPressed();
 		}
 	}

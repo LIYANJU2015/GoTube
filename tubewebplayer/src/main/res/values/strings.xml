@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">tubewebplayer</string>
+
+    <string name="browser_open_failed">The link cannot be opened using the browser.</string>
+    <string name="refresh_web_page">Refresh web page</string>
+    <string name="copy_link">Copy link</string>
+    <string name="default_browser">Open in browser</string>
+    <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
+</resources>

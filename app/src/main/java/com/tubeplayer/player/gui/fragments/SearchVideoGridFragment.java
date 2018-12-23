@@ -23,12 +23,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.adlibs.InMobiHelper;
+import com.mintergalsdk.AppNextSDK;
 import com.mintergalsdk.MintergalSDK;
 import com.tube.playtube.R;
 import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.SuperVersions;
-import com.tubeplayer.player.business.Utils;
 import com.tubeplayer.player.business.VideoCategory;
 
 /**
@@ -50,19 +49,18 @@ public class SearchVideoGridFragment extends VideosGridFragment {
 		// set the user's search query
 		searchQuery = getArguments().getString(QUERY);
 
-		if (SuperVersions.isSpecial()) {
-			InMobiHelper.init(TubeApp.getContext(), Utils.ACCOUNT_ID);
-			InMobiHelper.createInterstitial(Utils.CHAPING_INMOBI);
-		}
 	}
 
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
 		if (SuperVersions.isSpecial()) {
-			if (!InMobiHelper.showInterstitial()) {
-				MintergalSDK.showNativeFullScreen(TubeApp.NATIVE_AD_ID, TubeApp.callBack);
-			}
+			MintergalSDK.showNativeFullScreen(TubeApp.NATIVE_AD_ID, TubeApp.callBack, new Runnable() {
+				@Override
+				public void run() {
+					AppNextSDK.showInterstitial();
+				}
+			});
 		}
 	}
 

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3F3F3"
+    android:padding="7dp"
+     >
+
+    <LinearLayout
+        android:id="@+id/mintegral_feeds_ll_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:src="@drawable/ic_ad_fb_icon"
+                android:id="@+id/mintegral_feeds_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+            <TextView
+                android:id="@+id/mintegral_feeds_app_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="11dp"
+                android:layout_toRightOf="@id/mintegral_feeds_icon"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="#1b1b1b"
+                android:textSize="16sp" />
+
+            <com.mintergalsdk.StarLevelLayoutView
+                android:id="@+id/mintegral_feeds_star"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/mintegral_feeds_app_name"
+                android:layout_below="@id/mintegral_feeds_app_name"
+                android:layout_marginTop="10dp" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/mintegral_feeds_app_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="6dp"
+            android:alpha="0.5"
+            android:ellipsize="end"
+            android:enabled="true"
+            android:maxLines="2"
+            android:textColor="#737373"
+            android:textSize="14sp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.mintegral.msdk.nativex.view.MTGMediaView
+                android:id="@+id/mintegral_mediaview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/mintegral_feeds_tv_cta"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="6dp"
+            android:textAllCaps="false"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:background="@drawable/mt_selector_download_btn"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="20dp" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -30,7 +30,7 @@ import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.mintergalsdk.LeadboltSDK;
+import com.mintergalsdk.AppNextSDK;
 import com.mintergalsdk.MintergalSDK;
 import com.tube.playtube.R;
 import com.tubeplayer.player.app.TubeApp;
@@ -590,7 +590,7 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 				MintergalSDK.showInterstitialVideo(getActivity(), TubeApp.CHA_VIDEO_AD_ID, new Runnable() {
 					@Override
 					public void run() {
-						LeadboltSDK.showModule(getContext(), TubeApp.LE_AD_ID);
+						AppNextSDK.showInterstitial();
 					}
 				});
 				return true;
@@ -603,8 +603,6 @@ public class YouTubePlayerFragment extends ImmersiveModeFragment implements Medi
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		LeadboltSDK.initModule(getContext(), TubeApp.LE_AD_ID);
-		LeadboltSDK.loadModuleToCache(getContext(), TubeApp.LE_AD_ID);
 	}
 
 	/**

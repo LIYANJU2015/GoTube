@@ -38,9 +38,10 @@ import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
-import com.adlibs.InMobiHelper;
+
 import com.bumptech.glide.Glide;
 import com.liulishuo.filedownloader.FileDownloader;
+import com.mintergalsdk.AppNextSDK;
 import com.mintergalsdk.MintergalSDK;
 import com.mintergalsdk.NativeView;
 import com.rating.RatingActivity;
@@ -162,11 +163,11 @@ public class TubeApp extends MultiDexApplication {
 			SuperVersions.SuperVersionHandler.setSpecial();
 		}
 
-		InMobiHelper.init(getApplicationContext(), Utils.ACCOUNT_ID);
-		InMobiHelper.createInterstitial(Utils.CHAPING_INMOBI);
-
 		YouTubePlayerActivity.setDeveloperKey("AIzaSyAMM7NHUwZGQa3RfqbJXWifxksOvWgzRr0");
 		MintergalSDK.init(this, "107147", "0aebea839bd46fd8df1554832858bd2f");
+
+		AppNextSDK.init(this, "68b38470-c71e-4dea-bdf2-acdccfb5f76e",
+				"719ba167-112c-477b-bc20-cc002cc99322");
 	}
 
 	public static void addShortcut(Context context, Class clazz, String appName, int ic_launcher) {

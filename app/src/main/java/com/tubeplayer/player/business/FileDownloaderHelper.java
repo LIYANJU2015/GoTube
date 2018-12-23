@@ -10,13 +10,14 @@ import android.os.Environment;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
-import com.adlibs.InMobiHelper;
+
 import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.model.FileDownloadStatus;
 import com.liulishuo.filedownloader.notification.BaseNotificationItem;
 import com.liulishuo.filedownloader.notification.FileDownloadNotificationHelper;
 import com.liulishuo.filedownloader.notification.FileDownloadNotificationListener;
 import com.liulishuo.filedownloader.util.FileDownloadHelper;
+import com.mintergalsdk.AppNextSDK;
 import com.mintergalsdk.MintergalSDK;
 import com.rating.RatingActivity;
 import com.tube.playtube.R;
@@ -65,14 +66,6 @@ public class FileDownloaderHelper {
                 String.format(TubeApp.getContext().getString(R.string.starting_video_download), youTubeVideo.getTitle()),
                 Toast.LENGTH_LONG).show();
 
-        Utils.runUIThread(new Runnable() {
-            @Override
-            public void run() {
-                InMobiHelper.init(TubeApp.getContext(), Utils.ACCOUNT_ID);
-                InMobiHelper.createInterstitial(Utils.CHAPING_INMOBI);
-            }
-        });
-
     }
 
 
@@ -111,10 +104,12 @@ public class FileDownloaderHelper {
                         Utils.runUIThread(new Runnable() {
                             @Override
                             public void run() {
-                                if (!InMobiHelper.showInterstitial()) {
-                                    MintergalSDK.showInterstitialAd(TubeApp.CHA_PING_AD_ID, null);
-                                }
-
+                                MintergalSDK.showInterstitialAd(TubeApp.CHA_PING_AD_ID, new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        AppNextSDK.showInterstitial();
+                                    }
+                                });
                             }
                         });
 

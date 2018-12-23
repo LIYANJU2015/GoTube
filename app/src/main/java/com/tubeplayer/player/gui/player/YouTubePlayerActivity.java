@@ -17,14 +17,13 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.adlibs.InMobiHelper;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.dueeeke.videoplayer.listener.VideoListener;
 import com.dueeeke.videoplayer.player.IjkPlayer;
 import com.dueeeke.videoplayer.player.PlayerConfig;
-import com.mintergalsdk.LeadboltSDK;
+import com.mintergalsdk.AppNextSDK;
 import com.mintergalsdk.MintergalSDK;
 import com.mintergalsdk.NativeView;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
@@ -175,14 +174,10 @@ public class YouTubePlayerActivity extends AppCompatActivity implements VideoLis
         }
 
         if (SuperVersions.isSpecial()) {
-            InMobiHelper.init(TubeApp.getContext(), Utils.ACCOUNT_ID);
-            InMobiHelper.createInterstitial(Utils.CHAPING_INMOBI);
 
             MintergalSDK.preInterstitialAd(TubeApp.CHA_PING_AD_ID);
             MintergalSDK.preNativeFullScreen(TubeApp.NATIVE_AD_ID);
 
-            LeadboltSDK.initModule(getApplicationContext(), TubeApp.LE_AD_ID);
-            LeadboltSDK.loadModuleToCache(getApplicationContext(), LeadboltSDK.LOCATION_CODE);
         }
     }
 
@@ -244,8 +239,8 @@ public class YouTubePlayerActivity extends AppCompatActivity implements VideoLis
         if (SuperVersions.isShowAd()) {
             adFrameLayout.setVisibility(View.VISIBLE);
             adFrameLayout.removeAllViews();
-            InMobiHelper.init(getApplicationContext(), Utils.ACCOUNT_ID);
-            InMobiHelper.addBanner(this, adFrameLayout, Utils.BANNER_INMOBI);
+            View adView = MintergalSDK.getNABannerView(TubeApp.NATIVE_AD_ID, TubeApp.callBack);
+            adFrameLayout.addView(adView);
         } else {
             adFrameLayout.setVisibility(View.GONE);
         }
@@ -402,24 +397,23 @@ public class YouTubePlayerActivity extends AppCompatActivity implements VideoLis
         }
 
         if (SuperVersions.isSpecial()) {
-            if (!InMobiHelper.showInterstitial()) {
-                MintergalSDK.showNativeFullScreen(TubeApp.NATIVE_AD_ID, new NativeView.NativeCallBack() {
-                    @Override
-                    public void loadImage(String iconUrl, ImageView imageView) {
-                        Glide.with(getApplication()).load(iconUrl).into(imageView);
-                    }
+            MintergalSDK.showNativeFullScreen(TubeApp.NATIVE_AD_ID, new NativeView.NativeCallBack() {
+                @Override
+                public void loadImage(String iconUrl, ImageView imageView) {
+                    Glide.with(getApplication()).load(iconUrl).into(imageView);
+                }
 
-                    @Override
-                    public void loadFaild() {
-                        MintergalSDK.showInterstitialAd(TubeApp.CHA_PING_AD_ID, new Runnable() {
-                            @Override
-                            public void run() {
-                                LeadboltSDK.showModule(getApplicationContext(), LeadboltSDK.LOCATION_CODE);
-                            }
-                        });
-                    }
-                });
-            }
+                @Override
+                public void loadFaild() {
+
+                }
+            }, new Runnable() {
+                @Override
+                public void run() {
+                    AppNextSDK.showInterstitial();
+                }
+            });
+
         }
     }
 

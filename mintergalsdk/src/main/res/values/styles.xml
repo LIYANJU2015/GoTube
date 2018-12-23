@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MintegralAppTheme" parent="@style/mintegral_transparent_theme">
+        <item name="android:windowAnimationStyle">@style/enterandentrance</item>
+    </style>
+
+    <style name="enterandentrance">
+        <item name="android:activityOpenEnterAnimation">@anim/activity_bottom_entry</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_bottom_exit</item>
+        <item name="android:activityCloseEnterAnimation">@anim/activity_bottom_entry</item>
+        <item name="android:activityCloseExitAnimation">@anim/activity_bottom_exit</item>
+    </style>
+
+    <style name="TranslucentTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">#FFFFFF</item>
+    </style>
+</resources>

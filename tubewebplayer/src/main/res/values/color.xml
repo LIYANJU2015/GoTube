@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#FF5252</color>
+    <color name="colorPrimaryDark">#FF5252</color>
+    <color name="color_while">#ffffff</color>
+    <color name="color_while2">#f4f4f4</color>
+
+</resources>

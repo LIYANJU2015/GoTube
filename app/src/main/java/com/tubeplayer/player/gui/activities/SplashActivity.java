@@ -15,7 +15,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.adlibs.InMobiHelper;
+import com.mintergalsdk.AppNextSDK;
 import com.tube.playtube.R;
 import com.tubeplayer.player.app.TubeApp;
 import com.tubeplayer.player.business.FacebookReport;
@@ -115,7 +115,7 @@ public class SplashActivity extends AppCompatActivity{
                         try {
                             startMain();
                             if (SuperVersions.isShowAd()) {
-                                InMobiHelper.showInterstitial();
+                                AppNextSDK.showInterstitial();
                             }
                         } catch (Throwable e) {
                             e.printStackTrace();
